@@ -181,7 +181,7 @@ TIP: Also remember to change the values in:
 ApProfiles.php
 MESHdesk.php 
 */
-$config['DynamicClients']['shared_secret'] = 'testing123';
+$config['DynamicClients']['shared_secret'] = 'media123';
 
 //=== EXPERIMENTAL STUFF =====
 //Show experimental menus
