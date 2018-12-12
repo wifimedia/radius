@@ -211,9 +211,7 @@ function install_radiusdesk(){
 	cp -aR ${2}cake3 ${3}cake3/
 	cp -aR ${2}rd_cake ${3}cake2/
 	cp -aR ${2}rd ${3}rd
-	cp -aR ${2}rd_login_pages ${3}rd_login_pages
-	cp -aR ${2}rd_clients ${3}rd_clients
-	cp -aR ${2}meshdesk ${3}meshdesk
+	cp -aR ${2}login ${3}login
 	# NodeJS Forever Init Script
 	cp -aR ${3}cake2/rd_cake/Setup/Node.js/nodejs-socket-io /etc/init.d
 }

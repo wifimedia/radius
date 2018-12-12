@@ -536,7 +536,6 @@ class DashboardController extends AppController{
         
         
         //MESHdesk
-		/* dungtd
         array_push($tabs, array(
                 "$show"   => __('MESHdesk'),
                 'glyph'   => Configure::read('icnMesh'),
@@ -553,7 +552,7 @@ class DashboardController extends AppController{
                 'layout'  => 'fit'
             )
         );
-        end */
+        
         //Experi-mental 
         if(Configure::read('experimental.active')){
         
