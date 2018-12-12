@@ -159,8 +159,8 @@ function get_to(){
 # Install CakePHP
 function install_cakephp(){
 	get_to ${1}
-	mv ${1}cakephp-2.9.7 ${2}
 	tar -xzvf 2.9.7.tar.gz > /dev/null 2>&1
+	mv ${1}cakephp-2.9.7 ${2}
 	ln -s ${2}cakephp-2.9.7 ${2}cake2
 }
 
@@ -168,7 +168,7 @@ function install_cakephp(){
 function install_extjs(){
 	get_to ${1}
 	#unzip -q ext-4.2.1-gpl.zip
-	mv  ${2}ext-6-2-sencha_cmd.tar.gz ${3}/rd
+	cp  ${2}ext-6-2-sencha_cmd.tar.gz ${3}/rd
 	tar -xzvf ext-6-2-sencha_cmd.tar.gz > /dev/null 2>&1
 }
 
