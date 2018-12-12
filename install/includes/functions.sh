@@ -160,7 +160,7 @@ function get_to(){
 function install_cakephp(){
 	get_to ${1}
 	mv ${1}cakephp-2.9.7 ${2}
-	tar -xzvf 2.9.7.tar.gz 
+	tar -xzvf 2.9.7.tar.gz > /dev/null 2>&1
 	ln -s ${2}cakephp-2.9.7 ${2}cake2
 }
 
@@ -169,7 +169,7 @@ function install_extjs(){
 	get_to ${1}
 	#unzip -q ext-4.2.1-gpl.zip
 	mv  ${2}ext-6-2-sencha_cmd.tar.gz ${3}/rd
-	tar -xzvf ext-6-2-sencha_cmd.tar.gz
+	tar -xzvf ext-6-2-sencha_cmd.tar.gz > /dev/null 2>&1
 }
 
 # Install NodeJS
@@ -338,7 +338,7 @@ function configure_ubuntu_freeradius(){
 	mv /etc/freeradius/3.0 /etc/freeradius/3.0.orig
 	cp /usr/share/nginx/html/cake2/rd_cake/Setup/Radius/freeradius-3-radiusdesk.tar.gz /etc/freeradius/
 	cd /etc/freeradius/
-	tar -xzvf freeradius-3-radiusdesk.tar.gz
+	tar -xzvf freeradius-3-radiusdesk.tar.gz > /dev/null 2>&1
 	mv freeradius 3.0
 }
 
