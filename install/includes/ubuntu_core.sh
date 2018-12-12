@@ -54,15 +54,8 @@ echo ""
 echo "============================================================="
 echo -e "4. Installing ${LIGHT_BLUE}${BOLD}freeradius${F_END}"
 export DEBIAN_FRONTEND=noninteractive
-#echo "mysql-server mysql-server/root_password password" | debconf-set-selections
-#echo "mysql-server mysql-server/root_password_again password" | debconf-set-selections
-#echo "postfix postfix/mailname string mail.example.com" | debconf-set-selections 
-#echo "postfix postfix/main_mailer_type string 'Internet Site'" | debconf-set-selections
-# Make changes to add additional repositories for NodeJS
-
-add-apt-repository ppa:freeradius/stable-3.0 > /dev/null 2>&1
-#add-apt-repository -y ppa:chris-lea/node.js > /dev/null 2>&1
-apt -qq update -y  > /dev/null 2>&1
+sudo apt install -y software-properties-common python-software-properties
+sudo -y add-apt-repository ppa:freeradius/stable-3.0 > /dev/null 2>&1
 aptget_install freeradius freeradius-mysql
 ########## RADIUSDESK REQUIREMENTS ###########
 
