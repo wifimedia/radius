@@ -47,16 +47,16 @@ reset_iptables_rules
 # Install some packages from base repo
 echo "============================================================="
 echo -e "3. Installing ${LIGHT_BLUE}${BOLD}pre-requisite packages${F_END}"
-aptget_install nano curl wget unzip language-pack-en-base npm nodejs language-pack-en-base nginx php-fpm mysql-server php-mysql php-cli php-gd php-curl php-xml php-mbstring php-intl subversion
+#aptget_install nano curl wget unzip language-pack-en-base npm nodejs language-pack-en-base nginx php-fpm mysql-server php-mysql php-cli php-gd php-curl php-xml php-mbstring php-intl subversion
 
 # Install required packages
-echo ""
-echo "============================================================="
-echo -e "4. Installing ${LIGHT_BLUE}${BOLD}freeradius${F_END}"
-export DEBIAN_FRONTEND=noninteractive
-sudo apt install -y software-properties-common python-software-properties
-sudo -y add-apt-repository ppa:freeradius/stable-3.0 > /dev/null 2>&1
-aptget_install freeradius freeradius-mysql
+#echo ""
+#echo "============================================================="
+#echo -e "4. Installing ${LIGHT_BLUE}${BOLD}freeradius${F_END}"
+#export DEBIAN_FRONTEND=noninteractive
+#sudo apt install -y software-properties-common python-software-properties
+#sudo -y add-apt-repository ppa:freeradius/stable-3.0 > /dev/null 2>&1
+#aptget_install freeradius freeradius-mysql
 ########## RADIUSDESK REQUIREMENTS ###########
 
 # Prepare Temp directory for downloaded files
@@ -74,7 +74,7 @@ if [[ ! -f "${TEMP_PATH}download_complete.txt" ]]; then
 	echo "============================================================="
 	echo -e "6. Downloading ${LIGHT_BLUE}${BOLD}Source RADIUSdesk${F_END}"
 	#svn --quiet checkout http://svn.code.sf.net/p/radiusdesk/code ${TEMP_PATH} > /dev/null 2>&1
-git clone https://github.com/wifimedia/radius.git ${TEMP_PATH} > /dev/null 2>&1
+	git clone https://github.com/wifimedia/radius.git ${TEMP_PATH}source
 fi
 
 # Check for download completion
@@ -89,7 +89,7 @@ if [[ "${webserver}" = "nginx" ]]; then
 	HTTP_DOCUMENT_ROOT='/usr/share/nginx/html/'
 	
 	# Copy nginx configuration files
-	copy_ubuntu_nginx_configs ${CONF_DIR}
+	copy_ubuntu_nginx_configs ${TEMP_PATH}${SOURCE_DIR}${CONF_DIR}
 	
 	# Start services needed by RADIUSdesk
 	echo ""
@@ -137,7 +137,7 @@ install_radiusdesk ${TEMP_PATH} ${SOURCE_DIR} ${HTTP_DOCUMENT_ROOT}
 echo ""
 echo "============================================================="
 echo -e "11. Installing ${LIGHT_BLUE}${BOLD}Sencha ExtJS${F_END}"
-install_extjs ${TEMP_PATH} ${HTTP_DOCUMENT_ROOT}
+install_extjs ${TEMP_PATH} ${EXTJS_DIR} ${HTTP_DOCUMENT_ROOT}
 
 # RADIUSdesk cron script
 echo ""
@@ -199,7 +199,7 @@ restart_ubuntu_service mysql
 restart_ubuntu_service php7.2-fpm
 
 # Clear temporary directory
-clear_dir ${TEMP_PATH}
+#clear_dir ${TEMP_PATH}
 
 # RADIUSdesk Installation complete
 echo ""

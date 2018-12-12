@@ -125,8 +125,8 @@ function copy_nginx_configs(){
 function copy_ubuntu_nginx_configs(){
 
 	# 1a) Nginx: nginx.conf, default.conf
-	cp -aR ${1}nginx/ubuntu_nginx.conf /etc/nginx/nginx.conf
-	cp -aR ${1}nginx/ubuntu_default.conf /etc/nginx/sites-available/default
+	cp -aR ${1}${2}${3}nginx/ubuntu_nginx.conf /etc/nginx/nginx.conf
+	cp -aR ${1}${2}${3}nginx/ubuntu_default /etc/nginx/sites-available/default
 
 	# 1c) php-fpm: www.conf
 	#cp -aR ${1}php-fpm/ubuntu_www.conf /etc/php5/fpm/pool.d/www.conf
@@ -168,7 +168,7 @@ function install_cakephp(){
 function install_extjs(){
 	get_to ${1}
 	#unzip -q ext-4.2.1-gpl.zip
-	mv  ext-6-2-sencha_cmd.tar.gz ${2}/rd
+	mv  ${2}ext-6-2-sencha_cmd.tar.gz ${3}/rd
 	tar -xzvf ext-6-2-sencha_cmd.tar.gz
 }
 
@@ -208,6 +208,7 @@ function install_ubuntu_nodejs(){
 # Install RADIUSdesk
 function install_radiusdesk(){
 	get_to ${1}
+	cp -aR ${2}cake3 ${3}cake3/
 	cp -aR ${2}rd_cake ${3}cake2/
 	cp -aR ${2}rd ${3}rd
 	cp -aR ${2}rd_login_pages ${3}rd_login_pages
@@ -383,8 +384,8 @@ function fix_radiusdesk_permissions_ownership_ubuntu(){
 	# chown -R radiusd:radiusd /usr/local/etc/raddb
 
 	# Permissions
-	chmod 755 /usr/local/sbin/checkrad
-	chmod 644 /usr/local/etc/raddb/dictionary
+	#chmod 755 /usr/local/sbin/checkrad
+	#chmod 644 /usr/local/etc/raddb/dictionary
 	chmod -R 777 ${1}cake2/rd_cake/Setup/Scripts/*.pl
 	chmod 755 /etc/init.d/nodejs-socket-io
 }
