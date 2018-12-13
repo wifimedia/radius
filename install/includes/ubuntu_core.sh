@@ -173,7 +173,8 @@ fix_ubuntu_radiusdesk_sudoers ${SUDOERS_FILE} ${HTTP_DOCUMENT_ROOT}
 
 ########### RADIUSDESK OWNERSHIP AND PERMISSIONS ###########
 # Update Ownership and Permissions
-fix_radiusdesk_permissions_ownership_ubuntu ${HTTP_DOCUMENT_ROOT}
+fix_permissions_ownership_ubuntu ${HTTP_DOCUMENT_ROOT}
+fix_mysql ${MYSQL_CFG}
 
 # NodeJS Installation
 echo ""

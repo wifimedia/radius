@@ -257,7 +257,7 @@ function install_radiusdesk_schema(){
 	mysql -u root -e "CREATE DATABASE ${2};" > /dev/null 2>&1
 	mysql -u root -e "GRANT ALL PRIVILEGES ON ${2}.* to '${3}'@'127.0.0.1' IDENTIFIED BY '${4}';" > /dev/null 2>&1
 	mysql -u root -e "GRANT ALL PRIVILEGES ON ${2}.* to '${3}'@'localhost' IDENTIFIED BY '${4}';" > /dev/null 2>&1
-	mysql -u root ${2} < ${1}cake2/rd_cake/Setup/Db/rd.sql > /dev/null 2>&1
+	mysql -u root ${2} < ${1}cake3/rd_cake/setup/db/rd.sql > /dev/null 2>&1
 }
 
 function configure_ubuntu_freeradius(){
@@ -286,6 +286,14 @@ function fix_ubuntu_radiusdesk_sudoers(){
 
 }
 
+#fix mysql 5.7
+function fix_mysql(){
+echo "
+[mysqld]
+sql_mode=IGNORE_SPACE,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >${1}disable_strict_mode.cnf
+
+}
+
 # Fix RADIUSdesk permissions and ownership
 function fix_radiusdesk_permissions_ownership(){
 	# Web Directory -> both nginx and httpd use apache user
@@ -302,19 +310,37 @@ function fix_radiusdesk_permissions_ownership(){
 }
 
 # Fix RADIUSdesk permissions and ownership for Ubuntu
-function fix_radiusdesk_permissions_ownership_ubuntu(){
-	# Web Directory -> both nginx and httpd use apache user
-	chown -R www-data:www-data ${1}
 
-	# Radius Directory
-	# chown -R radiusd:radiusd /usr/local/etc/raddb
-
-	# Permissions
-	#chmod 755 /usr/local/sbin/checkrad
-	#chmod 644 /usr/local/etc/raddb/dictionary
-	chmod -R 777 ${1}cake2/rd_cake/Setup/Scripts/*.pl
-	chmod 755 /etc/init.d/nodejs-socket-io
+function fix_permissions_ownership_ubuntu(){
+	chown -R www-data. ${1}cake2/rd_cake/tmp
+	chown -R www-data. ${1}cake2/rd_cake/Locale
+	chown -R www-data. ${1}cake2/rd_cake/webroot/img/flags
+	chown -R www-data. ${1}cake2/rd_cake/webroot/img/nas
+	chown -R www-data. ${1}cake2/rd_cake/webroot/img/realms
+	chown -R www-data. ${1}cake2/rd_cake/webroot/img/dynamic_details
+	chown -R www-data. ${1}cake2/rd_cake/webroot/img/dynamic_photos
+	chown -R www-data. ${1}cake2/rd_cake/webroot/files/imagecache
+	chown -R www-data. ${1}cake3/rd_cake/tmp
+	chown -R www-data. ${1}cake3/rd_cake/logs
+	chown -R www-data. ${1}cake3/rd_cake/webroot/img/realms
+	chown -R www-data. ${1}cake3/rd_cake/webroot/img/dynamic_details
+	chown -R www-data. ${1}cake3/rd_cake/webroot/img/dynamic_photos
+	chown -R www-data. ${1}cake3/rd_cake/webroot/img/access_providers
+	chown -R www-data. ${1}cake3/rd_cake/webroot/files/imagecache
 }
+#function fix_radiusdesk_permissions_ownership_ubuntu(){
+#	# Web Directory -> both nginx and httpd use apache user
+#	chown -R www-data:www-data ${1}
+#
+#	# Radius Directory
+#	# chown -R radiusd:radiusd /usr/local/etc/raddb
+#
+#	# Permissions
+#	#chmod 755 /usr/local/sbin/checkrad
+#	#chmod 644 /usr/local/etc/raddb/dictionary
+#	chmod -R 777 ${1}cake2/rd_cake/Setup/Scripts/*.pl
+#	chmod 755 /etc/init.d/nodejs-socket-io
+#}
 
 # Create Temporary Directory
 function mk_temp_dir(){
@@ -326,7 +352,7 @@ function mk_temp_dir(){
 # Customize FreeRadius
 function customize_freeradius(){
 	sed -i "s|testing123|${2}|g" ${1}cake2/rd_cake/Setup/Scripts/radscenario.pl
-	sed -i "s|testing123|${2}|g" ${1}cake2/rd_cake/Setup/Db/rd.sql
+	sed -i "s|testing123|${2}|g" ${1}cake3/rd_cake/setup/db/rd.sql
 	
 	
 }
