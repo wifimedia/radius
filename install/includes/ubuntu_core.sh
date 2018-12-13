@@ -185,7 +185,7 @@ install_ubuntu_nodejs ${HTTP_DOCUMENT_ROOT} /etc/init.d/
 start_ubuntu_service_on_boot ${webserver}
 start_ubuntu_service_on_boot pptpd
 start_ubuntu_service_on_boot mysql
-#start_ubuntu_service_on_boot php7.2-fpm
+start_ubuntu_service_on_boot php7.2-fpm
 
 # Start/Restart services
 echo ""

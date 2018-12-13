@@ -243,16 +243,6 @@ function install_radiusdesk_ubuntu_cron(){
 	#sed -i "s|/var/www/cake2|${1}cake2|g" /etc/cron.d/rd
 }
 
-# Update RADIUSdesk Paths
-function update_radiusdesk_paths(){
-	#sed -i 's|/usr/local/share|/usr/share|g' ${1}cake2/rd_cake/Config/RadiusDesk.php
-	#sed -i 's|/usr/local/etc/raddb|/etc/raddb|g' ${1}cake2/rd_cake/Config/RadiusDesk.php
-	#sed -i 's|/usr/local/bin|/usr/bin|g' ${1}cake2/rd_cake/Config/RadiusDesk.php
-	sed -i "s|'id' => 'pptp',     'active' => false|'id' => 'pptp',     'active' => true|g" ${1}cake2/rd_cake/Config/RadiusDesk.php
-	sed -i 's|<script src="ext/ext-dev.js"></script>|<script src="ext/ext-all.js"></script>|g' ${1}rd/index.html
-	sed -i 's|Ext.Loader.setConfig({enabled:true});|Ext.Loader.setConfig({enabled:true,disableCaching: false});|g' ${1}rd/app.js 
-}
-
 # Update RADIUSdesk Ubuntu Paths
 function update_radiusdesk_ubuntu_paths(){
 	sed -i "s|'id' => 'pptp',     'active' => false|'id' => 'pptp',     'active' => true|g" ${1}cake2/rd_cake/Config/RadiusDesk.php
@@ -268,72 +258,6 @@ function install_radiusdesk_schema(){
 	mysql -u root -e "GRANT ALL PRIVILEGES ON ${2}.* to '${3}'@'127.0.0.1' IDENTIFIED BY '${4}';" > /dev/null 2>&1
 	mysql -u root -e "GRANT ALL PRIVILEGES ON ${2}.* to '${3}'@'localhost' IDENTIFIED BY '${4}';" > /dev/null 2>&1
 	mysql -u root ${2} < ${1}cake2/rd_cake/Setup/Db/rd.sql > /dev/null 2>&1
-}
-
-# Configure FreeRADIUS
-function configure_radiusdesk_freeradius(){
-
-	# Patch 
-	# patch -p1 < ../source/rd_cake/Setup/Radius/rlm_raw_patch
-	get_to ${3}
-	tar xzf freeradius-server-2.2.5.tar.gz
-	cd freeradius-server*/
-	patch -p1 < ${1}cake2/rd_cake/Setup/Radius/rlm_raw_patch > /dev/null 2>&1
-	echo "rlm_raw" >> src/modules/stable		#write 'rlm_raw' to file stable
-	 
-	# Configure and install FreeRADIUS
-	./configure > /dev/null 2>&1; make -i > /dev/null 2>&1; make -i install > /dev/null 2>&1; ldconfig > /dev/null 2>&1
-	cd ../
-
-	# Replace existing checkrad with RADIUSdesk modified version
-	cp -aR ${1}cake2/rd_cake/Setup/Radius/checkrad /usr/local/sbin/
-	#cp -aR /var/www/html/cake2/rd_cake/Setup/Radius/checkrad /usr/local/sbin/
-
-	# Backup original raddb directory
-	mv /usr/local${2} /usr/local/etc/raddb.bak
-	#mv /usr/local/etc/raddb /usr/local/etc/raddb.orig
-	tar xzf ${1}cake2/rd_cake/Setup/Radius/raddb_rd.tar.gz --directory=/usr/local/etc/
-
-	# Fix Variables & Paths for RHEL/CentOS compatibility
-	#sed -i 's|prefix = /usr/local|prefix = /usr|g' ${2}radiusd.conf
-	#sed -i 's|sysconfdir = ${prefix}/etc|sysconfdir = /etc|g' ${2}radiusd.conf
-	#sed -i 's|localstatedir = ${prefix}/var|localstatedir = /var|g' ${2}radiusd.conf
-	sed -i 's|#raw|	raw|g' /usr/local${2}radiusd.conf
-	sed -i 's|client localhost {|#client localhost {|g' /usr/local${2}clients.conf
-	sed -i 's|}|#}|g' /usr/local${2}clients.conf
-	#sed -i 's|$prefix		= "/usr/local";|$prefix		= "/usr";|g' /usr/sbin/checkrad
-	#sed -i 's|$localstatedir	= "${prefix}/var";|$localstatedir	= "/var";|g' /usr/sbin/checkrad
-	#sed -i 's|$prefix		= "/usr/local";|$sysconfdir	= "/etc";|g' /usr/sbin/checkrad
-	#sed -i 's|/usr/local/share/|/usr/share/|g' ${2}dictionary
-	#sed -i 's|/usr/local/etc/|/etc/|g' ${2}dictionary
-	#sed -i 's|"/usr/local/bin/radclient"|"/usr/bin/radclient"|g' ${1}cake2/rd_cake/Setup/Scripts/radscenario.pl
-
-	ln -s /usr/local${2}sites-available/dynamic-clients /usr/local${2}sites-enabled/dynamic-clients		#create shortcut dynamic-clients
-	cp -aR ${3}dynamic-clients /usr/local${2}sites-enabled/dynamic-clients
-
-	chmod 777 ${3}/rd_wifi/radiusd		#add permission
-	cp -aR ${3}/rd_wifi/radiusd /etc/init.d/
-
-	cd /etc/rc5.d/
-	ln -s /etc/init.d/radiusd		#create link shortcut file radiusd
-	mv radiusd S88radiusd			#rename
-	
-	cd /etc/rc6.d/
-	ln -s /etc/init.d/radiusd		#create link shortcut file radiusd
-	mv radiusd K10radiusd			#rename
-	
-	useradd radiusd -c 'radiusd user' 	#add user radius
-	usermod -s /sbin/nologin radiusd	#diusable user login
-#Create file raw
-cat > /usr/local${2}modules/raw <<EOF
-raw { 
-  
-}
-EOF
-
-	# Local IP for PPTP
-	echo "localip 10.20.30.1" >> /etc/pptpd.conf
-
 }
 
 function configure_ubuntu_freeradius(){
