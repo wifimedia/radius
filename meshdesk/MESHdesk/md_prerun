@@ -1,0 +1,93 @@
+#!/bin/sh /etc/rc.common
+# ============================================
+# == Coova Chilli Startup Script =============
+# == Hardware: Ubiquity PicoStation2 =========
+# == OpenWRT version 12.09 ===================
+# == Date 2013-07-03 =========================
+# ============================================
+ 
+START=50
+STOP=50
+DIR='/etc/MESHdesk'
+
+start() {
+
+	#Due to problems with the package postinstall script we will do a first run here
+	FIRST_RUN=`uci get meshdesk.settings.first_run`
+	echo "$FIRST_RUN"
+	if [ $FIRST_RUN == 1 ]; then
+		echo "First run - do some housekeeping"
+		if [ -e /etc/init.d/alfred ]; then
+                    echo "Disable rc.d symlink for Alfred"
+        	    /etc/init.d/alfred disable
+		    /etc/init.d/alfred stop
+		   cp /etc/MESHdesk/files/common/alfred /etc/init.d/alfred
+		fi
+
+		if [ -e /etc/init.d/odhcpd ]; then
+		    echo "Disable rc.d symlink for Odhcpd"
+		    /etc/init.d/odhcpd disable
+		    /etc/init.d/odhcpd stop
+		fi
+		
+		if [ -e /etc/init.d/dnsmasq ]; then
+		    echo "Disable rc.d symlink for DNSMASQ"
+		    /etc/init.d/dnsmasq disable
+		    /etc/init.d/dnsmasq stop
+		fi
+		
+		if [ -e /etc/init.d/chilli ]; then
+		    echo "Disable rc.d symlink for CoovaChilli"
+		    /etc/init.d/chilli disable
+		    /etc/init.d/chilli stop
+		fi
+		
+		if [ -e /etc/init.d/privoxy ]; then
+		    echo "Disable rc.d symlink for Privoxy"
+		    /etc/init.d/privoxy disable
+		    /etc/init.d/privoxy stop
+		fi
+		
+		if [ -e /etc/init.d/openvpn ]; then
+		    echo "Disable rc.d symlink for OpenVPN"
+		    /etc/init.d/openvpn disable
+		    /etc/init.d/openvpn stop		    
+		    if [ -d /etc/openvpn ]; then
+		        cp /etc/MESHdesk/files/common/up.sh /etc/openvpn/up.sh
+		    fi
+		fi
+		
+		if [ -e /etc/dropbear ]; then
+		    echo "Copy Dropbear keys over"
+		    cp /etc/MESHdesk/files/common/dropbear_dss_host_key /etc/dropbear
+	        cp /etc/MESHdesk/files/common/dropbear_rsa_host_key /etc/dropbear
+		    /etc/init.d/dropbear stop
+		    /etc/init.d/dropbear start
+		fi
+		
+		#We also keep the original /etc/config/wireless and /etc/config/network files if they want to disable the MESHdesk firmware
+		if [ -e /etc/config/network ]; then
+		    echo "Copy Original Network config file over"
+		    cp /etc/config/network /etc/MESHdesk/configs/network_original
+		fi
+		
+		if [ -e /etc/config/wireless ]; then
+		    echo "Copy Original Wireless config file over"
+		    cp /etc/config/wireless /etc/MESHdesk/configs/wireless_original
+		fi
+		
+		uci set meshdesk.settings.first_run=0
+		uci commit
+	else
+		echo "First run completed..."
+	fi
+	
+    	echo start
+    	cd $DIR	
+    	./a.lua &
+}
+
+stop() {
+    echo stop
+    killall /etc/MESHdesk/a.lua
+}

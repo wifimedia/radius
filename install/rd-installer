@@ -1,0 +1,19 @@
+#!/bin/bash
+
+# Description: This project tries to simplify or ease the process of getting a working installation of RadiusDESK on a vanilla/minimal installation of RHEL/CentOS 6.X (32 bit/64 bit).
+# Author: Smart Wifi VN
+# Date: March 12,9, 2014
+# Usage: ./rd-installer or ./rd-installer -v|--version
+
+# Include Menu
+source includes/menu.sh
+source includes/functions.sh
+
+# Show RADIUSdesk Installer Version when -v is passed to Installer
+show_version ${1}
+
+RD_DISTRO=$(os_distro_type)
+
+installer_menu ${RD_DISTRO}
+
+# END
