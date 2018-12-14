@@ -321,11 +321,9 @@ function fix_permissions_ownership_ubuntu(){
 	echo "" > ${1}cake3/rd_cake/tmp/cache/models/empty
 	echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_groups
 	echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_users
-	
 	echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/empty
 	echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/myapp_cake_core_translations_default_en__u_s
 	echo "" > ${1}cake3/rd_cake/tmp/cache/views/empty
-	
 	echo "" > ${1}cake3/rd_cake/logs/debug.log
 	echo "" > ${1}cake3/rd_cake/logs/empty
 	echo "" > ${1}cake3/rd_cake/logs/error.log
