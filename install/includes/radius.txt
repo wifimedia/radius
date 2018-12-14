@@ -1,0 +1,40 @@
+wget https://github.com/cakephp/cakephp/archive/2.9.7.tar.gz
+sudo cp 2.9.7.tar.gz /usr/share/nginx/html
+cd /usr/share/nginx/html
+sudo tar -xzvf 2.9.7.tar.gz 
+sudo ln -s ./cakephp-2.9.7 ./cake2
+sudo systemctl reload php7.2-fpm.service
+cd /usr/share/nginx/html/cake2
+sudo svn checkout svn://dvdwalt@svn.code.sf.net/p/radiusdesk/code/trunk/rd_cake ./rd_cake
+sudo chown -R www-data. /usr/share/nginx/html/cake2/rd_cake/tmp
+sudo chown -R www-data. /usr/share/nginx/html/cake2/rd_cake/Locale
+sudo chown -R www-data. /usr/share/nginx/html/cake2/rd_cake/webroot/img/flags
+sudo chown -R www-data. /usr/share/nginx/html/cake2/rd_cake/webroot/img/nas
+sudo chown -R www-data. /usr/share/nginx/html/cake2/rd_cake/webroot/img/realms
+sudo chown -R www-data. /usr/share/nginx/html/cake2/rd_cake/webroot/img/dynamic_details
+sudo chown -R www-data. /usr/share/nginx/html/cake2/rd_cake/webroot/img/dynamic_photos
+sudo chown -R www-data. /usr/share/nginx/html/cake2/rd_cake/webroot/files/imagecache
+cd /usr/share/nginx/html/
+sudo svn checkout svn://dvdwalt@svn.code.sf.net/p/radiusdesk/code/trunk/cake3 ./cake3
+sudo chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/tmp
+sudo chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/logs
+sudo chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/img/realms
+sudo chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/img/dynamic_details
+sudo chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/img/dynamic_photos
+sudo chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/img/access_providers
+sudo chown -R www-data. /usr/share/nginx/html/cake3/rd_cake/webroot/files/imagecache
+sudo su
+mysql -u root
+create database rd;
+GRANT ALL PRIVILEGES ON rd.* to 'rd'@'127.0.0.1' IDENTIFIED BY 'rd';
+GRANT ALL PRIVILEGES ON rd.* to 'rd'@'localhost' IDENTIFIED BY 'rd';
+exit;
+sudo mysql -u root rd < /usr/share/nginx/html/cake3/rd_cake/setup/db/rd.sql
+sudo systemctl reload nginx.service
+cd /usr/share/nginx/html/
+sudo svn checkout svn://dvdwalt@svn.code.sf.net/p/radiusdesk/code/trunk/rd ./rd
+cd /usr/share/nginx/html/
+sudo svn checkout svn://svn.code.sf.net/p/radiusdesk/code/extjs ./
+sudo mv  ext-6-2-sencha_cmd.tar.gz ./rd
+cd /usr/share/nginx/html/rd
+sudo tar -xzvf ext-6-2-sencha_cmd.tar.gz
