@@ -261,11 +261,11 @@ function install_radiusdesk_schema(){
 }
 
 function configure_ubuntu_freeradius(){
-	mv /etc/freeradius/3.0 /etc/freeradius/3.0.orig
+	#mv /etc/freeradius/3.0 /etc/freeradius/3.0.orig
 	cp /usr/share/nginx/html/cake2/rd_cake/Setup/Radius/freeradius-3-radiusdesk.tar.gz /etc/freeradius/
 	cd /etc/freeradius/
 	tar -xzvf freeradius-3-radiusdesk.tar.gz > /dev/null 2>&1
-	mv freeradius 3.0
+	cp -aR freeradius/* 3.0/*
 }
 
 # Fix sudoers file for RADIUSdesk
