@@ -312,6 +312,24 @@ function fix_radiusdesk_permissions_ownership(){
 # Fix RADIUSdesk permissions and ownership for Ubuntu
 
 function fix_permissions_ownership_ubuntu(){
+	mkdir -p ${1}cake3/rd_cake/logs
+	mkdir -p ${1}cake3/rd_cake/tmp/cache/models
+	mkdir -p ${1}cake3/rd_cake/tmp/cache/persistent
+	mkdir -p ${1}cake3/rd_cake/tmp/cache/views
+
+	echo "" > ${1}cake3/rd_cake/logs
+	echo "" > ${1}cake3/rd_cake/tmp/cache/models/empty
+	echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_groups
+	echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_users
+	
+	echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/empty
+	echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/myapp_cake_core_translations_default_en__u_s
+	echo "" > ${1}cake3/rd_cake/tmp/cache/views/empty
+	
+	echo "" > ${1}cake3/rd_cake/logs/debug.log
+	echo "" > ${1}cake3/rd_cake/logs/empty
+	echo "" > ${1}cake3/rd_cake/logs/error.log
+	
 	chown -R www-data. ${1}cake2/rd_cake/tmp
 	chown -R www-data. ${1}cake2/rd_cake/Locale
 	chown -R www-data. ${1}cake2/rd_cake/webroot/img/flags
