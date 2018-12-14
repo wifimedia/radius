@@ -160,15 +160,17 @@ function get_to(){
 function install_cakephp(){
 	get_to ${1}
 	tar -xzvf 2.9.7.tar.gz > /dev/null 2>&1
-	mv ${1}cakephp-2.9.7 ${2}
-	ln -s ${2}cakephp-2.9.7 ${2}cake2
+	cp -aR ${1}cakephp-2.9.7 ${2}
+	cd ${2}
+	ln -s cakephp-2.9.7 cake2
 }
 
 # Install Ext.JS
 function install_extjs(){
 	get_to ${1}
 	#unzip -q ext-4.2.1-gpl.zip
-	cp  ${2}ext-6-2-sencha_cmd.tar.gz ${3}/rd
+	mv  ${2}ext-6-2-sencha_cmd.tar.gz ${3}rd
+	cd ${3}rd
 	tar -xzvf ext-6-2-sencha_cmd.tar.gz > /dev/null 2>&1
 }
 
@@ -241,16 +243,6 @@ function install_radiusdesk_ubuntu_cron(){
 	#sed -i "s|/var/www/cake2|${1}cake2|g" /etc/cron.d/rd
 }
 
-# Update RADIUSdesk Paths
-function update_radiusdesk_paths(){
-	#sed -i 's|/usr/local/share|/usr/share|g' ${1}cake2/rd_cake/Config/RadiusDesk.php
-	#sed -i 's|/usr/local/etc/raddb|/etc/raddb|g' ${1}cake2/rd_cake/Config/RadiusDesk.php
-	#sed -i 's|/usr/local/bin|/usr/bin|g' ${1}cake2/rd_cake/Config/RadiusDesk.php
-	sed -i "s|'id' => 'pptp',     'active' => false|'id' => 'pptp',     'active' => true|g" ${1}cake2/rd_cake/Config/RadiusDesk.php
-	sed -i 's|<script src="ext/ext-dev.js"></script>|<script src="ext/ext-all.js"></script>|g' ${1}rd/index.html
-	sed -i 's|Ext.Loader.setConfig({enabled:true});|Ext.Loader.setConfig({enabled:true,disableCaching: false});|g' ${1}rd/app.js 
-}
-
 # Update RADIUSdesk Ubuntu Paths
 function update_radiusdesk_ubuntu_paths(){
 	sed -i "s|'id' => 'pptp',     'active' => false|'id' => 'pptp',     'active' => true|g" ${1}cake2/rd_cake/Config/RadiusDesk.php
@@ -265,73 +257,7 @@ function install_radiusdesk_schema(){
 	mysql -u root -e "CREATE DATABASE ${2};" > /dev/null 2>&1
 	mysql -u root -e "GRANT ALL PRIVILEGES ON ${2}.* to '${3}'@'127.0.0.1' IDENTIFIED BY '${4}';" > /dev/null 2>&1
 	mysql -u root -e "GRANT ALL PRIVILEGES ON ${2}.* to '${3}'@'localhost' IDENTIFIED BY '${4}';" > /dev/null 2>&1
-	mysql -u root ${2} < ${1}cake2/rd_cake/Setup/Db/rd.sql > /dev/null 2>&1
-}
-
-# Configure FreeRADIUS
-function configure_radiusdesk_freeradius(){
-
-	# Patch 
-	# patch -p1 < ../source/rd_cake/Setup/Radius/rlm_raw_patch
-	get_to ${3}
-	tar xzf freeradius-server-2.2.5.tar.gz
-	cd freeradius-server*/
-	patch -p1 < ${1}cake2/rd_cake/Setup/Radius/rlm_raw_patch > /dev/null 2>&1
-	echo "rlm_raw" >> src/modules/stable		#write 'rlm_raw' to file stable
-	 
-	# Configure and install FreeRADIUS
-	./configure > /dev/null 2>&1; make -i > /dev/null 2>&1; make -i install > /dev/null 2>&1; ldconfig > /dev/null 2>&1
-	cd ../
-
-	# Replace existing checkrad with RADIUSdesk modified version
-	cp -aR ${1}cake2/rd_cake/Setup/Radius/checkrad /usr/local/sbin/
-	#cp -aR /var/www/html/cake2/rd_cake/Setup/Radius/checkrad /usr/local/sbin/
-
-	# Backup original raddb directory
-	mv /usr/local${2} /usr/local/etc/raddb.bak
-	#mv /usr/local/etc/raddb /usr/local/etc/raddb.orig
-	tar xzf ${1}cake2/rd_cake/Setup/Radius/raddb_rd.tar.gz --directory=/usr/local/etc/
-
-	# Fix Variables & Paths for RHEL/CentOS compatibility
-	#sed -i 's|prefix = /usr/local|prefix = /usr|g' ${2}radiusd.conf
-	#sed -i 's|sysconfdir = ${prefix}/etc|sysconfdir = /etc|g' ${2}radiusd.conf
-	#sed -i 's|localstatedir = ${prefix}/var|localstatedir = /var|g' ${2}radiusd.conf
-	sed -i 's|#raw|	raw|g' /usr/local${2}radiusd.conf
-	sed -i 's|client localhost {|#client localhost {|g' /usr/local${2}clients.conf
-	sed -i 's|}|#}|g' /usr/local${2}clients.conf
-	#sed -i 's|$prefix		= "/usr/local";|$prefix		= "/usr";|g' /usr/sbin/checkrad
-	#sed -i 's|$localstatedir	= "${prefix}/var";|$localstatedir	= "/var";|g' /usr/sbin/checkrad
-	#sed -i 's|$prefix		= "/usr/local";|$sysconfdir	= "/etc";|g' /usr/sbin/checkrad
-	#sed -i 's|/usr/local/share/|/usr/share/|g' ${2}dictionary
-	#sed -i 's|/usr/local/etc/|/etc/|g' ${2}dictionary
-	#sed -i 's|"/usr/local/bin/radclient"|"/usr/bin/radclient"|g' ${1}cake2/rd_cake/Setup/Scripts/radscenario.pl
-
-	ln -s /usr/local${2}sites-available/dynamic-clients /usr/local${2}sites-enabled/dynamic-clients		#create shortcut dynamic-clients
-	cp -aR ${3}dynamic-clients /usr/local${2}sites-enabled/dynamic-clients
-
-	chmod 777 ${3}/rd_wifi/radiusd		#add permission
-	cp -aR ${3}/rd_wifi/radiusd /etc/init.d/
-
-	cd /etc/rc5.d/
-	ln -s /etc/init.d/radiusd		#create link shortcut file radiusd
-	mv radiusd S88radiusd			#rename
-	
-	cd /etc/rc6.d/
-	ln -s /etc/init.d/radiusd		#create link shortcut file radiusd
-	mv radiusd K10radiusd			#rename
-	
-	useradd radiusd -c 'radiusd user' 	#add user radius
-	usermod -s /sbin/nologin radiusd	#diusable user login
-#Create file raw
-cat > /usr/local${2}modules/raw <<EOF
-raw { 
-  
-}
-EOF
-
-	# Local IP for PPTP
-	echo "localip 10.20.30.1" >> /etc/pptpd.conf
-
+	mysql -u root ${2} < ${1}cake3/rd_cake/setup/db/rd.sql > /dev/null 2>&1
 }
 
 function configure_ubuntu_freeradius(){
@@ -360,6 +286,14 @@ function fix_ubuntu_radiusdesk_sudoers(){
 
 }
 
+#fix mysql 5.7
+function fix_mysql(){
+echo "
+[mysqld]
+sql_mode=IGNORE_SPACE,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >${1}disable_strict_mode.cnf
+
+}
+
 # Fix RADIUSdesk permissions and ownership
 function fix_radiusdesk_permissions_ownership(){
 	# Web Directory -> both nginx and httpd use apache user
@@ -376,19 +310,37 @@ function fix_radiusdesk_permissions_ownership(){
 }
 
 # Fix RADIUSdesk permissions and ownership for Ubuntu
-function fix_radiusdesk_permissions_ownership_ubuntu(){
-	# Web Directory -> both nginx and httpd use apache user
-	chown -R www-data:www-data ${1}
 
-	# Radius Directory
-	# chown -R radiusd:radiusd /usr/local/etc/raddb
-
-	# Permissions
-	#chmod 755 /usr/local/sbin/checkrad
-	#chmod 644 /usr/local/etc/raddb/dictionary
-	chmod -R 777 ${1}cake2/rd_cake/Setup/Scripts/*.pl
-	chmod 755 /etc/init.d/nodejs-socket-io
+function fix_permissions_ownership_ubuntu(){
+	chown -R www-data. ${1}cake2/rd_cake/tmp
+	chown -R www-data. ${1}cake2/rd_cake/Locale
+	chown -R www-data. ${1}cake2/rd_cake/webroot/img/flags
+	chown -R www-data. ${1}cake2/rd_cake/webroot/img/nas
+	chown -R www-data. ${1}cake2/rd_cake/webroot/img/realms
+	chown -R www-data. ${1}cake2/rd_cake/webroot/img/dynamic_details
+	chown -R www-data. ${1}cake2/rd_cake/webroot/img/dynamic_photos
+	chown -R www-data. ${1}cake2/rd_cake/webroot/files/imagecache
+	chown -R www-data. ${1}cake3/rd_cake/tmp
+	chown -R www-data. ${1}cake3/rd_cake/logs
+	chown -R www-data. ${1}cake3/rd_cake/webroot/img/realms
+	chown -R www-data. ${1}cake3/rd_cake/webroot/img/dynamic_details
+	chown -R www-data. ${1}cake3/rd_cake/webroot/img/dynamic_photos
+	chown -R www-data. ${1}cake3/rd_cake/webroot/img/access_providers
+	chown -R www-data. ${1}cake3/rd_cake/webroot/files/imagecache
 }
+#function fix_radiusdesk_permissions_ownership_ubuntu(){
+#	# Web Directory -> both nginx and httpd use apache user
+#	chown -R www-data:www-data ${1}
+#
+#	# Radius Directory
+#	# chown -R radiusd:radiusd /usr/local/etc/raddb
+#
+#	# Permissions
+#	#chmod 755 /usr/local/sbin/checkrad
+#	#chmod 644 /usr/local/etc/raddb/dictionary
+#	chmod -R 777 ${1}cake2/rd_cake/Setup/Scripts/*.pl
+#	chmod 755 /etc/init.d/nodejs-socket-io
+#}
 
 # Create Temporary Directory
 function mk_temp_dir(){
@@ -400,7 +352,7 @@ function mk_temp_dir(){
 # Customize FreeRadius
 function customize_freeradius(){
 	sed -i "s|testing123|${2}|g" ${1}cake2/rd_cake/Setup/Scripts/radscenario.pl
-	sed -i "s|testing123|${2}|g" ${1}cake2/rd_cake/Setup/Db/rd.sql
+	sed -i "s|testing123|${2}|g" ${1}cake3/rd_cake/setup/db/rd.sql
 	
 	
 }
