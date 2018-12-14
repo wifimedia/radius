@@ -74,7 +74,7 @@ if [[ ! -f "${TEMP_PATH}download_complete.txt" ]]; then
 	echo "============================================================="
 	echo -e "6. Downloading ${LIGHT_BLUE}${BOLD}Source RADIUSdesk${F_END}"
 	#svn --quiet checkout http://svn.code.sf.net/p/radiusdesk/code ${TEMP_PATH} > /dev/null 2>&1
-	git clone -b Radius1212 https://github.com/wifimedia/radius.git ${TEMP_PATH}source
+	git clone -b rd https://github.com/wifimedia/radius.git ${TEMP_PATH}source
 fi
 
 # Check for download completion

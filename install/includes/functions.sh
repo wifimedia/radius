@@ -169,7 +169,7 @@ function install_cakephp(){
 function install_extjs(){
 	get_to ${1}
 	#unzip -q ext-4.2.1-gpl.zip
-	mv  ${2}ext-6-2-sencha_cmd.tar.gz ${3}rd
+	cp  ${2}ext-6-2-sencha_cmd.tar.gz ${3}rd
 	cd ${3}rd
 	tar -xzvf ext-6-2-sencha_cmd.tar.gz > /dev/null 2>&1
 }
