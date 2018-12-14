@@ -310,7 +310,6 @@ function fix_radiusdesk_permissions_ownership(){
 }
 
 # Fix RADIUSdesk permissions and ownership for Ubuntu
-
 function fix_permissions_ownership_ubuntu(){
 	mkdir -p ${1}cake3/rd_cake/logs
 	mkdir -p ${1}cake3/rd_cake/tmp/cache/models
