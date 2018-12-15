@@ -260,12 +260,14 @@ function install_radiusdesk_schema(){
 	mysql -u root ${2} < ${1}cake3/rd_cake/setup/db/rd.sql > /dev/null 2>&1
 }
 
+
+
 function configure_ubuntu_freeradius(){
 	#mv /etc/freeradius/3.0 /etc/freeradius/3.0.orig
 	cp /usr/share/nginx/html/cake2/rd_cake/Setup/Radius/freeradius-3-radiusdesk.tar.gz /etc/freeradius/
 	cd /etc/freeradius/
 	tar -xzvf freeradius-3-radiusdesk.tar.gz > /dev/null 2>&1
-	cp -aR freeradius/* 3.0/*
+	cp -aR freeradius/* 3.0/
 }
 
 # Fix sudoers file for RADIUSdesk
@@ -283,7 +285,6 @@ function fix_ubuntu_radiusdesk_sudoers(){
 	# Add admin group to Sudoers
 	echo "%admin ALL=(ALL) ALL www-data ALL = NOPASSWD:${2}cake2/rd_cake/Setup/Scripts/radmin_wrapper.pl" >> ${1}
 	echo "www-data ALL = NOPASSWD:${2}cake2/rd_cake/Setup/Scripts/radmin_wrapper.pl" >> ${1}
-
 }
 
 #fix mysql 5.7
@@ -293,7 +294,6 @@ echo "
 sql_mode=IGNORE_SPACE,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >${1}disable_strict_mode.cnf
 
 }
-
 # Fix RADIUSdesk permissions and ownership
 function fix_radiusdesk_permissions_ownership(){
 	# Web Directory -> both nginx and httpd use apache user
@@ -343,20 +343,6 @@ function fix_permissions_ownership_ubuntu(){
 	chown -R www-data. ${1}cake3/rd_cake/webroot/img/access_providers
 	chown -R www-data. ${1}cake3/rd_cake/webroot/files/imagecache
 }
-#function fix_radiusdesk_permissions_ownership_ubuntu(){
-#	# Web Directory -> both nginx and httpd use apache user
-#	chown -R www-data:www-data ${1}
-#
-#	# Radius Directory
-#	# chown -R radiusd:radiusd /usr/local/etc/raddb
-#
-#	# Permissions
-#	#chmod 755 /usr/local/sbin/checkrad
-#	#chmod 644 /usr/local/etc/raddb/dictionary
-#	chmod -R 777 ${1}cake2/rd_cake/Setup/Scripts/*.pl
-#	chmod 755 /etc/init.d/nodejs-socket-io
-#}
-
 # Create Temporary Directory
 function mk_temp_dir(){
 	mkdir -p /tmp/radiusdesk/

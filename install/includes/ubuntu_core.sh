@@ -74,6 +74,7 @@ if [[ ! -f "${TEMP_PATH}download_complete.txt" ]]; then
 	echo "============================================================="
 	echo -e "6. Downloading ${LIGHT_BLUE}${BOLD}Source RADIUSdesk${F_END}"
 	#svn --quiet checkout http://svn.code.sf.net/p/radiusdesk/code ${TEMP_PATH} > /dev/null 2>&1
+	#git clone https://github.com/wifimedia/extjs.git PATH}extjs
 	git clone -b rd https://github.com/wifimedia/radius.git ${TEMP_PATH}source
 fi
 
@@ -173,7 +174,7 @@ fix_ubuntu_radiusdesk_sudoers ${SUDOERS_FILE} ${HTTP_DOCUMENT_ROOT}
 
 ########### RADIUSDESK OWNERSHIP AND PERMISSIONS ###########
 # Update Ownership and Permissions
-fix_permissions_ownership_ubuntu ${HTTP_DOCUMENT_ROOT}
+fix_radiusdesk_permissions_ownership_ubuntu ${HTTP_DOCUMENT_ROOT}
 fix_mysql ${MYSQL_CFG}
 
 # NodeJS Installation
@@ -218,6 +219,5 @@ ask_for_coovachilli_install_ubuntu
 
 # Prompt User to reboot
 ask_for_reboot
-
 
 # END
