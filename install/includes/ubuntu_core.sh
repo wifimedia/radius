@@ -158,6 +158,7 @@ echo -e "14. Installing ${LIGHT_BLUE}${BOLD}FreeRADIUS${F_END}"
 customize_freeradius ${HTTP_DOCUMENT_ROOT} ${rad_secret}
 
 # FreeRADIUS configuration
+stop_ubuntu_service freeradius
 configure_ubuntu_freeradius ${HTTP_DOCUMENT_ROOT} ${RADIUS_UBUNTU_DIR} ${TEMP_PATH}
 
 # Customize Database
@@ -174,9 +175,15 @@ fix_ubuntu_radiusdesk_sudoers ${SUDOERS_FILE} ${HTTP_DOCUMENT_ROOT}
 
 ########### RADIUSDESK OWNERSHIP AND PERMISSIONS ###########
 # Update Ownership and Permissions
-fix_radiusdesk_permissions_ownership_ubuntu ${HTTP_DOCUMENT_ROOT}
+#fix_radiusdesk_permissions_ownership_ubuntu ${HTTP_DOCUMENT_ROOT}
+fix_permissions_ownership_ubuntu ${HTTP_DOCUMENT_ROOT}
 fix_mysql ${MYSQL_CFG}
 
+#Customize rad_secret radiusdesk
+echo -e "Customize ${LIGHT_BLUE}${BOLD}Secret RADIUS${F_END}"
+customize_secret_radiusdesktop ${HTTP_DOCUMENT_ROOT} ${rad_secret} ${FREERADIUS_CFG}
+#fix directory
+fix_dictionary ${FREERADIUS_CFG}
 # NodeJS Installation
 echo ""
 echo "============================================================="
@@ -188,14 +195,15 @@ start_ubuntu_service_on_boot ${webserver}
 start_ubuntu_service_on_boot pptpd
 start_ubuntu_service_on_boot mysql
 start_ubuntu_service_on_boot php7.2-fpm
-
+start_ubuntu_service_on_boot freeradius
+systemctl enable freeradius.service
 # Start/Restart services
 echo ""
 echo "============================================================="
 echo -e "17. Checking if services are ${LIGHT_BLUE}${BOLD}fully Operational${F_END}"
 restart_ubuntu_service nodejs-socket-io
 restart_ubuntu_service ${webserver}
-#restart_ubuntu_service radiusd
+restart_ubuntu_service freeradius
 restart_ubuntu_service pptpd
 restart_ubuntu_service mysql
 restart_ubuntu_service php7.2-fpm

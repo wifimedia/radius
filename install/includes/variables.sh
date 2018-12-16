@@ -9,6 +9,7 @@ CONF_DIR='conf/'
 TEMP_PATH='/tmp/radiusdesk/'
 SOURCE_DIR='source/'
 EXTJS_DIR='source/extjs/'
+FREERADIUS_CFG='/etc/freeradius/3.0/'
 if [[ "${OS_VERSION}" = "7" ]]; then
     IFCFG=`ip link | awk -F": " '{print $2}' |  head -3 | tail -1`
     IP_ADDRESS=`ip -f inet addr | grep inet |awk -F" " '{print $4}' | head -2 | tail -1`

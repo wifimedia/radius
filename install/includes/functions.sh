@@ -83,13 +83,15 @@ function restart_service(){
 # Restart Ubuntu Service
 function restart_ubuntu_service(){
 	#/etc/init.d/${1} restart > /dev/null 2>&1
+	systemctl daemon-reload
 	systemctl restart {1} > /dev/null 2>&1
 }
 
-# Stop Service CentOS
+# Stop Service Ubuntu
 function stop_ubuntu_service(){
 	#/etc/init.d/${1} stop > /dev/null 2>&1
 	systemctl stop {1} > /dev/null 2>&1
+	systemctl daemon-reload
 }
 
 # Stop Service CentOS
@@ -263,11 +265,13 @@ function install_radiusdesk_schema(){
 
 
 function configure_ubuntu_freeradius(){
+	sudo systemctl stop freeradius.service
 	#mv /etc/freeradius/3.0 /etc/freeradius/3.0.orig
 	cp /usr/share/nginx/html/cake2/rd_cake/Setup/Radius/freeradius-3-radiusdesk.tar.gz /etc/freeradius/
 	cd /etc/freeradius/
 	tar -xzvf freeradius-3-radiusdesk.tar.gz > /dev/null 2>&1
 	cp -aR freeradius/* 3.0/
+	#mv freeradius 3.0
 }
 
 # Fix sudoers file for RADIUSdesk
@@ -311,21 +315,21 @@ function fix_radiusdesk_permissions_ownership(){
 
 # Fix RADIUSdesk permissions and ownership for Ubuntu
 function fix_permissions_ownership_ubuntu(){
-	mkdir -p ${1}cake3/rd_cake/logs
-	mkdir -p ${1}cake3/rd_cake/tmp/cache/models
-	mkdir -p ${1}cake3/rd_cake/tmp/cache/persistent
-	mkdir -p ${1}cake3/rd_cake/tmp/cache/views
+	#mkdir -p ${1}cake3/rd_cake/logs
+	#mkdir -p ${1}cake3/rd_cake/tmp/cache/models
+	#mkdir -p ${1}cake3/rd_cake/tmp/cache/persistent
+	#mkdir -p ${1}cake3/rd_cake/tmp/cache/views
 
-	echo "" > ${1}cake3/rd_cake/logs
-	echo "" > ${1}cake3/rd_cake/tmp/cache/models/empty
-	echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_groups
-	echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_users
-	echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/empty
-	echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/myapp_cake_core_translations_default_en__u_s
-	echo "" > ${1}cake3/rd_cake/tmp/cache/views/empty
-	echo "" > ${1}cake3/rd_cake/logs/debug.log
-	echo "" > ${1}cake3/rd_cake/logs/empty
-	echo "" > ${1}cake3/rd_cake/logs/error.log
+	#echo "" > ${1}cake3/rd_cake/logs
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/models/empty
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_groups
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_users
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/empty
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/myapp_cake_core_translations_default_en__u_s
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/views/empty
+	#echo "" > ${1}cake3/rd_cake/logs/debug.log
+	#echo "" > ${1}cake3/rd_cake/logs/empty
+	#echo "" > ${1}cake3/rd_cake/logs/error.log
 	
 	chown -R www-data. ${1}cake2/rd_cake/tmp
 	chown -R www-data. ${1}cake2/rd_cake/Locale
@@ -389,6 +393,17 @@ function customize_database(){
 	sed -i "s|'login' => 'rd'|'login' => '${3}'|g" ${1}cake2/rd_cake/Config/database.php
 	sed -i "s|'password' => 'rd'|'password' => '${4}'|g" ${1}cake2/rd_cake/Config/database.php
 	sed -i "s|'database' => 'rd'|'database' => '${5}'|g" ${1}cake2/rd_cake/Config/database.php
+}
+
+function customize_secret_radiusdesktop(){
+	sed -i "s|'testing123'|'${2}'|g" ${1}cake2/rd_cake/Config/RadiusDesk.php
+	sed -i "s|'testing123'|'${2}'|g" ${3}sites-enabled/dynamic-clients
+}
+
+function fix_dictionary(){
+	sed -i "s|/etc/freeradius/|/etc/freeradius/3.0/|g" ${1}dictionary
+	sed -i "s|EnvironmentFile=-/etc/default/freeradius|#EnvironmentFile=-/etc/default/freeradius|g" /lib/systemd/system/freeradius.service
+	sed -i "s|ExecStartPre=/usr/sbin/freeradius|#ExecStartPre=/usr/sbin/freeradius|g" /lib/systemd/system/freeradius.service
 }
 
 function configure_coovachilli(){
