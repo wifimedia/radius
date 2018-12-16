@@ -83,13 +83,15 @@ function restart_service(){
 # Restart Ubuntu Service
 function restart_ubuntu_service(){
 	#/etc/init.d/${1} restart > /dev/null 2>&1
+	systemctl daemon-reload
 	systemctl restart {1} > /dev/null 2>&1
 }
 
-# Stop Service CentOS
+# Stop Service Ubuntu
 function stop_ubuntu_service(){
 	#/etc/init.d/${1} stop > /dev/null 2>&1
 	systemctl stop {1} > /dev/null 2>&1
+	systemctl daemon-reload
 }
 
 # Stop Service CentOS
@@ -260,12 +262,16 @@ function install_radiusdesk_schema(){
 	mysql -u root ${2} < ${1}cake3/rd_cake/setup/db/rd.sql > /dev/null 2>&1
 }
 
+
+
 function configure_ubuntu_freeradius(){
+	sudo systemctl stop freeradius.service
 	#mv /etc/freeradius/3.0 /etc/freeradius/3.0.orig
 	cp /usr/share/nginx/html/cake2/rd_cake/Setup/Radius/freeradius-3-radiusdesk.tar.gz /etc/freeradius/
 	cd /etc/freeradius/
 	tar -xzvf freeradius-3-radiusdesk.tar.gz > /dev/null 2>&1
-	cp -aR freeradius/* 3.0/*
+	cp -aR freeradius/* 3.0/
+	#mv freeradius 3.0
 }
 
 # Fix sudoers file for RADIUSdesk
@@ -283,7 +289,6 @@ function fix_ubuntu_radiusdesk_sudoers(){
 	# Add admin group to Sudoers
 	echo "%admin ALL=(ALL) ALL www-data ALL = NOPASSWD:${2}cake2/rd_cake/Setup/Scripts/radmin_wrapper.pl" >> ${1}
 	echo "www-data ALL = NOPASSWD:${2}cake2/rd_cake/Setup/Scripts/radmin_wrapper.pl" >> ${1}
-
 }
 
 #fix mysql 5.7
@@ -293,7 +298,6 @@ echo "
 sql_mode=IGNORE_SPACE,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION" >${1}disable_strict_mode.cnf
 
 }
-
 # Fix RADIUSdesk permissions and ownership
 function fix_radiusdesk_permissions_ownership(){
 	# Web Directory -> both nginx and httpd use apache user
@@ -311,21 +315,21 @@ function fix_radiusdesk_permissions_ownership(){
 
 # Fix RADIUSdesk permissions and ownership for Ubuntu
 function fix_permissions_ownership_ubuntu(){
-	mkdir -p ${1}cake3/rd_cake/logs
-	mkdir -p ${1}cake3/rd_cake/tmp/cache/models
-	mkdir -p ${1}cake3/rd_cake/tmp/cache/persistent
-	mkdir -p ${1}cake3/rd_cake/tmp/cache/views
+	#mkdir -p ${1}cake3/rd_cake/logs
+	#mkdir -p ${1}cake3/rd_cake/tmp/cache/models
+	#mkdir -p ${1}cake3/rd_cake/tmp/cache/persistent
+	#mkdir -p ${1}cake3/rd_cake/tmp/cache/views
 
-	echo "" > ${1}cake3/rd_cake/logs
-	echo "" > ${1}cake3/rd_cake/tmp/cache/models/empty
-	echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_groups
-	echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_users
-	echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/empty
-	echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/myapp_cake_core_translations_default_en__u_s
-	echo "" > ${1}cake3/rd_cake/tmp/cache/views/empty
-	echo "" > ${1}cake3/rd_cake/logs/debug.log
-	echo "" > ${1}cake3/rd_cake/logs/empty
-	echo "" > ${1}cake3/rd_cake/logs/error.log
+	#echo "" > ${1}cake3/rd_cake/logs
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/models/empty
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_groups
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/models/myapp_cake_model_default_users
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/empty
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/persistent/myapp_cake_core_translations_default_en__u_s
+	#echo "" > ${1}cake3/rd_cake/tmp/cache/views/empty
+	#echo "" > ${1}cake3/rd_cake/logs/debug.log
+	#echo "" > ${1}cake3/rd_cake/logs/empty
+	#echo "" > ${1}cake3/rd_cake/logs/error.log
 	
 	chown -R www-data. ${1}cake2/rd_cake/tmp
 	chown -R www-data. ${1}cake2/rd_cake/Locale
@@ -343,20 +347,6 @@ function fix_permissions_ownership_ubuntu(){
 	chown -R www-data. ${1}cake3/rd_cake/webroot/img/access_providers
 	chown -R www-data. ${1}cake3/rd_cake/webroot/files/imagecache
 }
-#function fix_radiusdesk_permissions_ownership_ubuntu(){
-#	# Web Directory -> both nginx and httpd use apache user
-#	chown -R www-data:www-data ${1}
-#
-#	# Radius Directory
-#	# chown -R radiusd:radiusd /usr/local/etc/raddb
-#
-#	# Permissions
-#	#chmod 755 /usr/local/sbin/checkrad
-#	#chmod 644 /usr/local/etc/raddb/dictionary
-#	chmod -R 777 ${1}cake2/rd_cake/Setup/Scripts/*.pl
-#	chmod 755 /etc/init.d/nodejs-socket-io
-#}
-
 # Create Temporary Directory
 function mk_temp_dir(){
 	mkdir -p /tmp/radiusdesk/
@@ -403,6 +393,17 @@ function customize_database(){
 	sed -i "s|'login' => 'rd'|'login' => '${3}'|g" ${1}cake2/rd_cake/Config/database.php
 	sed -i "s|'password' => 'rd'|'password' => '${4}'|g" ${1}cake2/rd_cake/Config/database.php
 	sed -i "s|'database' => 'rd'|'database' => '${5}'|g" ${1}cake2/rd_cake/Config/database.php
+}
+
+function customize_secret_radiusdesktop(){
+	sed -i "s|'testing123'|'${2}'|g" ${1}cake2/rd_cake/Config/RadiusDesk.php
+	sed -i "s|'testing123'|'${2}'|g" ${3}sites-enabled/dynamic-clients
+}
+
+function fix_dictionary(){
+	sed -i "s|/etc/freeradius/|/etc/freeradius/3.0/|g" ${1}dictionary
+	sed -i "s|EnvironmentFile=-/etc/default/freeradius|#EnvironmentFile=-/etc/default/freeradius|g" /lib/systemd/system/freeradius.service
+	sed -i "s|ExecStartPre=/usr/sbin/freeradius|#ExecStartPre=/usr/sbin/freeradius|g" /lib/systemd/system/freeradius.service
 }
 
 function configure_coovachilli(){
