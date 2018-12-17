@@ -26,7 +26,7 @@ IP_ADDRESS=`ifconfig ${IFACE} | grep "inet addr" | awk -F: '{print $2}' | awk '{
 #For ubuntu
 SUDOERS_FILE='/etc/sudoers'
 RADIUS_DIR='/etc/raddb/'
-RADIUS_UBUNTU_DIR='/usr/local/etc/raddb/'
+RADIUS_UBUNTU_DIR='//local/etc/raddb/'
 CONF_NGINX='/etc/nginx/'
 #IF_COUNT=`ifconfig | egrep '^eth' | wc -l`
 COOVACHILLI_DIR='/etc/chilli/'
