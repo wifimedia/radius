@@ -6,9 +6,9 @@ This project tries to simplify or ease the process of getting a working installa
 ## Installation & Usage
 1. Clone or download the project.
 
-   a) If you have git already installed, just use `git clone git clone https://github.com/smartwifi/rd_wifi`. **Note:** you can install git on RHEL/CentOS 6.x via yum (`yum install -y git`)
+   a) If you have git already installed, just use `git clone git clone https://github.com/wifimedia/radius.git`. **Note:** you can install git on RHEL/CentOS 6.x via yum (`yum install -y git`)
    
-   b) If you prefer to download the zip file `wget -cL https://github.com/smartwifi/rd_wifi/archive/master.zip`. **Note:** just make sure you have **wget** and **unzip** installed (`yum install -y wget unzip`)
+   b) If you prefer to download the zip file `wget -cL https://github.com/wifimedia/radius.git`. **Note:** just make sure you have **wget** and **unzip** installed (`yum install -y wget unzip`)
 2. Run/execute the Installer script as **root** `cd radiusdesk-installer; ./rd-installer` and walk through the wizard.
 3. Grab yourself a **cup of Coffee** as the installer provisions your server with RADIUSdesk.
 4. When the script is done installing and configuring your system, we recommend rebooting your machine/server to ensure everything is persistent on reboot.
@@ -24,7 +24,7 @@ The installer has been tested on the following Linux Operating Systems
  
 1. CentOS 6.4/6.5 (64 bit)  
 2. Red Hat Enterprise Linux 6.4/6.5 (64 bit) 
-3. Ubuntu 13.10/14.04 (64 bit) 
+3. Ubuntu 13.10/14.04../18.10 (64 bit) 
 
 ## Resources
 1. [RADIUSdesk Course/Tutorials](http://www.maomuffy.com/introduction-to-radiusdesk-with-rhelcentos-6-x-mini-course/) by [Mfawa Alfred Onen](http://ng.linkedin.com/in/mfawaalfredonen/)
