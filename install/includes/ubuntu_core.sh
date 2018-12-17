@@ -183,7 +183,7 @@ fix_mysql ${MYSQL_CFG}
 echo -e "Customize ${LIGHT_BLUE}${BOLD}Secret RADIUS${F_END}"
 customize_secret_radiusdesktop ${HTTP_DOCUMENT_ROOT} ${rad_secret} ${FREERADIUS_CFG}
 #fix directory
-fix_dictionary ${FREERADIUS_CFG}
+fix_dictionary ${FREERADIUS_CFG} ${rad_secret}
 # NodeJS Installation
 echo ""
 echo "============================================================="
