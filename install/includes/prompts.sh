@@ -107,7 +107,7 @@ function ask_for_radius_customization(){
 	  y|Y|yes|Yes )
 		# Mask secret enter and replace with *
 		unset rad_pass
-		rad_prompt="RADIUS Secret (Default: media123) "
+		rad_prompt="RADIUS Secret (Default: testing123) "
 		while IFS= read -p "${rad_prompt}" -r -s -n 1 rad_pass
 			do
 				if [[ ${rad_pass} == $'\0' ]]
@@ -117,14 +117,14 @@ function ask_for_radius_customization(){
 				rad_prompt='*'
 				rad_secret+="${rad_pass}"
 		done
-		[ "${rad_secret}" = "" ] && rad_secret="media123"
+		[ "${rad_secret}" = "" ] && rad_secret="testing123"
 		echo
 		;;
 	  n|N|no|No)
-		rad_secret="media123"
+		rad_secret="testing123"
 		;;
 	  * ) 
-		rad_secret="media123"
+		rad_secret="testing123"
 		;;
 	esac
 	echo
