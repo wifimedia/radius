@@ -402,7 +402,6 @@ function customize_secret_radiusdesktop(){
 
 function fix_dictionary(){
 	sed -i "s|/etc/freeradius/|/etc/freeradius/3.0/|g" ${1}dictionary
-	sed -i "s|testing123|${2}|g" ${1}sites-enabled/dynamic-clients
 	sed -i "s|EnvironmentFile=-/etc/default/freeradius|#EnvironmentFile=-/etc/default/freeradius|g" /lib/systemd/system/freeradius.service
 	sed -i "s|ExecStartPre=/usr/sbin/freeradius|#ExecStartPre=/usr/sbin/freeradius|g" /lib/systemd/system/freeradius.service
 }
