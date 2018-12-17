@@ -2,9 +2,9 @@ Rd = {};
 
 Rd.config = {
 
-    headerName      : 'RADIUSdesk',
-    footerName      : 'RADIUSdesk',
-    footerLicense   : '2012-2017 GPL license',
+    headerName      : 'WIFIMEDIA',
+    footerName      : 'WIFIMEDIA',
+    footerLicense   : '2012-2018 GPL license',
     levelAColor     : '#0066ff',
     levelBColor     : '#33ccff',  
     selLanguage     : '4_4', //4_4 = en_GB
