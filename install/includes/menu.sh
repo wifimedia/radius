@@ -8,7 +8,7 @@ function installer_menu(){
 	echo "========================================="
 	echo -e "${LIGHT_BLUE}${BOLD}Welcome to RADIUSdesk Installer${F_END} ${LIGHT_RED}${BOLD}v${RD_INSTALLER_VERSION}${F_END}"
 	echo "========================================="
-	echo -e "1) Setup RADIUSdesk"
+	echo -e "1) Setup RADIUS Server"
 	echo -e "2) Setup CoovaChilli Captive Portal (Optional)"
 	echo -e "3) Quit or q"
 	echo -n "Select an option: "
