@@ -161,10 +161,10 @@ function get_to(){
 # Install CakePHP
 function install_cakephp(){
 	get_to ${1}
-	tar -xzvf 2.9.7.tar.gz > /dev/null 2>&1
-	cp -aR ${1}cakephp-2.9.7 ${2}
+	tar -xzvf cake2x.tar.gz > /dev/null 2>&1
+	cp -aR ${1}cakephp-2.9.9 ${2}
 	cd ${2}
-	ln -s cakephp-2.9.7 cake2
+	ln -s cakephp-2.9.9 cake2
 }
 
 # Install Ext.JS

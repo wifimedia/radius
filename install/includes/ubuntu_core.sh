@@ -67,7 +67,8 @@ if [[ ! -f "${TEMP_PATH}download_complete.txt" ]]; then
 	echo ""
 	echo "============================================================="
 	echo -e "5. Downloading ${LIGHT_BLUE}${BOLD}CakePHP${F_END}"
-	wget_download https://github.com/cakephp/cakephp/archive/2.9.7.tar.gz ${TEMP_PATH}2.9.7.tar.gz
+	#wget_download https://github.com/cakephp/cakephp/archive/2.9.9.tar.gz ${TEMP_PATH}cake2x.tar.gz
+	wget_download -O ${TEMP_PATH}cake2x.tar.gz https://github.com/cakephp/cakephp/archive/2.9.9.tar.gz
 	
 	# Download RADIUSdesk Source
 	echo ""
