@@ -12,17 +12,17 @@ EXTJS_DIR='source/extjs/'
 FREERADIUS_CFG='/etc/freeradius/3.0/'
 if [[ "${OS_VERSION}" = "7" ]]; then
     IFCFG=`ip link | awk -F": " '{print $2}' |  head -3 | tail -1`
-    IP_ADDRESS=`ip -f inet addr | grep inet |awk -F" " '{print $4}' | head -2 | tail -1`
+    IP_ADDRESS=`ip -f inet addr | grep inet |awk -F" " '{print $2}' | head -2 | tail -1`
 else
-    IFCFG=`ifconfig | awk -F" " '{print $1}' | head -1`
-    IP_ADDRESS=`ifconfig ${IFACE} | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`
+    IFCFG=`ifconfig | awk -F": " '{print $1}' | head -1`
+    IP_ADDRESS=`ifconfig ${IFACE} | grep "inet" | awk '{print $2}' |head -1`
 fi
 if [[ "${IFCFG}" = "lo" ]]; then
 	IFACE="eth0"
 else
 	IFACE="${IFCFG}"
 fi
-IP_ADDRESS=`ifconfig ${IFACE} | grep "inet addr" | awk -F: '{print $2}' | awk '{print $1}'`
+IP_ADDRESS=`ifconfig ${IFACE} | grep "inet" | awk '{print $2}' |head -1`
 #For ubuntu
 SUDOERS_FILE='/etc/sudoers'
 RADIUS_DIR='/etc/raddb/'
