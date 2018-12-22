@@ -124,7 +124,7 @@ Ext.define('Rd.view.realms.pnlRealmDetail', {
                                         name        : "phone",
                                         allowBlank  : true,
                                         vtype       : 'Numeric'
-                                    },
+                                    },/*
                                     {
                                         xtype       : 'textfield',
                                         fieldLabel  : i18n('sFax'),
@@ -138,7 +138,7 @@ Ext.define('Rd.view.realms.pnlRealmDetail', {
                                         name        : "cell",
                                         allowBlank  : true,
                                         vtype       : 'Numeric'
-                                    },
+                                    },*/
                                     {
                                         xtype       : 'textfield',
                                         fieldLabel  : i18n('s_email'),
