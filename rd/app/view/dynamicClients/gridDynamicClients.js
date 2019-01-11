@@ -76,26 +76,6 @@ Ext.define('Rd.view.dynamicClients.gridDynamicClients' ,{
                 },stateId: 'StateGridDc7'
             },
             { 
-                text        : 'Data Limits', 
-                width       : 200,
-                hidden      : false,
-                tdCls       : 'gridTree',
-                xtype       : 'templatecolumn', 
-                tpl         : new Ext.XTemplate(
-                                 "<tpl if='data_limit_active == true'><div class=\"fieldGreen\">"+i18n("sYes")+"</div>",
-                                 '<div><b>{data_limit_amount} {data_limit_unit}</b> (Reset on {data_limit_reset_on} - {data_limit_reset_hour}:{data_limit_reset_minute})</div>',
-                                 "</tpl>",
-                                "<tpl if='data_limit_active == false'><div class=\"fieldRed\">"+i18n("sNo")+"</div></tpl>"
-                            ),
-                dataIndex   : 'data_limit_active',
-                filter      : {
-                        type    : 'boolean',
-                        defaultValue   : false,
-                        yesText : 'Yes',
-                        noText  : 'No'
-                },stateId: 'StateGridDc6'
-            },
-            { 
                 text    :   i18n('sRealms'),
                 sortable: false,
                 width   :  150,

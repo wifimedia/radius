@@ -13,6 +13,8 @@ Ext.define('Rd.view.meshes.winMeshAddNode', {
     iconCls:    'add',
     glyph   : Rd.config.icnAdd,
     autoShow:   false,
+    meshId 		: '',
+	meshName	: '',
     defaults: {
             border: false
     },
@@ -28,15 +30,12 @@ Ext.define('Rd.view.meshes.winMeshAddNode', {
     controller  : 'vcMeshNodeGeneric',
     initComponent: function() {
         var me 	= this;
-		var cmb = Ext.create('Rd.view.components.cmbMesh',
-		    { 
-		        itemId          : 'mesh_id', 
-		        labelClsExtra   : 'lblRdReq',
-		        listeners       : {
-                        change : 'onCmbMeshChange'
-                }  
-		    });
-		
+ 
+		var cmb = Ext.create('Rd.view.components.cmbMesh',{'itemId' : 'mesh_id', labelClsExtra: 'lblRdReq'});
+		cmb.getStore().loadData([],false); //Wipe it
+		cmb.getStore().loadData([{'id' : me.meshId, 'name' : me.meshName}],true);//Add it
+		cmb.setValue(me.meshId);//Show it
+
         var frmData = Ext.create('Ext.form.Panel',{
             border:     false,
             layout:     'fit',
@@ -127,7 +126,7 @@ Ext.define('Rd.view.meshes.winMeshAddNode', {
                                     } 
 						        },
 						        {
-						            xtype       : 'tagStaticEntries',
+						            xtype       : 'cmbStaticEntries',
 						            meshId      : me.meshId
 						        },
 						        {

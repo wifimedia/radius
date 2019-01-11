@@ -681,7 +681,7 @@ Ext.define('Rd.controller.cDynamicDetails', {
                         {
                             id          : 'winNoteDynamicDetails'+sr.getId(),
                             noteForId   : sr.getId(),
-                            noteForGrid : 'dynamic-details',
+                            noteForGrid : 'dynamicDetails',
                             noteForName : sr.get('name')
                         });
                     w.show();       

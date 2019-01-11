@@ -27,7 +27,7 @@ Ext.define('Rd.view.accessProviders.gridAccessProviders' ,{
         me.tbar     = Ext.create('Rd.view.components.ajaxToolbar',{'url': me.urlMenu});
 
         me.columns  = [
-            /*{xtype: 'rownumberer', stateId: 'StateGridAccessProviders1'},
+            {xtype: 'rownumberer', stateId: 'StateGridAccessProviders1'},
             {
                 text        : i18n('sOwner'),
                 sortable    : true,
@@ -35,7 +35,7 @@ Ext.define('Rd.view.accessProviders.gridAccessProviders' ,{
                 dataIndex   : 'owner',
                 tdCls       : 'gridTree',
                 filter      : {type: 'string'}, stateId: 'StateGridAccessProviders2'
-            },*/
+            },
             {
                 text        : i18n('sUsername'),
                 sortable    : true,

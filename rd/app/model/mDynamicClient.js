@@ -23,12 +23,6 @@ Ext.define('Rd.model.mDynamicClient', {
          'country_name',
          'city',
          'postal_code',
-         {name: 'data_limit_active',  type: 'bool'  },
-         {name: 'data_limit_amount'},
-         {name: 'data_limit_unit'},
-         {name: 'data_limit_reset_on'},
-         {name: 'data_limit_reset_hour'},
-         {name: 'data_limit_reset_minute'},
          {name: 'notes',        type: 'bool'  },
          {name: 'update',       type: 'bool'},
          {name: 'delete',       type: 'bool'}

@@ -2,9 +2,9 @@ Rd = {};
 
 Rd.config = {
 
-    headerName      : 'RADIUSdesk',
-    footerName      : 'RADIUSdesk',
-    footerLicense   : '2012-2017 GPL license',
+    headerName      : 'WIFIMEDIA',
+    footerName      : 'WIFIMEDIA',
+    footerLicense   : '2012-2018 GPL license',
     levelAColor     : '#0066ff',
     levelBColor     : '#33ccff',  
     selLanguage     : '4_4', //4_4 = en_GB
@@ -123,7 +123,6 @@ Rd.config = {
     'icnList'       : 'xf03a@FontAwesome',
     'icnFilter'     : 'xf0b0@FontAwesome',
     'icnDropbox'    : 'xf16b@FontAwesome',
-    'icnHistory'    : 'xf1da@FontAwesome',
-    'icnGroup'      : 'xf0c0@FontAwesome'
+    'icnHistory'    : 'xf1da@FontAwesome'
 }
 

@@ -53,7 +53,7 @@ Ext.define('Rd.controller.cDynamicClients', {
         urlAdd          : '/cake2/rd_cake/dynamic_clients/add.json',
         urlDelete       : '/cake2/rd_cake/dynamic_clients/delete.json',
 		urlEdit         : '/cake2/rd_cake/dynamic_clients/edit.json',
-		urlNoteAdd      : '/cake3/rd_cake/dynamic-clients/note-add.json',
+		urlNoteAdd      : '/cake2/rd_cake/dynamic_clients/note_add.json',
 		urlView         : '/cake2/rd_cake/dynamic_clients/view.json',
 		urlViewPhoto    : '/cake2/rd_cake/dynamic_clients/view_photo.json',
         urlPhotoBase    : '/cake2/rd_cake/webroot/img/nas/',
@@ -229,25 +229,25 @@ Ext.define('Rd.controller.cDynamicClients', {
 			'gridUnknownDynamicClients #delete': {
                 click: me.delUnknownDynamicClient
             } ,
-            'gridNote[noteForGrid=dynamicClients] #reload' : {
+            'gridNote[noteForGrid=dynamic_clients] #reload' : {
                 click:  me.noteReload
             },
-            'gridNote[noteForGrid=dynamicClients] #add' : {
+            'gridNote[noteForGrid=dynamic_clients] #add' : {
                 click:  me.noteAdd
             },
-            'gridNote[noteForGrid=dynamicClients] #delete' : {
+            'gridNote[noteForGrid=dynamic_clients] #delete' : {
                 click:  me.noteDelete
             },
-            'gridNote[noteForGrid=dynamicClients]' : {
+            'gridNote[noteForGrid=dynamic_clients]' : {
                 itemclick: me.gridNoteClick
             },
-            'winNoteAdd[noteForGrid=dynamicClients] #btnTreeNext' : {
+            'winNoteAdd[noteForGrid=dynamic_clients] #btnTreeNext' : {
                 click:  me.btnNoteTreeNext
             },
-            'winNoteAdd[noteForGrid=dynamicClients] #btnNoteAddPrev'  : {   
+            'winNoteAdd[noteForGrid=dynamic_clients] #btnNoteAddPrev'  : {   
                 click: me.btnNoteAddPrev
             },
-            'winNoteAdd[noteForGrid=dynamicClients] #btnNoteAddNext'  : {   
+            'winNoteAdd[noteForGrid=dynamic_clients] #btnNoteAddNext'  : {   
                 click: me.btnNoteAddNext
             },
             
@@ -319,11 +319,7 @@ Ext.define('Rd.controller.cDynamicClients', {
             },
             '#pnlMapsEdit #save': {
                 click: me.btnMapSave
-            },
-            '#tabDataLimit #chkDataLimitActive' : {
-                change:     me.chkDataLimitActiveChange
             }
-            
         });
     },
     appClose:   function(){
@@ -953,7 +949,7 @@ Ext.define('Rd.controller.cDynamicClients', {
                         {
                             id          : 'winNoteDynamicClient'+sr.getId(),
                             noteForId   : sr.getId(),
-                            noteForGrid : 'dynamicClients',
+                            noteForGrid : 'dynamic_clients',
                             noteForName : sr.get('name')
                         });
                     w.show()       
@@ -1492,38 +1488,6 @@ Ext.define('Rd.controller.cDynamicClients', {
             },
             scope: me
         });
-    },
-    chkDataLimitActiveChange: function(chk){
-        var me      = this;
-        var form    = chk.up('form');
-        var amount  = form.down('#nrDataLimitAmount');
-        var unit    = form.down('#cmbDataLimitUnit');
-        var reset   = form.down('#nrDataLimitResetOn');
-        var hour    = form.down('#nrDataLimitResetHour');
-        var minute  = form.down('#nrDataLimitResetMinute');
-        if(chk.getValue()){
-            amount.setVisible(true);
-            amount.setDisabled(false);
-            unit.setVisible(true);
-            unit.setDisabled(false);
-            reset.setVisible(true);
-            reset.setDisabled(false);
-            hour.setVisible(true);
-            hour.setDisabled(false);
-            minute.setVisible(true);
-            minute.setDisabled(false);
-        }else{
-            amount.setVisible(false);
-            amount.setDisabled(true);
-            unit.setVisible(false);
-            unit.setDisabled(true);
-            reset.setVisible(false);
-            reset.setDisabled(true);
-            hour.setVisible(false);
-            hour.setDisabled(true);
-            minute.setVisible(false);
-            minute.setDisabled(true);
-        }
     }
     
 });

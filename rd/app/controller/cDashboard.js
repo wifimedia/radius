@@ -210,11 +210,6 @@ Ext.define('Rd.controller.cDashboard', {
 				        me.application.runAction('cPolicies','Index',pnl);
 				    }
 			    },
-			    'tpDashboard #cPolicyUserGroups' : {
-				    activate	: function(pnl){
-				        me.application.runAction('cPolicyUserGroups','Index',pnl);
-				    }
-			    },
 			    'tpDashboard > tabpanel' : {
                     activate   : me.updateBanner
                 }     

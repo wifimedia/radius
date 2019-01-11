@@ -5,7 +5,7 @@ Ext.define('Rd.view.aps.winAccessPointEditAp', {
     draggable   : true,
     resizable   : true,
     title       : 'Edit Device',
-    width       : 450,
+    width       : 400,
     height      : 450,
     plain       : true,
     border      : false,

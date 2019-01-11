@@ -26,23 +26,20 @@ Ext.define('Rd.view.meshes.winMeshEditNode', {
         'Rd.view.meshes.cmbHardwareOptions',
 		'Rd.view.components.cmbMesh',
         'Rd.view.components.cmbFiveGigChannels',
-        'Rd.view.meshes.vcMeshNodeGeneric',
-        'Rd.view.meshes.tagStaticEntries'
+        'Rd.view.meshes.vcMeshNodeGeneric'
     ],
     controller  : 'vcMeshNodeGeneric',
     initComponent: function() {
         var me 		= this; 
-		var cmb = Ext.create('Rd.view.components.cmbMesh',
-		    { 
-		        itemId          : 'mesh_id', 
-		        labelClsExtra   : 'lblRdReq',
-		        listeners       : {
-                        change : 'onCmbMeshChange'
-                }  
-		    });
+
+		console.log(me.meshName);
+		console.log(me.meshId);
+
+		var cmb = Ext.create('Rd.view.components.cmbMesh',{'itemId' : 'mesh_id', labelClsExtra: 'lblRdReq'});
 		cmb.getStore().loadData([],false); //Wipe it
 		cmb.getStore().loadData([{'id' : me.meshId, 'name' : me.meshName}],true);//Add it
 		//cmb.setValue(me.meshId);//Show it (We don't need to show it.... the view just need to specify it as an INTEGER and NOT string  in JSON)
+
 
         var frmData = Ext.create('Ext.form.Panel',{
             border:     false,
@@ -145,8 +142,10 @@ Ext.define('Rd.view.meshes.winMeshEditNode', {
                                     } 
 						        },
 						        {
-						            xtype       : 'tagStaticEntries',
-						            meshId      : me.meshId
+						            xtype       : 'cmbStaticEntries',
+						            meshId      : me.meshId,
+						            nodeId      : me.nodeId
+
 						        },
 						        {
 						            xtype       : 'cmbStaticExits',

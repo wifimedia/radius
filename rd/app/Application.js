@@ -7,6 +7,7 @@ Ext.define('Rd.Application', {
     extend: 'Ext.app.Application',
     
     name: 'Rd',
+    
     requires: [
      //'Ext.*',   //Uncomment when building production
      //'Rd.*'    //Uncomment when building production
@@ -182,7 +183,7 @@ Ext.define('Rd.Application', {
                     if(!msgCt){
                         msgCt = Ext.DomHelper.insertFirst(document.body, {id:'msg-div'}, false);
                     }
-                    //Here the 'true' is important to get Ext.Element to do angit clone https://github.com/lede-project/source.gitimation on
+                    //Here the 'true' is important to get Ext.Element to do animation on
                     var m = Ext.DomHelper.append(msgCt, createBox(title, content), true);
                     //Add a class if required
                     if(type !== undefined){
@@ -204,27 +205,11 @@ Ext.define('Rd.Application', {
         }();
 
         //<-- Toaster --
-        
-        Ext.ux.ajaxFail = function(r){  
-            var heading = r.status+" "+r.statusText;
-            var detail  = "Detail not available";
-            if(r.responseText !== undefined){
-                var jsonData = Ext.JSON.decode(r.responseText);
-                if(jsonData.message !== undefined){
-                    detail = jsonData.message;
-                }
-            }
-         
-            Ext.ux.Toaster.msg(
-                heading,
-                detail,
-                Ext.ux.Constants.clsError,
-                Ext.ux.Constants.msgError
-            );
-        }
 
         //--- Form Fail message --->
         Ext.ux.formFail = function(form,action){
+        
+            console.log(action);
             switch (action.failureType) {
             case Ext.form.action.Action.CLIENT_INVALID:
                 Ext.ux.Toaster.msg(
@@ -245,14 +230,6 @@ Ext.define('Rd.Application', {
             case Ext.form.action.Action.SERVER_INVALID:
                 Ext.ux.Toaster.msg(
                     'Failure',
-                    action.result.message,
-                    Ext.ux.Constants.clsWarn,
-                    Ext.ux.Constants.msgWarn
-                );
-            break;
-            case Ext.form.action.Action.LOAD_FAILURE:
-                 Ext.ux.Toaster.msg(
-                    'Load Failure',
                     action.result.message,
                     Ext.ux.Constants.clsWarn,
                     Ext.ux.Constants.msgWarn
