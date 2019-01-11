@@ -26,17 +26,21 @@ use Symfony\Component\Process\Exception\RuntimeException;
  */
 class WindowsPipes extends AbstractPipes
 {
+    /** @var array */
     private $files = array();
+    /** @var array */
     private $fileHandles = array();
+    /** @var array */
     private $readBytes = array(
         Process::STDOUT => 0,
         Process::STDERR => 0,
     );
+    /** @var bool */
     private $haveReadSupport;
 
-    public function __construct($input, bool $haveReadSupport)
+    public function __construct($input, $haveReadSupport)
     {
-        $this->haveReadSupport = $haveReadSupport;
+        $this->haveReadSupport = (bool) $haveReadSupport;
 
         if ($this->haveReadSupport) {
             // Fix for PHP bug #51800: reading from STDOUT pipe hangs forever on Windows if the output is too big.

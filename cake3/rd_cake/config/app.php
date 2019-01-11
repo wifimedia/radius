@@ -9,7 +9,7 @@ return [
      * Development Mode:
      * true: Errors and warnings shown.
      */
-    'debug' => filter_var(env('DEBUG', true), FILTER_VALIDATE_BOOLEAN),
+    'debug' => filter_var(env('DEBUG', false), FILTER_VALIDATE_BOOLEAN),
 
     /**
      * Configure basic information about the application.
@@ -154,7 +154,7 @@ return [
      *   breathing room to complete logging or error handling.
      */
     'Error' => [
-        'errorLevel' => E_ALL & ~E_USER_DEPRECATED,
+        'errorLevel' => E_ALL,
         'exceptionRenderer' => 'Cake\Error\ExceptionRenderer',
         'skipLog' => [],
         'log' => true,
@@ -304,20 +304,20 @@ return [
      * Configures logging options
      */
     'Log' => [
-        'debug' => [
-            'className' => 'Cake\Log\Engine\FileLog',
-            'path' => LOGS,
-            'file' => 'debug',
-            'levels' => ['notice', 'info', 'debug'],
-            'url' => env('LOG_DEBUG_URL', null),
-        ],
-        'error' => [
-            'className' => 'Cake\Log\Engine\FileLog',
-            'path' => LOGS,
-            'file' => 'error',
-            'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
-            'url' => env('LOG_ERROR_URL', null),
-        ],
+        //'debug' => [
+        //    'className' => 'Cake\Log\Engine\FileLog',
+        //    'path' => LOGS,
+        //    'file' => 'debug',
+        //    'levels' => ['notice', 'info', 'debug'],
+        //    'url' => env('LOG_DEBUG_URL', null),
+        //],
+        //'error' => [
+        //   'className' => 'Cake\Log\Engine\FileLog',
+        //    'path' => LOGS,
+        //    'file' => 'error',
+        //    'levels' => ['warning', 'error', 'critical', 'alert', 'emergency'],
+        //    'url' => env('LOG_ERROR_URL', null),
+        //],
     ],
 
     /**

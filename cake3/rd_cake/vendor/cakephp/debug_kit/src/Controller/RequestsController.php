@@ -15,7 +15,7 @@ namespace DebugKit\Controller;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Http\Exception\NotFoundException;
+use Cake\Network\Exception\NotFoundException;
 
 /**
  * Provides access to panel data.
@@ -30,7 +30,7 @@ class RequestsController extends Controller
      *
      * @param \Cake\Event\Event $event The event.
      * @return void
-     * @throws \Cake\Http\Exception\NotFoundException
+     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function beforeFilter(Event $event)
     {
@@ -39,7 +39,7 @@ class RequestsController extends Controller
             throw new NotFoundException();
         }
 
-        $this->response = $this->response->withHeader('Content-Security-Policy', '');
+        $this->response->header(['Content-Security-Policy' => '']);
     }
 
     /**
@@ -51,8 +51,8 @@ class RequestsController extends Controller
     public function beforeRender(Event $event)
     {
         $this->viewBuilder()
-            ->setLayout('DebugKit.toolbar')
-            ->setClassName('DebugKit.Ajax');
+            ->layout('DebugKit.toolbar')
+            ->className('DebugKit.Ajax');
     }
 
     /**

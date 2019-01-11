@@ -74,7 +74,7 @@ class TablePrefixAdapter extends AdapterWrapper
             $adapterReferenceTable->setName($adapterReferenceTableName);
         }
 
-        parent::createTable($adapterTable);
+        return parent::createTable($adapterTable);
     }
 
     /**
@@ -84,7 +84,7 @@ class TablePrefixAdapter extends AdapterWrapper
     {
         $adapterTableName = $this->getAdapterTableName($tableName);
         $adapterNewTableName = $this->getAdapterTableName($newTableName);
-        parent::renameTable($adapterTableName, $adapterNewTableName);
+        return parent::renameTable($adapterTableName, $adapterNewTableName);
     }
 
     /**
@@ -93,16 +93,7 @@ class TablePrefixAdapter extends AdapterWrapper
     public function dropTable($tableName)
     {
         $adapterTableName = $this->getAdapterTableName($tableName);
-        parent::dropTable($adapterTableName);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function truncateTable($tableName)
-    {
-        $adapterTableName = $this->getAdapterTableName($tableName);
-        return parent::truncateTable($adapterTableName);
+        return parent::dropTable($adapterTableName);
     }
 
     /**
@@ -131,7 +122,7 @@ class TablePrefixAdapter extends AdapterWrapper
         $adapterTable = clone $table;
         $adapterTableName = $this->getAdapterTableName($table->getName());
         $adapterTable->setName($adapterTableName);
-        parent::addColumn($adapterTable, $column);
+        return parent::addColumn($adapterTable, $column);
     }
 
     /**
@@ -140,7 +131,7 @@ class TablePrefixAdapter extends AdapterWrapper
     public function renameColumn($tableName, $columnName, $newColumnName)
     {
         $adapterTableName = $this->getAdapterTableName($tableName);
-        parent::renameColumn($adapterTableName, $columnName, $newColumnName);
+        return parent::renameColumn($adapterTableName, $columnName, $newColumnName);
     }
 
     /**
@@ -158,7 +149,7 @@ class TablePrefixAdapter extends AdapterWrapper
     public function dropColumn($tableName, $columnName)
     {
         $adapterTableName = $this->getAdapterTableName($tableName);
-        parent::dropColumn($adapterTableName, $columnName);
+        return parent::dropColumn($adapterTableName, $columnName);
     }
 
     /**
@@ -187,16 +178,16 @@ class TablePrefixAdapter extends AdapterWrapper
         $adapterTable = clone $table;
         $adapterTableName = $this->getAdapterTableName($table->getName());
         $adapterTable->setName($adapterTableName);
-        parent::addIndex($adapterTable, $index);
+        return parent::addIndex($adapterTable, $index);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dropIndex($tableName, $columns)
+    public function dropIndex($tableName, $columns, $options = array())
     {
         $adapterTableName = $this->getAdapterTableName($tableName);
-        parent::dropIndex($adapterTableName, $columns);
+        return parent::dropIndex($adapterTableName, $columns, $options);
     }
 
     /**
@@ -205,7 +196,7 @@ class TablePrefixAdapter extends AdapterWrapper
     public function dropIndexByName($tableName, $indexName)
     {
         $adapterTableName = $this->getAdapterTableName($tableName);
-        parent::dropIndexByName($adapterTableName, $indexName);
+        return parent::dropIndexByName($adapterTableName, $indexName);
     }
 
     /**
@@ -225,7 +216,7 @@ class TablePrefixAdapter extends AdapterWrapper
         $adapterTable = clone $table;
         $adapterTableName = $this->getAdapterTableName($table->getName());
         $adapterTable->setName($adapterTableName);
-        parent::addForeignKey($adapterTable, $foreignKey);
+        return parent::addForeignKey($adapterTable, $foreignKey);
     }
 
     /**
@@ -234,7 +225,7 @@ class TablePrefixAdapter extends AdapterWrapper
     public function dropForeignKey($tableName, $columns, $constraint = null)
     {
         $adapterTableName = $this->getAdapterTableName($tableName);
-        parent::dropForeignKey($adapterTableName, $columns, $constraint);
+        return parent::dropForeignKey($adapterTableName, $columns, $constraint);
     }
 
     /**
@@ -245,9 +236,9 @@ class TablePrefixAdapter extends AdapterWrapper
         $adapterTable = clone $table;
         $adapterTableName = $this->getAdapterTableName($table->getName());
         $adapterTable->setName($adapterTableName);
-        parent::insert($adapterTable, $row);
+        return parent::insert($adapterTable, $row);
     }
-
+    
     /**
      * Gets the table prefix.
      *

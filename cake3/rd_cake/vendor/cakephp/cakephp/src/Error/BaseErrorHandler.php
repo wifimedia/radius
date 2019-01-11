@@ -1,16 +1,16 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         2.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Error;
 
@@ -36,11 +36,6 @@ abstract class BaseErrorHandler
      * @var array
      */
     protected $_options = [];
-
-    /**
-     * @var bool
-     */
-    protected $_handled = false;
 
     /**
      * Display an error message in an environment specific way.
@@ -80,7 +75,7 @@ abstract class BaseErrorHandler
         set_error_handler([$this, 'handleError'], $level);
         set_exception_handler([$this, 'wrapAndHandleException']);
         register_shutdown_function(function () {
-            if ((PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') && $this->_handled) {
+            if (PHP_SAPI === 'cli' || PHP_SAPI === 'phpdbg') {
                 return;
             }
             $megabytes = Configure::read('Error.extraFatalErrorMemory');
@@ -133,7 +128,6 @@ abstract class BaseErrorHandler
         if (error_reporting() === 0) {
             return false;
         }
-        $this->_handled = true;
         list($error, $log) = static::mapErrorCode($code);
         if ($log === LOG_ERR) {
             return $this->handleFatalError($code, $description, $file, $line);
@@ -186,7 +180,7 @@ abstract class BaseErrorHandler
      * @param \Exception $exception Exception instance.
      * @return void
      * @throws \Exception When renderer class not found
-     * @see https://secure.php.net/manual/en/function.set-exception-handler.php
+     * @see http://php.net/manual/en/function.set-exception-handler.php
      */
     public function handleException(Exception $exception)
     {
@@ -335,7 +329,7 @@ abstract class BaseErrorHandler
     {
         $message = "\nRequest URL: " . $request->getRequestTarget();
 
-        $referer = $request->getEnv('HTTP_REFERER');
+        $referer = $request->env('HTTP_REFERER');
         if ($referer) {
             $message .= "\nReferer URL: " . $referer;
         }

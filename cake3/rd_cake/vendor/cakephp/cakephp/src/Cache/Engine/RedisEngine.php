@@ -1,16 +1,16 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         2.2.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 
 namespace Cake\Cache\Engine;
@@ -165,7 +165,7 @@ class RedisEngine extends CacheEngine
     }
 
     /**
-     * Increments the value of an integer cached key & update the expiry time
+     * Increments the value of an integer cached key
      *
      * @param string $key Identifier for the data
      * @param int $offset How much to increment
@@ -173,19 +173,13 @@ class RedisEngine extends CacheEngine
      */
     public function increment($key, $offset = 1)
     {
-        $duration = $this->_config['duration'];
         $key = $this->_key($key);
 
-        $value = (int)$this->_Redis->incrBy($key, $offset);
-        if ($duration > 0) {
-            $this->_Redis->setTimeout($key, $duration);
-        }
-
-        return $value;
+        return (int)$this->_Redis->incrBy($key, $offset);
     }
 
     /**
-     * Decrements the value of an integer cached key & update the expiry time
+     * Decrements the value of an integer cached key
      *
      * @param string $key Identifier for the data
      * @param int $offset How much to subtract
@@ -193,15 +187,9 @@ class RedisEngine extends CacheEngine
      */
     public function decrement($key, $offset = 1)
     {
-        $duration = $this->_config['duration'];
         $key = $this->_key($key);
 
-        $value = (int)$this->_Redis->decrBy($key, $offset);
-        if ($duration > 0) {
-            $this->_Redis->setTimeout($key, $duration);
-        }
-
-        return $value;
+        return (int)$this->_Redis->decrBy($key, $offset);
     }
 
     /**
@@ -229,13 +217,9 @@ class RedisEngine extends CacheEngine
             return true;
         }
         $keys = $this->_Redis->getKeys($this->_config['prefix'] . '*');
+        $this->_Redis->del($keys);
 
-        $result = [];
-        foreach ($keys as $key) {
-            $result[] = $this->_Redis->delete($key) > 0;
-        }
-
-        return !in_array(false, $result);
+        return true;
     }
 
     /**
@@ -256,9 +240,9 @@ class RedisEngine extends CacheEngine
             $value = serialize($value);
         }
 
-        // setnx() doesn't have an expiry option, so follow up with an expiry
+        // setnx() doesn't have an expiry option, so overwrite the key with one
         if ($this->_Redis->setnx($key, $value)) {
-            return $this->_Redis->setTimeout($key, $duration);
+            return $this->_Redis->setex($key, $duration, $value);
         }
 
         return false;

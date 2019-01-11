@@ -39,7 +39,8 @@ class ToolbarComponent extends Component
     {
         parent::__construct($registry, $settings);
 
-        $msg = __d('debug_kit', "{0} is now loaded through plugin bootstrapping. Make sure you have {1} in your application's {2}.", 'DebugKit', '`Plugin::load("DebugKit", ["bootstrap" => true, "routes" => true]);`', 'bootstrap.php');
+        $msg = 'DebugKit is now loaded through plugin bootstrapping. Make sure you have ' .
+            '`Plugin::load("DebugKit", ["bootstrap" => true]);` in your application\'s bootstrap.php.';
         throw new \RuntimeException($msg);
     }
 }

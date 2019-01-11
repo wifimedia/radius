@@ -172,7 +172,7 @@ class JsonParser
         $errStr = null;
 
         while (true) {
-            // retrieve state number from top of stack
+            // retreive state number from top of stack
             $state = $this->stack[count($this->stack)-1];
 
             // use default actions if available

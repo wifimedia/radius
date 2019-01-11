@@ -44,9 +44,9 @@ abstract class AbstractSeed extends BaseAbstractSeed
     {
         $this->getOutput()->writeln('');
         $this->getOutput()->writeln(
-            ' ====' .
-            ' <info>' . $seeder . ':</info>' .
-            ' <comment>seeding</comment>'
+            ' ===='
+            . ' <info>' . $seeder . ':</info>'
+            . ' <comment>seeding</comment>'
         );
 
         $start = microtime(true);
@@ -54,10 +54,10 @@ abstract class AbstractSeed extends BaseAbstractSeed
         $end = microtime(true);
 
         $this->getOutput()->writeln(
-            ' ====' .
-            ' <info>' . $seeder . ':</info>' .
-            ' <comment>seeded' .
-            ' ' . sprintf('%.4fs', $end - $start) . '</comment>'
+            ' ===='
+            . ' <info>' . $seeder . ':</info>'
+            . ' <comment>seeded'
+            . ' ' . sprintf('%.4fs', $end - $start) . '</comment>'
         );
         $this->getOutput()->writeln('');
     }
@@ -102,8 +102,7 @@ abstract class AbstractSeed extends BaseAbstractSeed
         $seedCommand->setInput($input);
         $config = $seedCommand->getConfig();
 
-        $seedPaths = $config->getSeedPaths();
-        require_once(array_pop($seedPaths) . DS . $seeder . '.php');
+        require_once($config->getSeedPath() . DS . $seeder . '.php');
         $seeder = new $seeder();
         $seeder->setOutput($this->getOutput());
         $seeder->setAdapter($this->getAdapter());
@@ -114,7 +113,7 @@ abstract class AbstractSeed extends BaseAbstractSeed
     /**
      * Sets the InputInterface this Seed class is being used with.
      *
-     * @param InputInterface $input Input object.
+     * @param InputInterface $input
      * @return void
      */
     public function setInput(InputInterface $input)

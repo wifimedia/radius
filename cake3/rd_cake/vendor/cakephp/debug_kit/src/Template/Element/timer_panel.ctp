@@ -13,10 +13,10 @@
  */
 
 /**
- * @var \DebugKit\View\AjaxView $this
- * @var float $requestTime
- * @var int $peakMemory
- * @var array $memory
+ * @type \DebugKit\View\AjaxView $this
+ * @type float $requestTime
+ * @type int $peakMemory
+ * @type array $memory
  */
 ?>
 <section>

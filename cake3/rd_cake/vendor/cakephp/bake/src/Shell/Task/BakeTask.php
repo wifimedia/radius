@@ -14,11 +14,11 @@
  */
 namespace Bake\Shell\Task;
 
-use Bake\Utility\CommonOptionsTrait;
 use Cake\Cache\Cache;
 use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\Core\ConventionsTrait;
+use Cake\Core\Plugin;
 use Cake\Filesystem\File;
 
 /**
@@ -27,7 +27,6 @@ use Cake\Filesystem\File;
  */
 class BakeTask extends Shell
 {
-    use CommonOptionsTrait;
     use ConventionsTrait;
 
     /**
@@ -131,8 +130,7 @@ class BakeTask extends Shell
     public function main()
     {
         if (isset($this->params['plugin'])) {
-            $parts = explode('/', $this->params['plugin']);
-            $this->plugin = implode('/', array_map([$this, '_camelize'], $parts));
+            $this->plugin = $this->params['plugin'];
             if (strpos($this->plugin, '\\')) {
                 $this->abort('Invalid plugin namespace separator, please use / instead of \ for plugins.');
 
@@ -227,6 +225,33 @@ class BakeTask extends Shell
      */
     public function getOptionParser()
     {
-        return $this->_setCommonOptions(parent::getOptionParser());
+        $parser = parent::getOptionParser();
+
+        $bakeThemes = [];
+        foreach (Plugin::loaded() as $plugin) {
+            $path = Plugin::classPath($plugin);
+            if (is_dir($path . 'Template' . DS . 'Bake')) {
+                $bakeThemes[] = $plugin;
+            }
+        }
+
+        $parser->addOption('plugin', [
+            'short' => 'p',
+            'help' => 'Plugin to bake into.'
+        ])->addOption('force', [
+            'short' => 'f',
+            'boolean' => true,
+            'help' => 'Force overwriting existing files without prompting.'
+        ])->addOption('connection', [
+            'short' => 'c',
+            'default' => 'default',
+            'help' => 'The datasource connection to get data from.'
+        ])->addOption('theme', [
+            'short' => 't',
+            'help' => 'The theme to use when baking code.',
+            'choices' => $bakeThemes
+        ]);
+
+        return $parser;
     }
 }

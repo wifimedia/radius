@@ -16,7 +16,7 @@ namespace Bake\Shell\Task;
 
 use Cake\Console\Shell;
 use Cake\Core\Configure;
-use Cake\Database\Schema\TableSchema;
+use Cake\Database\Schema\Table as SchemaTable;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -24,10 +24,6 @@ use Cake\Utility\Inflector;
 
 /**
  * Task class for generating model files.
- *
- * @property \Bake\Shell\Task\FixtureTask $Fixture
- * @property \Bake\Shell\Task\BakeTemplateTask $BakeTemplate
- * @property \Bake\Shell\Task\TestTask $Test
  */
 class ModelTask extends BakeTask
 {
@@ -44,6 +40,7 @@ class ModelTask extends BakeTask
      * @var array
      */
     public $tasks = [
+        'Bake.DbConfig',
         'Bake.Fixture',
         'Bake.BakeTemplate',
         'Bake.Test'
@@ -134,7 +131,7 @@ class ModelTask extends BakeTask
         $primaryKey = $this->getPrimaryKey($tableObject);
         $displayField = $this->getDisplayField($tableObject);
         $propertySchema = $this->getEntityPropertySchema($tableObject);
-        $fields = $this->getFields($tableObject);
+        $fields = $this->getFields();
         $validation = $this->getValidation($tableObject, $associations);
         $rulesChecker = $this->getRules($tableObject, $associations);
         $behaviors = $this->getBehaviors($tableObject);
@@ -291,7 +288,7 @@ class ModelTask extends BakeTask
                 $namespace = $appNamespace;
 
                 $className = $association->className();
-                if (strlen($className)) {
+                if ($className !== null) {
                     list($plugin, $className) = pluginSplit($className);
                     if ($plugin !== null) {
                         $namespace = $plugin;
@@ -323,7 +320,7 @@ class ModelTask extends BakeTask
     {
         $schema = $model->getSchema();
         foreach ($schema->columns() as $fieldName) {
-            if (!preg_match('/^.+_id$/', $fieldName) || ([$fieldName] === $schema->primaryKey())) {
+            if (!preg_match('/^.+_id$/', $fieldName)) {
                 continue;
             }
 
@@ -346,7 +343,7 @@ class ModelTask extends BakeTask
                     'alias' => $tmpModelName,
                     'foreignKey' => $fieldName
                 ];
-                if ($schema->getColumn($fieldName)['null'] === false) {
+                if ($schema->column($fieldName)['null'] === false) {
                     $assoc['joinType'] = 'INNER';
                 }
             }
@@ -365,18 +362,18 @@ class ModelTask extends BakeTask
      * Search tables in db for keyField; if found search key constraints
      * for the table to which it refers.
      *
-     * @param \Cake\Database\Schema\TableSchema $schema The table schema to find a constraint for.
+     * @param \Cake\Database\Schema\Table $schema The table schema to find a constraint for.
      * @param string $keyField The field to check for a constraint.
      * @return string|null Either the referenced table or null if the field has no constraints.
      */
     public function findTableReferencedBy($schema, $keyField)
     {
-        if (!$schema->getColumn($keyField)) {
+        if (!$schema->column($keyField)) {
             return null;
         }
 
         foreach ($schema->constraints() as $constraint) {
-            $constraintInfo = $schema->getConstraint($constraint);
+            $constraintInfo = $schema->constraint($constraint);
             if (!in_array($keyField, $constraintInfo['columns'])) {
                 continue;
             }
@@ -405,7 +402,7 @@ class ModelTask extends BakeTask
     public function findHasMany($model, array $associations)
     {
         $schema = $model->getSchema();
-        $primaryKey = $schema->primaryKey();
+        $primaryKey = (array)$schema->primaryKey();
         $tableName = $schema->name();
         $foreignKey = $this->_modelKey($tableName);
 
@@ -557,7 +554,7 @@ class ModelTask extends BakeTask
         foreach ($schema->columns() as $column) {
             $properties[$column] = [
                 'kind' => 'column',
-                'type' => $schema->getColumnType($column)
+                'type' => $schema->columnType($column)
             ];
         }
 
@@ -591,16 +588,11 @@ class ModelTask extends BakeTask
      * Evaluates the fields and no-fields options, and
      * returns if, and which fields should be made accessible.
      *
-     * If no fields are specified and the `no-fields` parameter is
-     * not set, then all non-primary key fields + association
-     * fields will be set as accessible.
-     *
-     * @param \Cake\ORM\Table $table The table instance to get fields for.
      * @return array|bool|null Either an array of fields, `false` in
-     *   case the no-fields option is used, or `null` if none of the
-     *   field options is used.
+     * case the no-fields option is used, or `null` if none of the
+     * field options is used.
      */
-    public function getFields($table)
+    public function getFields()
     {
         if (!empty($this->params['no-fields'])) {
             return false;
@@ -610,14 +602,8 @@ class ModelTask extends BakeTask
 
             return array_values(array_filter(array_map('trim', $fields)));
         }
-        $schema = $table->getSchema();
-        $fields = $schema->columns();
-        foreach ($table->associations() as $assoc) {
-            $fields[] = $assoc->getProperty();
-        }
-        $primaryKey = $schema->primaryKey();
 
-        return array_values(array_diff($fields, $primaryKey));
+        return null;
     }
 
     /**
@@ -650,7 +636,7 @@ class ModelTask extends BakeTask
      *
      * @param \Cake\ORM\Table $model The model to introspect.
      * @param array $associations The associations list.
-     * @return array|false The validation rules.
+     * @return array The validation rules.
      */
     public function getValidation($model, $associations = [])
     {
@@ -664,7 +650,7 @@ class ModelTask extends BakeTask
         }
 
         $validate = [];
-        $primaryKey = $schema->primaryKey();
+        $primaryKey = (array)$schema->primaryKey();
         $foreignKeys = [];
         if (isset($associations['belongsTo'])) {
             foreach ($associations['belongsTo'] as $assoc) {
@@ -675,7 +661,7 @@ class ModelTask extends BakeTask
             if (in_array($fieldName, $foreignKeys)) {
                 continue;
             }
-            $field = $schema->getColumn($fieldName);
+            $field = $schema->column($fieldName);
             $validation = $this->fieldValidation($schema, $fieldName, $field, $primaryKey);
             if (!empty($validation)) {
                 $validate[$fieldName] = $validation;
@@ -688,74 +674,66 @@ class ModelTask extends BakeTask
     /**
      * Does individual field validation handling.
      *
-     * @param \Cake\Database\Schema\TableSchema $schema The table schema for the current field.
+     * @param \Cake\Database\Schema\Table $schema The table schema for the current field.
      * @param string $fieldName Name of field to be validated.
      * @param array $metaData metadata for field
-     * @param array $primaryKey The primary key field
+     * @param string $primaryKey The primary key field
      * @return array Array of validation for the field.
      */
     public function fieldValidation($schema, $fieldName, array $metaData, $primaryKey)
     {
         $ignoreFields = ['lft', 'rght', 'created', 'modified', 'updated'];
         if (in_array($fieldName, $ignoreFields)) {
-            return [];
+            return false;
         }
 
-        $rules = [];
+        $rule = false;
         if ($fieldName === 'email') {
-            $rules['email'] = [];
+            $rule = 'email';
         } elseif ($metaData['type'] === 'uuid') {
-            $rules['uuid'] = [];
+            $rule = 'uuid';
         } elseif ($metaData['type'] === 'integer') {
-            $rules['integer'] = [];
+            $rule = 'integer';
         } elseif ($metaData['type'] === 'float') {
-            $rules['numeric'] = [];
+            $rule = 'numeric';
         } elseif ($metaData['type'] === 'decimal') {
-            $rules['decimal'] = [];
+            $rule = 'decimal';
         } elseif ($metaData['type'] === 'boolean') {
-            $rules['boolean'] = [];
+            $rule = 'boolean';
         } elseif ($metaData['type'] === 'date') {
-            $rules['date'] = [];
+            $rule = 'date';
         } elseif ($metaData['type'] === 'time') {
-            $rules['time'] = [];
+            $rule = 'time';
         } elseif ($metaData['type'] === 'datetime') {
-            $rules['dateTime'] = [];
+            $rule = 'dateTime';
         } elseif ($metaData['type'] === 'timestamp') {
-            $rules['dateTime'] = [];
+            $rule = 'dateTime';
         } elseif ($metaData['type'] === 'inet') {
-            $rules['ip'] = [];
-        } elseif ($metaData['type'] === 'string' || $metaData['type'] === 'text') {
-            $rules['scalar'] = [];
-            if ($metaData['length'] > 0) {
-                $rules['maxLength'] = [$metaData['length']];
-            }
+            $rule = 'ip';
         }
 
+        $allowEmpty = false;
         if (in_array($fieldName, $primaryKey)) {
-            $rules['allowEmpty'] = ["'create'"];
+            $allowEmpty = 'create';
         } elseif ($metaData['null'] === true) {
-            $rules['allowEmpty'] = [];
-        } else {
-            $rules['requirePresence'] = ["'create'"];
-            $rules['notEmpty'] = [];
+            $allowEmpty = true;
         }
 
-        $validation = [];
-        foreach ($rules as $rule => $args) {
-            $validation[$rule] = [
+        $validation = [
+            'valid' => [
                 'rule' => $rule,
-                'args' => $args
-            ];
-        }
+                'allowEmpty' => $allowEmpty,
+            ]
+        ];
 
         foreach ($schema->constraints() as $constraint) {
-            $constraint = $schema->getConstraint($constraint);
+            $constraint = $schema->constraint($constraint);
             if (!in_array($fieldName, $constraint['columns']) || count($constraint['columns']) > 1) {
                 continue;
             }
 
             $notDatetime = !in_array($metaData['type'], ['datetime', 'timestamp', 'date', 'time']);
-            if ($constraint['type'] === TableSchema::CONSTRAINT_UNIQUE && $notDatetime) {
+            if ($constraint['type'] === SchemaTable::CONSTRAINT_UNIQUE && $notDatetime) {
                 $validation['unique'] = ['rule' => 'validateUnique', 'provider' => 'table'];
             }
         }
@@ -788,8 +766,8 @@ class ModelTask extends BakeTask
             }
         }
         foreach ($schema->constraints() as $name) {
-            $constraint = $schema->getConstraint($name);
-            if ($constraint['type'] !== TableSchema::CONSTRAINT_UNIQUE) {
+            $constraint = $schema->constraint($name);
+            if ($constraint['type'] !== SchemaTable::CONSTRAINT_UNIQUE) {
                 continue;
             }
             if (count($constraint['columns']) > 1) {
@@ -827,8 +805,8 @@ class ModelTask extends BakeTask
             $behaviors['Timestamp'] = [];
         }
 
-        if (in_array('lft', $fields) && $schema->getColumnType('lft') === 'integer' &&
-            in_array('rght', $fields) && $schema->getColumnType('rght') === 'integer' &&
+        if (in_array('lft', $fields) && $schema->columnType('lft') === 'integer' &&
+            in_array('rght', $fields) && $schema->columnType('rght') === 'integer' &&
             in_array('parent_id', $fields)
         ) {
             $behaviors['Tree'] = [];
@@ -1027,14 +1005,18 @@ class ModelTask extends BakeTask
     {
         $db = ConnectionManager::get($this->connection);
         if (!method_exists($db, 'schemaCollection')) {
-            $this->abort(
+            $this->err(
                 'Connections need to implement schemaCollection() to be used with bake.'
             );
+
+            return $this->_stop();
         }
-        $schema = $db->getSchemaCollection();
+        $schema = $db->schemaCollection();
         $tables = $schema->listTables();
         if (empty($tables)) {
-            $this->abort('Your database does not have any tables.');
+            $this->err('Your database does not have any tables.');
+
+            return $this->_stop();
         }
         sort($tables);
 
@@ -1134,7 +1116,6 @@ class ModelTask extends BakeTask
         }
         $this->Fixture->connection = $this->connection;
         $this->Fixture->plugin = $this->plugin;
-        $this->Fixture->interactive = $this->interactive;
         $this->Fixture->bake($className, $useTable);
     }
 
@@ -1142,7 +1123,7 @@ class ModelTask extends BakeTask
      * Assembles and writes a unit test file
      *
      * @param string $className Model class name
-     * @return string|bool
+     * @return string|null
      */
     public function bakeTest($className)
     {
@@ -1150,7 +1131,6 @@ class ModelTask extends BakeTask
             return null;
         }
         $this->Test->plugin = $this->plugin;
-        $this->Test->interactive = $this->interactive;
         $this->Test->connection = $this->connection;
 
         return $this->Test->bake('Table', $className);

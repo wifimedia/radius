@@ -1,15 +1,15 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @since         2.2.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Utility;
 
@@ -26,7 +26,7 @@ use RuntimeException;
  * support for pseudo Xpath, its more fully featured dot notation provides
  * similar features in a more consistent implementation.
  *
- * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html
+ * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html
  */
 class Hash
 {
@@ -43,7 +43,7 @@ class Hash
      * @param mixed $default The return value when the path does not exist
      * @throws \InvalidArgumentException
      * @return mixed The value fetched from the array, or null.
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::get
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::get
      */
     public static function get($data, $path, $default = null)
     {
@@ -110,16 +110,16 @@ class Hash
      *
      * - `1.User.name` Get the name of the user at index 1.
      * - `{n}.User.name` Get the name of every user in the set of users.
-     * - `{n}.User[id].name` Get the name of every user with an id key.
-     * - `{n}.User[id>=2].name` Get the name of every user with an id key greater than or equal to 2.
+     * - `{n}.User[id]` Get the name of every user with an id key.
+     * - `{n}.User[id>=2]` Get the name of every user with an id key greater than or equal to 2.
      * - `{n}.User[username=/^paul/]` Get User elements with username matching `^paul`.
      * - `{n}.User[id=1].name` Get the Users name with id matching `1`.
      *
      * @param array|\ArrayAccess $data The data to extract from.
      * @param string $path The path to extract.
-     * @return array|\ArrayAccess An array of the extracted values. Returns an empty array
+     * @return array An array of the extracted values. Returns an empty array
      *   if there are no matches.
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::extract
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::extract
      */
     public static function extract($data, $path)
     {
@@ -135,12 +135,7 @@ class Hash
 
         // Simple paths.
         if (!preg_match('/[{\[]/', $path)) {
-            $data = static::get($data, $path);
-            if ($data !== null && !(is_array($data) || $data instanceof ArrayAccess)) {
-                return [$data];
-            }
-
-            return $data !== null ? (array)$data : [];
+            return (array)static::get($data, $path);
         }
 
         if (strpos($path, '[') === false) {
@@ -160,7 +155,6 @@ class Hash
 
             foreach ($context[$_key] as $item) {
                 if (is_object($item) && method_exists($item, 'toArray')) {
-                    /** @var \Cake\Datasource\EntityInterface $item */
                     $item = $item->toArray();
                 }
                 foreach ((array)$item as $k => $v) {
@@ -267,8 +261,6 @@ class Hash
                 $prop = $prop ? '1' : '0';
             } elseif ($isBool) {
                 $prop = $prop ? 'true' : 'false';
-            } elseif (is_numeric($prop)) {
-                $prop = (string)$prop;
             }
 
             // Pattern matches and other operators.
@@ -298,7 +290,7 @@ class Hash
      * @param string $path The path to insert at.
      * @param array|null $values The values to insert.
      * @return array The data with $values inserted.
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::insert
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::insert
      */
     public static function insert(array $data, $path, $values = null)
     {
@@ -353,6 +345,11 @@ class Hash
         $count = count($path);
         $last = $count - 1;
         foreach ($path as $i => $key) {
+            if ((is_numeric($key) && (int)$key > 0 || $key === '0') &&
+                strpos($key, '0') !== 0
+            ) {
+                $key = (int)$key;
+            }
             if ($op === 'insert') {
                 if ($i === $last) {
                     $_list[$key] = $values;
@@ -368,9 +365,7 @@ class Hash
                 }
             } elseif ($op === 'remove') {
                 if ($i === $last) {
-                    if (is_array($_list)) {
-                        unset($_list[$key]);
-                    }
+                    unset($_list[$key]);
 
                     return $data;
                 }
@@ -390,7 +385,7 @@ class Hash
      * @param array $data The data to operate on
      * @param string $path A path expression to use to remove.
      * @return array The modified array.
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::remove
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::remove
      */
     public static function remove(array $data, $path)
     {
@@ -419,7 +414,7 @@ class Hash
             if ($match && is_array($v)) {
                 if ($conditions) {
                     if (static::_matches($v, $conditions)) {
-                        if ($nextPath !== '') {
+                        if ($nextPath) {
                             $data[$k] = static::remove($v, $nextPath);
                         } else {
                             unset($data[$k]);
@@ -431,7 +426,7 @@ class Hash
                 if (empty($data[$k])) {
                     unset($data[$k]);
                 }
-            } elseif ($match && $nextPath === '') {
+            } elseif ($match && empty($nextPath)) {
                 unset($data[$k]);
             }
         }
@@ -450,7 +445,7 @@ class Hash
      * @param string|null $valuePath A dot-separated string.
      * @param string|null $groupPath A dot-separated string.
      * @return array Combined array
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::combine
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::combine
      * @throws \RuntimeException When keys and values count is unequal.
      */
     public static function combine(array $data, $keyPath, $valuePath = null, $groupPath = null)
@@ -527,7 +522,7 @@ class Hash
      * @param array $paths An array containing one or more Hash::extract()-style key paths
      * @param string $format Format string into which values will be inserted, see sprintf()
      * @return array|null An array of strings extracted from `$path` and formatted with `$format`
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::format
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::format
      * @see sprintf()
      * @see \Cake\Utility\Hash::extract()
      */
@@ -567,7 +562,7 @@ class Hash
      * @param array $data The data to search through.
      * @param array $needle The values to file in $data
      * @return bool true If $data contains $needle, false otherwise
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::contains
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::contains
      */
     public static function contains(array $data, array $needle)
     {
@@ -611,7 +606,7 @@ class Hash
      * @param string $path The path to check for.
      * @return bool Existence of path.
      * @see \Cake\Utility\Hash::extract()
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::check
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::check
      */
     public static function check(array $data, $path)
     {
@@ -630,7 +625,7 @@ class Hash
      * @param callable|array $callback A function to filter the data with. Defaults to
      *   `static::_filter()` Which strips out all non-zero empty values.
      * @return array Filtered array
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::filter
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::filter
      */
     public static function filter(array $data, $callback = ['self', '_filter'])
     {
@@ -662,7 +657,7 @@ class Hash
      * @param array $data Array to flatten
      * @param string $separator String used to separate array key elements in a path, defaults to '.'
      * @return array
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::flatten
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::flatten
      */
     public static function flatten(array $data, $separator = '.')
     {
@@ -706,7 +701,7 @@ class Hash
      * @param array $data Flattened array
      * @param string $separator The delimiter used
      * @return array
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::expand
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::expand
      */
     public static function expand(array $data, $separator = '.')
     {
@@ -743,7 +738,7 @@ class Hash
      * @param array $data Array to be merged
      * @param mixed $merge Array to merge with. The argument and all trailing arguments will be array cast when merged
      * @return array Merged array
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::merge
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::merge
      */
     public static function merge(array $data, $merge)
     {
@@ -793,7 +788,7 @@ class Hash
      *
      * @param array $data The array to check.
      * @return bool true if values are numeric, false otherwise
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::numeric
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::numeric
      */
     public static function numeric(array $data)
     {
@@ -813,7 +808,7 @@ class Hash
      *
      * @param array $data Array to count dimensions on
      * @return int The number of dimensions in $data
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::dimensions
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::dimensions
      */
     public static function dimensions(array $data)
     {
@@ -840,7 +835,7 @@ class Hash
      *
      * @param array $data Array to count dimensions on
      * @return int The maximum number of dimensions in $data
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::maxDimensions
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::maxDimensions
      */
     public static function maxDimensions(array $data)
     {
@@ -866,7 +861,7 @@ class Hash
      * @param string $path The path to extract for mapping over.
      * @param callable $function The function to call on each extracted value.
      * @return array An array of the modified values.
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::map
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::map
      */
     public static function map(array $data, $path, $function)
     {
@@ -882,7 +877,7 @@ class Hash
      * @param string $path The path to extract from $data.
      * @param callable $function The function to call on each extracted value.
      * @return mixed The reduced value.
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::reduce
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::reduce
      */
     public static function reduce(array $data, $path, $function)
     {
@@ -914,7 +909,7 @@ class Hash
      * @param string $path The path to extract from $data.
      * @param callable $function The function to call on each extracted value.
      * @return mixed The results of the applied method.
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::apply
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::apply
      */
     public static function apply(array $data, $path, $function)
     {
@@ -954,7 +949,7 @@ class Hash
      * @param string $dir See directions above. Defaults to 'asc'.
      * @param array|string $type See direction types above. Defaults to 'regular'.
      * @return array Sorted array of data
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::sort
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::sort
      */
     public static function sort(array $data, $path, $dir = 'asc', $type = 'regular')
     {
@@ -1069,7 +1064,7 @@ class Hash
      * @param array $compare Second value
      * @return array Returns the key => value pairs that are not common in $data and $compare
      *    The expression for this function is ($data - $compare) + ($compare - ($data - $compare))
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::diff
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::diff
      */
     public static function diff(array $data, array $compare)
     {
@@ -1096,7 +1091,7 @@ class Hash
      * @param array $data The data to append onto.
      * @param array $compare The data to compare and append onto.
      * @return array The merged array.
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::mergeDiff
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::mergeDiff
      */
     public static function mergeDiff(array $data, array $compare)
     {
@@ -1123,7 +1118,7 @@ class Hash
      * @param array $data List to normalize
      * @param bool $assoc If true, $data will be converted to an associative array.
      * @return array
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::normalize
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::normalize
      */
     public static function normalize(array $data, $assoc = true)
     {
@@ -1171,7 +1166,7 @@ class Hash
      * @return array of results, nested
      * @see \Cake\Utility\Hash::extract()
      * @throws \InvalidArgumentException When providing invalid data.
-     * @link https://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::nest
+     * @link http://book.cakephp.org/3.0/en/core-libraries/hash.html#Cake\Utility\Hash::nest
      */
     public static function nest(array $data, array $options = [])
     {

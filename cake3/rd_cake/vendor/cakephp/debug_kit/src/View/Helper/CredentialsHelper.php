@@ -23,9 +23,6 @@ use Cake\View\Helper;
  * CredentialsHelper
  *
  * Filter sensitive data in screen, data will be displayed on mouse click
- *
- * @property \Cake\View\Helper\HtmlHelper $Html
- * @property \DebugKit\View\Helper\ToolbarHelper $Toolbar
  */
 class CredentialsHelper extends Helper
 {

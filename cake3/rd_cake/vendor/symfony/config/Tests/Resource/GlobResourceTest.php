@@ -36,15 +36,6 @@ class GlobResourceTest extends TestCase
         $this->assertEquals(array($file => new \SplFileInfo($file)), $paths);
         $this->assertInstanceOf('SplFileInfo', current($paths));
         $this->assertSame($dir, $resource->getPrefix());
-
-        $resource = new GlobResource($dir, '/**/Resource', true);
-
-        $paths = iterator_to_array($resource);
-
-        $file = $dir.DIRECTORY_SEPARATOR.'Resource'.DIRECTORY_SEPARATOR.'ConditionalClass.php';
-        $this->assertEquals(array($file => $file), $paths);
-        $this->assertInstanceOf('SplFileInfo', current($paths));
-        $this->assertSame($dir, $resource->getPrefix());
     }
 
     public function testIsFreshNonRecursiveDetectsNewFile()

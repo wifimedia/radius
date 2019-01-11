@@ -59,9 +59,7 @@ EOT
         $authoritative = $input->getOption('classmap-authoritative') || $config->get('classmap-authoritative');
         $apcu = $input->getOption('apcu') || $config->get('apcu-autoloader');
 
-        if ($authoritative) {
-            $this->getIO()->writeError('<info>Generating optimized autoload files (authoritative)</info>');
-        } elseif ($optimize) {
+        if ($optimize || $authoritative) {
             $this->getIO()->writeError('<info>Generating optimized autoload files</info>');
         } else {
             $this->getIO()->writeError('<info>Generating autoload files</info>');

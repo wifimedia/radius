@@ -1,7 +1,7 @@
 <?php
 
 $finder = new PhpCsFixer\Finder();
-$config = new PhpCsFixer\Config('json-schema');
+$config = new PhpCsFixer\Config('json-schema', 'json-schema style guide');
 $finder->in(__DIR__);
 
 /* Based on ^2.1 of php-cs-fixer */
@@ -11,11 +11,10 @@ $config
         '@PSR2' => true,
         '@Symfony' => true,
         // additionally
-        'align_multiline_comment' => array('comment_type' => 'phpdocs_like'),
         'array_syntax' => array('syntax' => 'long'),
         'binary_operator_spaces' => false,
         'concat_space' => array('spacing' => 'one'),
-        'increment_style' => false,
+        'no_unused_imports' => false,
         'no_useless_else' => true,
         'no_useless_return' => true,
         'ordered_imports' => true,
@@ -23,9 +22,8 @@ $config
         'phpdoc_order' => true,
         'phpdoc_summary' => false,
         'pre_increment' => false,
-        'simplified_null_return' => false,
         'trailing_comma_in_multiline_array' => false,
-        'yoda_style' => null,
+        'simplified_null_return' => false,
     ))
     ->setFinder($finder)
 ;

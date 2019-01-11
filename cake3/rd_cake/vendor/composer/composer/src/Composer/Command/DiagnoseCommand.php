@@ -150,14 +150,6 @@ EOT
             $this->outputResult($this->checkVersion($config));
         }
 
-        $io->write(sprintf('Composer version: <comment>%s</comment>', Composer::VERSION));
-
-        $io->write(sprintf('PHP version: <comment>%s</comment>', PHP_VERSION));
-
-        if (defined('PHP_BINARY')) {
-            $io->write(sprintf('PHP binary path: <comment>%s</comment>', PHP_BINARY));
-        }
-
         return $this->exitCode;
     }
 

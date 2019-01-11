@@ -116,15 +116,16 @@ class Perforce
 
     protected function executeCommand($command)
     {
-        $this->commandResult = '';
+        $this->commandResult = "";
+        $exit_code = $this->process->execute($command, $this->commandResult);
 
-        return $this->process->execute($command, $this->commandResult);
+        return $exit_code;
     }
 
     public function getClient()
     {
         if (!isset($this->p4Client)) {
-            $cleanStreamName = str_replace(array('//', '/', '@'), array('', '_', ''), $this->getStream());
+            $cleanStreamName = str_replace('@', '', str_replace('/', '_', str_replace('//', '', $this->getStream())));
             $this->p4Client = 'composer_perforce_' . $this->uniquePerforceClientName . '_' . $cleanStreamName;
         }
 
@@ -188,7 +189,9 @@ class Perforce
 
     public function getP4ClientSpec()
     {
-        return $this->path . '/' . $this->getClient() . '.p4.spec';
+        $p4clientSpec = $this->path . '/' . $this->getClient() . '.p4.spec';
+
+        return $p4clientSpec;
     }
 
     public function getUser()
@@ -243,13 +246,13 @@ class Perforce
             }
 
             return null;
+        } else {
+            $command = 'echo $' . $name;
+            $this->executeCommand($command);
+            $result = trim($this->commandResult);
+
+            return $result;
         }
-
-        $command = 'echo $' . $name;
-        $this->executeCommand($command);
-        $result = trim($this->commandResult);
-
-        return $result;
     }
 
     public function queryP4Password()
@@ -273,7 +276,8 @@ class Perforce
         if ($useClient) {
             $p4Command = $p4Command . '-c ' . $this->getClient() . ' ';
         }
-        $p4Command = $p4Command . '-p ' . $this->getPort() . ' ' . $command;
+        $p4Command = $p4Command . '-p ' . $this->getPort() . ' ';
+        $p4Command = $p4Command . $command;
 
         return $p4Command;
     }
@@ -426,20 +430,20 @@ class Perforce
             $path = $identifier. '/' . $file;
 
             return $path;
-        }
+        } else {
+            $path = substr($identifier, 0, $index) . '/' . $file . substr($identifier, $index);
+            $command = $this->generateP4Command(' files ' . $path, false);
+            $this->executeCommand($command);
+            $result = $this->commandResult;
+            $index2 = strpos($result, 'no such file(s).');
+            if ($index2 === false) {
+                $index3 = strpos($result, 'change');
+                if ($index3 !== false) {
+                    $phrase = trim(substr($result, $index3));
+                    $fields = explode(' ', $phrase);
 
-        $path = substr($identifier, 0, $index) . '/' . $file . substr($identifier, $index);
-        $command = $this->generateP4Command(' files ' . $path, false);
-        $this->executeCommand($command);
-        $result = $this->commandResult;
-        $index2 = strpos($result, 'no such file(s).');
-        if ($index2 === false) {
-            $index3 = strpos($result, 'change');
-            if ($index3 !== false) {
-                $phrase = trim(substr($result, $index3));
-                $fields = explode(' ', $phrase);
-
-                return substr($identifier, 0, $index) . '/' . $file . '@' . $fields[1];
+                    return substr($identifier, 0, $index) . '/' . $file . '@' . $fields[1];
+                }
             }
         }
 
@@ -534,8 +538,9 @@ class Perforce
             return null;
         }
         $fields = explode(' ', $changes);
+        $changeList = $fields[1];
 
-        return $fields[1];
+        return $changeList;
     }
 
     /**
@@ -557,8 +562,9 @@ class Perforce
         $main = substr($fromReference, 0, $index) . '/...';
         $command = $this->generateP4Command('filelog ' . $main . '@' . $fromChangeList. ',' . $toChangeList);
         $this->executeCommand($command);
+        $result = $this->commandResult;
 
-        return $this->commandResult;
+        return $result;
     }
 
     public function getFilesystem()

@@ -175,15 +175,6 @@ class Cache
         return false;
     }
 
-    public function clear()
-    {
-        if ($this->enabled) {
-            return $this->filesystem->removeDirectory($this->root);
-        }
-
-        return false;
-    }
-
     public function gc($ttl, $maxSize)
     {
         if ($this->enabled) {

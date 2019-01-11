@@ -1043,19 +1043,17 @@ class LightOpenID
     {
         $attributes = array();
         $sreg_to_ax = array_flip(self::$ax_to_sreg);
-        if ($alias = $this->getNamespaceAlias('http://openid.net/extensions/sreg/1.1', 'sreg')) {
-            foreach (explode(',', $this->data['openid_signed']) as $key) {
-                $keyMatch = $alias . '.';
-                if (strncmp($key, $keyMatch, strlen($keyMatch)) !== 0) {
-                    continue;
-                }
-                $key = substr($key, strlen($keyMatch));
-                if (!isset($sreg_to_ax[$key])) {
-                    # The field name isn't part of the SREG spec, so we ignore it.
-                    continue;
-                }
-                $attributes[$sreg_to_ax[$key]] = $this->data['openid_' . $alias . '_' . $key];
+        foreach (explode(',', $this->data['openid_signed']) as $key) {
+            $keyMatch = 'sreg.';
+            if (strncmp($key, $keyMatch, strlen($keyMatch)) !== 0) {
+                continue;
             }
+            $key = substr($key, strlen($keyMatch));
+            if (!isset($sreg_to_ax[$key])) {
+                # The field name isn't part of the SREG spec, so we ignore it.
+                continue;
+            }
+            $attributes[$sreg_to_ax[$key]] = $this->data['openid_sreg_' . $key];
         }
         return $attributes;
     }

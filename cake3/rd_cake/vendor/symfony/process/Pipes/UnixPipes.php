@@ -22,15 +22,18 @@ use Symfony\Component\Process\Process;
  */
 class UnixPipes extends AbstractPipes
 {
+    /** @var bool */
     private $ttyMode;
+    /** @var bool */
     private $ptyMode;
+    /** @var bool */
     private $haveReadSupport;
 
-    public function __construct(?bool $ttyMode, bool $ptyMode, $input, bool $haveReadSupport)
+    public function __construct($ttyMode, $ptyMode, $input, $haveReadSupport)
     {
-        $this->ttyMode = $ttyMode;
-        $this->ptyMode = $ptyMode;
-        $this->haveReadSupport = $haveReadSupport;
+        $this->ttyMode = (bool) $ttyMode;
+        $this->ptyMode = (bool) $ptyMode;
+        $this->haveReadSupport = (bool) $haveReadSupport;
 
         parent::__construct($input);
     }
@@ -99,9 +102,7 @@ class UnixPipes extends AbstractPipes
         unset($r[0]);
 
         // let's have a look if something changed in streams
-        set_error_handler(array($this, 'handleError'));
-        if (($r || $w) && false === stream_select($r, $w, $e, 0, $blocking ? Process::TIMEOUT_PRECISION * 1E6 : 0)) {
-            restore_error_handler();
+        if (($r || $w) && false === $n = @stream_select($r, $w, $e, 0, $blocking ? Process::TIMEOUT_PRECISION * 1E6 : 0)) {
             // if a system call has been interrupted, forget about it, let's try again
             // otherwise, an error occurred, let's reset pipes
             if (!$this->hasSystemCallBeenInterrupted()) {
@@ -110,7 +111,6 @@ class UnixPipes extends AbstractPipes
 
             return $read;
         }
-        restore_error_handler();
 
         foreach ($r as $pipe) {
             // prior PHP 5.4 the array passed to stream_select is modified and

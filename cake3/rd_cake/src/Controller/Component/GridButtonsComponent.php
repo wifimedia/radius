@@ -137,11 +137,6 @@ class GridButtonsComponent extends Component {
             $menu = array($b);
         }
         
-        if($type == 'add_and_delete'){
-            $b = $this->_fetchAddAndDelete();
-            $menu = array($b);
-        }
-        
         if($type == 'basic_no_disabled'){
             $b = $this->_fetchBasic('no_disabled');
             $menu = array($b);
@@ -213,6 +208,7 @@ class GridButtonsComponent extends Component {
             $menu = array($b,$d);
         }
         
+        
         return $menu;
     }
 
@@ -239,23 +235,6 @@ class GridButtonsComponent extends Component {
             );
         }
 
-        return $menu;
-    }
-    
-    private function _fetchAddAndDelete(){
-    
-        $menu = ['xtype' => 'buttongroup', 'items' => [
-                    [
-                        'xtype'     => 'button',  
-                        'glyph'     => Configure::read('icnReload'), 
-                        'scale'     => $this->scale, 
-                        'itemId'    => 'reload',   
-                        'tooltip'=> __('Reload')
-                    ],
-                    $this->btnAdd,
-                    $this->btnDelete,    
-                ]
-        ];
         return $menu;
     }
     
@@ -329,7 +308,7 @@ class GridButtonsComponent extends Component {
             array_push($action_group,$reload);
 
             //Add
-            if($this->controller->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base."add")){
+            if($this->controller->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base."add")){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'glyph'     => Configure::read('icnAdd'),      
@@ -338,7 +317,7 @@ class GridButtonsComponent extends Component {
                     'tooltip'   => __('Add')));
             }
             //Delete
-            if($this->controller->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'delete')){
+            if($this->controller->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'delete')){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'glyph'     => Configure::read('icnDelete'),   
@@ -348,7 +327,7 @@ class GridButtonsComponent extends Component {
                     'tooltip'   => __('Delete')));
             }
             //Edit
-            if($this->controller->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'edit')){
+            if($this->controller->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'edit')){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'glyph'     => Configure::read('icnEdit'),     
@@ -427,16 +406,16 @@ class GridButtonsComponent extends Component {
             array_push($action_group,$this->btnReloadTimer);
 
             //Add
-            if($this->controller->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base."add")){
+            if($this->controller->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base."add")){
                 array_push($action_group,$add);
             }
             //Delete
-            if($this->controller->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'delete')){
+            if($this->controller->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'delete')){
                 array_push($action_group,$delete);
             }
 
             //Edit
-            if($this->controller->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'editBasicInfo')){
+            if($this->controller->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'editBasicInfo')){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'glyph'     => Configure::read('icnEdit'),     
@@ -473,11 +452,11 @@ class GridButtonsComponent extends Component {
             $id             = $user['id'];
             $document_group = array();
 
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'noteIndex')){ 
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'noteIndex')){ 
                 array_push($document_group,$this->btnNote);
             }
 
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'exportCsv')){ 
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'exportCsv')){ 
                 array_push($document_group,$this->btnCSV);
             }
 
@@ -540,7 +519,7 @@ class GridButtonsComponent extends Component {
             $id             = $user['id'];
             $document_group = array();
          
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'exportCsv')){ 
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'exportCsv')){ 
                 array_push($document_group,$this->btnCSV);
             }
 
@@ -573,7 +552,7 @@ class GridButtonsComponent extends Component {
             $id             = $user['id'];
             $document_group = array();
 
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'noteIndex')){ 
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'noteIndex')){ 
                 array_push($document_group,$this->btnNote);
             }
 
@@ -603,11 +582,11 @@ class GridButtonsComponent extends Component {
             $id             = $user['id'];
             $specific_group = array();
 
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'changePassword')){      
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'changePassword')){      
                 array_push($specific_group,$this->btnPassword);
            }
             
-           if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'enableDisable')){      
+           if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'enableDisable')){      
                 array_push($specific_group, $this->btnEnable);
             }
            
@@ -683,15 +662,15 @@ class GridButtonsComponent extends Component {
             $id             = $user['id'];
             $specific_group = array();
 
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'changePassword')){      
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'changePassword')){      
                 array_push($specific_group,$this->btnPassword);
            }
             
-           if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'enableDisable')){      
+           if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'enableDisable')){      
                 array_push($specific_group, $this->btnEnable);
             }
             //FIXME when FreeRadius has been ported ... update this one also
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), 'Access Providers/Controllers/FreeRadius/test_radius')){      
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), 'Access Providers/Controllers/FreeRadius/test_radius')){      
                 array_push($specific_group, $this->btnRadius);
             }
             
@@ -725,11 +704,11 @@ class GridButtonsComponent extends Component {
             $id             = $user['id'];
             $specific_group = array();
       
-           if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'enableDisable')){      
+           if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'enableDisable')){      
                 array_push($specific_group, $this->btnEnable);
             }
             
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), 'Access Providers/Controllers/FreeRadius/test_radius')){      
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), 'Access Providers/Controllers/FreeRadius/test_radius')){      
                 array_push($specific_group, $this->btnRadius);
             }
             
@@ -762,11 +741,11 @@ class GridButtonsComponent extends Component {
             $id             = $user['id'];
             $specific_group = array();
 
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->controller->base.'changePassword')){      
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->controller->base.'changePassword')){      
                 array_push($specific_group,$this->btnPassword);
             }
              
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), 'Access Providers/Controllers/FreeRadius/test_radius')){      
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), 'Access Providers/Controllers/FreeRadius/test_radius')){      
                 array_push($specific_group, $this->btnRadius);
             }
             

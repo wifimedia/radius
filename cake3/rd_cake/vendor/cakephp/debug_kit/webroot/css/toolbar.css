@@ -49,9 +49,6 @@ h4 {
 p {
 	margin-bottom: 10px;
 }
-strong {
-	font-weight: bold;
-}
 
 .centered-text {
 	text-align: center;
@@ -276,12 +273,6 @@ pre,
 .list {
 	list-style: disc;
 	margin: 10px 0 10px 20px;
-}
-.list li {
-	margin: 10px 0;
-}
-.deprecation-list li {
-	font-family: Monaco, Consolas, mono-space;
 }
 
 /**

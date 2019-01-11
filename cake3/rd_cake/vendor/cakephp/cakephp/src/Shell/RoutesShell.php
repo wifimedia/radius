@@ -1,21 +1,20 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.1.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Shell;
 
 use Cake\Console\Shell;
-use Cake\Http\ServerRequest;
 use Cake\Routing\Exception\MissingRouteException;
 use Cake\Routing\Router;
 
@@ -38,7 +37,6 @@ class RoutesShell extends Shell
         ];
         foreach (Router::routes() as $route) {
             $name = isset($route->options['_name']) ? $route->options['_name'] : $route->getName();
-            ksort($route->defaults);
             $output[] = [$name, $route->template, json_encode($route->defaults)];
         }
         $this->helper('table')->output($output);
@@ -54,8 +52,7 @@ class RoutesShell extends Shell
     public function check($url)
     {
         try {
-            $request = new ServerRequest(['url' => $url]);
-            $route = Router::parseRequest($request);
+            $route = Router::parse($url);
             $name = null;
             foreach (Router::routes() as $r) {
                 if ($r->match($route)) {
@@ -65,7 +62,6 @@ class RoutesShell extends Shell
             }
 
             unset($route['_matchedRoute']);
-            ksort($route);
 
             $output = [
                 ['Route name', 'URI template', 'Defaults'],
@@ -97,7 +93,7 @@ class RoutesShell extends Shell
             $this->out("> $url");
             $this->out();
         } catch (MissingRouteException $e) {
-            $this->err('<warning>The provided parameters do not match any routes.</warning>');
+            $this->err("<warning>The provided parameters do not match any routes.</warning>");
             $this->out();
 
             return false;
@@ -123,8 +119,8 @@ class RoutesShell extends Shell
         ])->addSubcommand('generate', [
             'help' => 'Check a routing array against the routes. ' .
                 "Will output the URL if there is a match.\n\n" .
-                'Routing parameters should be supplied in a key:value format. ' .
-                'For example `controller:Articles action:view 2`'
+                "Routing parameters should be supplied in a key:value format. " .
+                "For example `controller:Articles action:view 2`"
         ]);
 
         return $parser;

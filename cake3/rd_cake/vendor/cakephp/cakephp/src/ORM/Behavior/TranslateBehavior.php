@@ -1,23 +1,22 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\ORM\Behavior;
 
 use ArrayObject;
 use Cake\Collection\Collection;
 use Cake\Datasource\EntityInterface;
-use Cake\Datasource\QueryInterface;
 use Cake\Event\Event;
 use Cake\I18n\I18n;
 use Cake\ORM\Behavior;
@@ -77,8 +76,6 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
     protected $_defaultConfig = [
         'implementedFinders' => ['translations' => 'findTranslations'],
         'implementedMethods' => [
-            'setLocale' => 'setLocale',
-            'getLocale' => 'getLocale',
             'locale' => 'locale',
             'translationField' => 'translationField'
         ],
@@ -102,7 +99,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
     public function __construct(Table $table, array $config = [])
     {
         $config += [
-            'defaultLocale' => I18n::getDefaultLocale(),
+            'defaultLocale' => I18n::defaultLocale(),
             'referenceName' => $this->_referenceName($table)
         ];
 
@@ -121,7 +118,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
      */
     public function initialize(array $config)
     {
-        $this->_translationTable = $this->getTableLocator()->get($this->_config['translationTable']);
+        $this->_translationTable = $this->tableLocator()->get($this->_config['translationTable']);
 
         $this->setupFieldAssociations(
             $this->_config['fields'],
@@ -150,7 +147,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
         $targetAlias = $this->_translationTable->getAlias();
         $alias = $this->_table->getAlias();
         $filter = $this->_config['onlyTranslated'];
-        $tableLocator = $this->getTableLocator();
+        $tableLocator = $this->tableLocator();
 
         foreach ($fields as $field) {
             $name = $alias . '_' . $field . '_translation';
@@ -176,7 +173,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
             $this->_table->hasOne($name, [
                 'targetTable' => $fieldTable,
                 'foreignKey' => 'foreign_key',
-                'joinType' => $filter ? QueryInterface::JOIN_TYPE_INNER : QueryInterface::JOIN_TYPE_LEFT,
+                'joinType' => $filter ? 'INNER' : 'LEFT',
                 'conditions' => $conditions,
                 'propertyName' => $field . '_translation'
             ]);
@@ -209,7 +206,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
      */
     public function beforeFind(Event $event, Query $query, $options)
     {
-        $locale = $this->getLocale();
+        $locale = $this->locale();
 
         if ($locale === $this->getConfig('defaultLocale')) {
             return;
@@ -217,10 +214,8 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
 
         $conditions = function ($field, $locale, $query, $select) {
             return function ($q) use ($field, $locale, $query, $select) {
-                /* @var \Cake\Datasource\QueryInterface $q */
-                $q->where([$q->getRepository()->aliasField('locale') => $locale]);
+                $q->where([$q->repository()->aliasField('locale') => $locale]);
 
-                /* @var \Cake\ORM\Query $query */
                 if ($query->isAutoFieldsEnabled() ||
                     in_array($field, $select, true) ||
                     in_array($this->_table->aliasField($field), $select, true)
@@ -251,7 +246,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
             );
 
             if ($changeFilter) {
-                $filter = $options['filterByCurrentLocale'] ? QueryInterface::JOIN_TYPE_INNER : QueryInterface::JOIN_TYPE_LEFT;
+                $filter = $options['filterByCurrentLocale'] ? 'INNER' : 'LEFT';
                 $contain[$name]['joinType'] = $filter;
             }
         }
@@ -273,7 +268,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
      */
     public function beforeSave(Event $event, EntityInterface $entity, ArrayObject $options)
     {
-        $locale = $entity->get('_locale') ?: $this->getLocale();
+        $locale = $entity->get('_locale') ?: $this->locale();
         $newOptions = [$this->_translationTable->getAlias() => ['validate' => false]];
         $options['associated'] = $newOptions + $options['associated'];
 
@@ -313,7 +308,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
         // entity persists.
         if ($noFields && $bundled && !$key) {
             foreach ($this->_config['fields'] as $field) {
-                $entity->setDirty($field, true);
+                $entity->dirty($field, true);
             }
 
             return;
@@ -333,7 +328,6 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
                 'model' => $model
             ])
             ->enableBufferedResults(false)
-            ->all()
             ->indexBy('field');
 
         $modified = [];
@@ -352,10 +346,10 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
 
         $entity->set('_i18n', array_merge($bundled, array_values($modified + $new)));
         $entity->set('_locale', $locale, ['setter' => false]);
-        $entity->setDirty('_locale', false);
+        $entity->dirty('_locale', false);
 
         foreach ($fields as $field) {
-            $entity->setDirty($field, false);
+            $entity->dirty($field, false);
         }
     }
 
@@ -372,9 +366,9 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
     }
 
     /**
-     * Add in `_translations` marshalling handlers. You can disable marshalling
-     * of translations by setting `'translations' => false` in the options
-     * provided to `Table::newEntity()` or `Table::patchEntity()`.
+     * Add in _translations marshalling handlers if translation marshalling is
+     * enabled. You need to specifically enable translation marshalling by adding
+     * `'translations' => true` to the options provided to `Table::newEntity()` or `Table::patchEntity()`.
      *
      * {@inheritDoc}
      */
@@ -386,26 +380,25 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
 
         return [
             '_translations' => function ($value, $entity) use ($marshaller, $options) {
-                /* @var \Cake\Datasource\EntityInterface $entity */
                 $translations = $entity->get('_translations');
                 foreach ($this->_config['fields'] as $field) {
                     $options['validate'] = $this->_config['validator'];
                     $errors = [];
                     if (!is_array($value)) {
-                        return null;
+                        return;
                     }
                     foreach ($value as $language => $fields) {
                         if (!isset($translations[$language])) {
                             $translations[$language] = $this->_table->newEntity();
                         }
                         $marshaller->merge($translations[$language], $fields, $options);
-                        if ((bool)$translations[$language]->getErrors()) {
-                            $errors[$language] = $translations[$language]->getErrors();
+                        if ((bool)$translations[$language]->errors()) {
+                            $errors[$language] = $translations[$language]->errors();
                         }
                     }
                     // Set errors into the root entity, so validation errors
                     // match the original form data position.
-                    $entity->setErrors($errors);
+                    $entity->errors($errors);
                 }
 
                 return $translations;
@@ -414,68 +407,20 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
     }
 
     /**
-     * Sets the locale that should be used for all future find and save operations on
-     * the table where this behavior is attached to.
-     *
-     * When fetching records, the behavior will include the content for the locale set
-     * via this method, and likewise when saving data, it will save the data in that
-     * locale.
-     *
-     * Note that in case an entity has a `_locale` property set, that locale will win
-     * over the locale set via this method (and over the globally configured one for
-     * that matter)!
-     *
-     * @param string|null $locale The locale to use for fetching and saving records. Pass `null`
-     * in order to unset the current locale, and to make the behavior fall back to using the
-     * globally configured locale.
-     * @return $this
-     * @see \Cake\ORM\Behavior\TranslateBehavior::getLocale()
-     * @link https://book.cakephp.org/3.0/en/orm/behaviors/translate.html#retrieving-one-language-without-using-i18n-locale
-     * @link https://book.cakephp.org/3.0/en/orm/behaviors/translate.html#saving-in-another-language
-     */
-    public function setLocale($locale)
-    {
-        $this->_locale = $locale;
-
-        return $this;
-    }
-
-    /**
-     * Returns the current locale.
-     *
-     * If no locale has been explicitly set via `setLocale()`, this method will return
-     * the currently configured global locale.
-     *
-     * @return string
-     * @see \Cake\I18n\I18n::getLocale()
-     * @see \Cake\ORM\Behavior\TranslateBehavior::setLocale()
-     */
-    public function getLocale()
-    {
-        return $this->_locale ?: I18n::getLocale();
-    }
-
-    /**
      * Sets all future finds for the bound table to also fetch translated fields for
      * the passed locale. If no value is passed, it returns the currently configured
      * locale
      *
-     * @deprecated 3.6.0 Use setLocale()/getLocale() instead.
      * @param string|null $locale The locale to use for fetching translated records
      * @return string
      */
     public function locale($locale = null)
     {
-        deprecationWarning(
-            get_called_class() . '::locale() is deprecated. ' .
-            'Use setLocale()/getLocale() instead.'
-        );
-
-        if ($locale !== null) {
-            $this->setLocale($locale);
+        if ($locale === null) {
+            return $this->_locale ?: I18n::locale();
         }
 
-        return $this->getLocale();
+        return $this->_locale = (string)$locale;
     }
 
     /**
@@ -491,7 +436,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
     public function translationField($field)
     {
         $table = $this->_table;
-        if ($this->getLocale() === $this->getConfig('defaultLocale')) {
+        if ($this->locale() === $this->getConfig('defaultLocale')) {
             return $table->aliasField($field);
         }
         $associationName = $table->getAlias() . '_' . $field . '_translation';
@@ -531,13 +476,12 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
         $targetAlias = $this->_translationTable->getAlias();
 
         return $query
-            ->contain([$targetAlias => function ($query) use ($locales, $targetAlias) {
+            ->contain([$targetAlias => function ($q) use ($locales, $targetAlias) {
                 if ($locales) {
-                    /* @var \Cake\Datasource\QueryInterface $query */
-                    $query->where(["$targetAlias.locale IN" => $locales]);
+                    $q->where(["$targetAlias.locale IN" => $locales]);
                 }
 
-                return $query;
+                return $q;
             }])
             ->formatResults([$this, 'groupTranslations'], $query::PREPEND);
     }
@@ -600,7 +544,6 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
 
             $row['_locale'] = $locale;
             if ($hydrated) {
-                /* @var \Cake\Datasource\EntityInterface $row */
                 $row->clean();
             }
 
@@ -659,7 +602,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
     {
         $translations = (array)$entity->get('_translations');
 
-        if (empty($translations) && !$entity->isDirty('_translations')) {
+        if (empty($translations) && !$entity->dirty('_translations')) {
             return;
         }
 
@@ -671,7 +614,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
 
         foreach ($translations as $lang => $translation) {
             foreach ($fields as $field) {
-                if (!$translation->isDirty($field)) {
+                if (!$translation->dirty($field)) {
                     continue;
                 }
                 $find[] = ['locale' => $lang, 'field' => $field, 'foreign_key' => $key];
@@ -745,7 +688,7 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
      */
     protected function _findExistingTranslations($ruleSet)
     {
-        $association = $this->_table->getAssociation($this->_translationTable->getAlias());
+        $association = $this->_table->association($this->_translationTable->getAlias());
 
         $query = $association->find()
             ->select(['id', 'num' => 0])
@@ -761,6 +704,6 @@ class TranslateBehavior extends Behavior implements PropertyMarshalInterface
             $query->unionAll($q);
         }
 
-        return $query->all()->combine('num', 'id')->toArray();
+        return $query->combine('num', 'id')->toArray();
     }
 }

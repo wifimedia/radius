@@ -50,7 +50,7 @@ class ResourceCaster
 
     public static function castStreamContext($stream, array $a, Stub $stub, $isNested)
     {
-        return @stream_context_get_params($stream) ?: $a;
+        return stream_context_get_params($stream);
     }
 
     public static function castGd($gd, array $a, Stub $stub, $isNested)

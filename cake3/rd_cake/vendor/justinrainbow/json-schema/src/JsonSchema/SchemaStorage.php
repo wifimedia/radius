@@ -5,12 +5,13 @@ namespace JsonSchema;
 use JsonSchema\Constraints\BaseConstraint;
 use JsonSchema\Entity\JsonPointer;
 use JsonSchema\Exception\UnresolvableJsonPointerException;
+use JsonSchema\Iterator\ObjectIterator;
 use JsonSchema\Uri\UriResolver;
 use JsonSchema\Uri\UriRetriever;
 
 class SchemaStorage implements SchemaStorageInterface
 {
-    const INTERNAL_PROVIDED_SCHEMA_URI = 'internal://provided-schema/';
+    const INTERNAL_PROVIDED_SCHEMA_URI = 'internal://provided-schema';
 
     protected $uriRetriever;
     protected $uriResolver;
@@ -68,42 +69,14 @@ class SchemaStorage implements SchemaStorageInterface
             }
         }
 
-        // resolve references
-        $this->expandRefs($schema, $id);
-
-        $this->schemas[$id] = $schema;
-    }
-
-    /**
-     * Recursively resolve all references against the provided base
-     *
-     * @param mixed  $schema
-     * @param string $base
-     */
-    private function expandRefs(&$schema, $base = null)
-    {
-        if (!is_object($schema)) {
-            if (is_array($schema)) {
-                foreach ($schema as &$member) {
-                    $this->expandRefs($member, $base);
-                }
+        $objectIterator = new ObjectIterator($schema);
+        foreach ($objectIterator as $toResolveSchema) {
+            if (property_exists($toResolveSchema, '$ref') && is_string($toResolveSchema->{'$ref'})) {
+                $jsonPointer = new JsonPointer($this->uriResolver->resolve($toResolveSchema->{'$ref'}, $id));
+                $toResolveSchema->{'$ref'} = (string) $jsonPointer;
             }
-
-            return;
         }
-
-        if (property_exists($schema, 'id') && is_string($schema->id) && $base != $schema->id) {
-            $base = $this->uriResolver->resolve($schema->id, $base);
-        }
-
-        if (property_exists($schema, '$ref') && is_string($schema->{'$ref'})) {
-            $refPointer = new JsonPointer($this->uriResolver->resolve($schema->{'$ref'}, $base));
-            $schema->{'$ref'} = (string) $refPointer;
-        }
-
-        foreach ($schema as &$member) {
-            $this->expandRefs($member, $base);
-        }
+        $this->schemas[$id] = $schema;
     }
 
     /**

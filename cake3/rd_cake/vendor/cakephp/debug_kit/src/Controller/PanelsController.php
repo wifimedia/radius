@@ -15,7 +15,7 @@ namespace DebugKit\Controller;
 use Cake\Controller\Controller;
 use Cake\Core\Configure;
 use Cake\Event\Event;
-use Cake\Http\Exception\NotFoundException;
+use Cake\Network\Exception\NotFoundException;
 
 /**
  * Provides access to panel data.
@@ -37,7 +37,7 @@ class PanelsController extends Controller
      *
      * @param \Cake\Event\Event $event The event.
      * @return void
-     * @throws \Cake\Http\Exception\NotFoundException
+     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function beforeFilter(Event $event)
     {
@@ -55,15 +55,10 @@ class PanelsController extends Controller
      */
     public function beforeRender(Event $event)
     {
-        $this->viewBuilder()
-            ->setHelpers([
-                'Form', 'Html', 'Number', 'Url', 'DebugKit.Toolbar',
-                'DebugKit.Credentials', 'DebugKit.SimpleGraph',
-            ])
-            ->setLayout('DebugKit.toolbar');
+        $this->viewBuilder()->layout('DebugKit.toolbar');
 
         if (!$this->request->is('json')) {
-            $this->viewBuilder()->setClassName('DebugKit.Ajax');
+            $this->viewBuilder()->className('DebugKit.Ajax');
         }
     }
 
@@ -72,7 +67,7 @@ class PanelsController extends Controller
      *
      * @param string $requestId Request id
      * @return void
-     * @throws \Cake\Http\Exception\NotFoundException
+     * @throws \Cake\Network\Exception\NotFoundException
      */
     public function index($requestId = null)
     {

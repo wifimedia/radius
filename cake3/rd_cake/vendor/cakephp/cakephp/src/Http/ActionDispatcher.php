@@ -1,16 +1,16 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.3.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Http;
 
@@ -55,7 +55,7 @@ class ActionDispatcher
     public function __construct($factory = null, $eventManager = null, array $filters = [])
     {
         if ($eventManager) {
-            $this->setEventManager($eventManager);
+            $this->eventManager($eventManager);
         }
         foreach ($filters as $filter) {
             $this->addFilter($filter);
@@ -69,7 +69,6 @@ class ActionDispatcher
      * @param \Cake\Http\ServerRequest $request The request to dispatch.
      * @param \Cake\Http\Response $response The response to dispatch.
      * @return \Cake\Http\Response A modified/replaced response.
-     * @throws \ReflectionException
      */
     public function dispatch(ServerRequest $request, Response $response)
     {
@@ -92,7 +91,7 @@ class ActionDispatcher
         }
 
         $response = $this->_invoke($controller);
-        if ($request->getParam('return')) {
+        if (isset($request->params['return'])) {
             return $response;
         }
 
@@ -122,16 +121,15 @@ class ActionDispatcher
             throw new LogicException('Controller actions can only return Cake\Http\Response or null.');
         }
 
-        if (!$response && $controller->isAutoRenderEnabled()) {
-            $controller->render();
+        if (!$response && $controller->autoRender) {
+            $response = $controller->render();
+        } elseif (!$response) {
+            $response = $controller->response;
         }
 
         $result = $controller->shutdownProcess();
         if ($result instanceof Response) {
             return $result;
-        }
-        if (!$response) {
-            $response = $controller->getResponse();
         }
 
         return $response;
@@ -150,13 +148,8 @@ class ActionDispatcher
      */
     public function addFilter(EventListenerInterface $filter)
     {
-        deprecationWarning(
-            'ActionDispatcher::addFilter() is deprecated. ' .
-            'This is only available for backwards compatibility with DispatchFilters'
-        );
-
         $this->filters[] = $filter;
-        $this->getEventManager()->on($filter);
+        $this->eventManager()->on($filter);
     }
 
     /**

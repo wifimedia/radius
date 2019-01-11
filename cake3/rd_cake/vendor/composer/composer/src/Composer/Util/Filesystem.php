@@ -103,10 +103,6 @@ class Filesystem
             return $this->removeJunction($directory);
         }
 
-        if (is_link($directory)) {
-            return unlink($directory);
-        }
-
         if (!file_exists($directory) || !is_dir($directory)) {
             return true;
         }
@@ -251,44 +247,27 @@ class Filesystem
      */
     public function copyThenRemove($source, $target)
     {
-        $this->copy($source, $target);
         if (!is_dir($source)) {
+            copy($source, $target);
             $this->unlink($source);
 
             return;
-        }
-
-        $this->removeDirectoryPhp($source);
-    }
-
-    /**
-     * Copies a file or directory from $source to $target.
-     *
-     * @param $source
-     * @param $target
-     * @return bool
-     */
-    public function copy($source, $target)
-    {
-        if (!is_dir($source)) {
-            return copy($source, $target);
         }
 
         $it = new RecursiveDirectoryIterator($source, RecursiveDirectoryIterator::SKIP_DOTS);
         $ri = new RecursiveIteratorIterator($it, RecursiveIteratorIterator::SELF_FIRST);
         $this->ensureDirectoryExists($target);
 
-        $result = true;
         foreach ($ri as $file) {
             $targetPath = $target . DIRECTORY_SEPARATOR . $ri->getSubPathName();
             if ($file->isDir()) {
                 $this->ensureDirectoryExists($targetPath);
             } else {
-                $result = $result && copy($file->getPathname(), $targetPath);
+                copy($file->getPathname(), $targetPath);
             }
         }
 
-        return $result;
+        $this->removeDirectoryPhp($source);
     }
 
     public function rename($source, $target)
@@ -669,7 +648,6 @@ class Filesystem
          * Stat cache should be cleared before to avoid accidentally reading wrong information from previous installs.
          */
         clearstatcache(true, $junction);
-        clearstatcache(false);
         $stat = lstat($junction);
 
         return !($stat['mode'] & 0xC000);

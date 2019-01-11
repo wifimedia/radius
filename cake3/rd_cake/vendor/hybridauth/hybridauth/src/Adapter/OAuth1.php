@@ -7,7 +7,7 @@
 
 namespace Hybridauth\Adapter;
 
-use Hybridauth\Exception\Exception;
+use Hybridauth\Exception;
 use Hybridauth\Exception\InvalidApplicationCredentialsException;
 use Hybridauth\Exception\AuthorizationDeniedException;
 use Hybridauth\Exception\InvalidOauthTokenException;
@@ -177,8 +177,8 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
         $this->sha1Method  = new OAuthSignatureMethodHMACSHA1();
 
         $this->OAuthConsumer = new OAuthConsumer(
-            $this->consumerKey,
-            $this->consumerSecret
+            $this->config->filter('keys')->get('key'),
+            $this->config->filter('keys')->get('secret')
         );
 
         if ($this->getStoredData('request_token')) {
@@ -213,13 +213,11 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
             } elseif (! $this->getStoredData('access_token')) {
                 $this->authenticateFinish();
             }
-        } catch (Exception $exception) {
+        } catch (\Exception $exception) {
             $this->clearStoredData();
 
             throw $exception;
         }
-
-        return null;
     }
 
     /**
@@ -243,20 +241,14 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
     }
 
     /**
-     * Finalize the authorization process
-     *
-     * @throws AuthorizationDeniedException
-     * @throws \Hybridauth\Exception\HttpClientFailureException
-     * @throws \Hybridauth\Exception\HttpRequestFailedException
-     * @throws InvalidAccessTokenException
-     * @throws InvalidOauthTokenException
-     */
+    * Finalize the authorization process
+    *
+    * @throws AuthorizationDeniedException
+    * @throws InvalidOauthTokenException
+    */
     protected function authenticateFinish()
     {
-        $this->logger->debug(
-            sprintf('%s::authenticateFinish(), callback url:', get_class($this)),
-            [HttpClient\Util::getCurrentUrl(true)]
-        );
+        $this->logger->debug(sprintf('%s::authenticateFinish(), callback url:', get_class($this)), [HttpClient\Util::getCurrentUrl(true)]);
 
         $denied         = filter_input(INPUT_GET, 'denied');
         $oauth_problem  = filter_input(INPUT_GET, 'oauth_problem');
@@ -317,8 +309,6 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
     * 6.1.1. Consumer Obtains a Request Token
     *
     * @return string Raw Provider API response
-    * @throws \Hybridauth\Exception\HttpClientFailureException
-    * @throws \Hybridauth\Exception\HttpRequestFailedException
     */
     protected function requestAuthToken()
     {
@@ -414,8 +404,6 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
     * @param string $oauth_verifier
     *
     * @return string Raw Provider API response
-    * @throws \Hybridauth\Exception\HttpClientFailureException
-    * @throws \Hybridauth\Exception\HttpRequestFailedException
     */
     protected function exchangeAuthTokenForAccessToken($oauth_token, $oauth_verifier = '')
     {
@@ -511,17 +499,15 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
     *
     * @param string $url
     * @param string $method
-    * @param array $parameters
-    * @param array $headers
+    * @param array  $parameters
+    * @param array  $headers
     *
-    * @return mixed
-    * @throws \Hybridauth\Exception\HttpClientFailureException
-    * @throws \Hybridauth\Exception\HttpRequestFailedException
+    * @return object
     */
     public function apiRequest($url, $method = 'GET', $parameters = [], $headers = [])
     {
         if (strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0) {
-            $url = rtrim($this->apiBaseUrl, '/') . '/' . ltrim($url, '/');
+            $url = $this->apiBaseUrl . $url;
         }
 
         $parameters = array_replace($this->apiRequestParameters, (array)$parameters);
@@ -542,12 +528,10 @@ abstract class OAuth1 extends AbstractAdapter implements AdapterInterface
     *
     * @param string $uri
     * @param string $method
-    * @param array $parameters
-    * @param array $headers
+    * @param array  $parameters
+    * @param array  $headers
     *
     * @return string Raw Provider API response
-    * @throws \Hybridauth\Exception\HttpClientFailureException
-    * @throws \Hybridauth\Exception\HttpRequestFailedException
     */
     protected function oauthRequest($uri, $method = 'GET', $parameters = [], $headers = [])
     {

@@ -119,12 +119,7 @@ class PluginInstaller extends LibraryInstaller
         $vendorDir = realpath($config->get('vendor-dir'));
 
         $packages = $composer->getRepositoryManager()->getLocalRepository()->getPackages();
-        $extra = $event->getComposer()->getPackage()->getExtra();
-        if (empty($extra['plugin-paths'])) {
-            $pluginsDir = dirname($vendorDir) . DIRECTORY_SEPARATOR . 'plugins';
-        } else {
-            $pluginsDir = $extra['plugin-paths'];
-        }
+        $pluginsDir = dirname($vendorDir) . DIRECTORY_SEPARATOR . 'plugins';
 
         $plugins = static::determinePlugins($packages, $pluginsDir, $vendorDir);
 
@@ -139,7 +134,7 @@ class PluginInstaller extends LibraryInstaller
      * in the plugins directory to a plugin-name indexed array of paths
      *
      * @param array $packages an array of \Composer\Package\PackageInterface objects
-     * @param string|array $pluginsDir the path to the plugins dir
+     * @param string $pluginsDir the path to the plugins dir
      * @param string $vendorDir the path to the vendor dir
      * @return array plugin-name indexed paths to plugins
      */
@@ -157,48 +152,21 @@ class PluginInstaller extends LibraryInstaller
             $plugins[$ns] = $path;
         }
 
-        foreach ((array)$pluginsDir as $path) {
-            $path = static::fullpath($path, $vendorDir);
-            if (is_dir($path)) {
-                $dir = new \DirectoryIterator($path);
-                foreach ($dir as $info) {
-                    if (!$info->isDir() || $info->isDot()) {
-                        continue;
-                    }
-
-                    $name = $info->getFilename();
-                    if ($name{0} === '.') {
-                        continue;
-                    }
-
-                    $plugins[$name] = $path . DIRECTORY_SEPARATOR . $name;
+        if (is_dir($pluginsDir)) {
+            $dir = new \DirectoryIterator($pluginsDir);
+            foreach ($dir as $info) {
+                if (!$info->isDir() || $info->isDot()) {
+                    continue;
                 }
+
+                $name = $info->getFilename();
+                $plugins[$name] = $pluginsDir . DIRECTORY_SEPARATOR . $name;
             }
         }
 
         ksort($plugins);
 
         return $plugins;
-    }
-
-    /**
-     * Turns relative paths in full paths.
-     *
-     * @param string $path Path
-     * @param string $vendorDir The path to the vendor dir
-     * @return string
-     */
-    protected static function fullpath($path, $vendorDir)
-    {
-        if (preg_match('{^(?:/|[a-z]:|[a-z0-9.]+://)}i', $path)) {
-            return rtrim($path, '/');
-        }
-
-        if (substr($path, 0, 2) === './') {
-            $path = substr($path, 2);
-        }
-
-        return rtrim(dirname($vendorDir) . DIRECTORY_SEPARATOR . $path);
     }
 
     /**

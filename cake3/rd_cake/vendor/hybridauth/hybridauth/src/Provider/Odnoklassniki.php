@@ -11,45 +11,27 @@ use Hybridauth\Adapter\OAuth2;
 use Hybridauth\Data;
 use Hybridauth\Exception\UnexpectedApiResponseException;
 use Hybridauth\User;
+
 /**
  * Odnoklassniki OAuth2 provider adapter.
- *
- * Example:
- *
- *   $config = [
- *       'callback'  => Hybridauth\HttpClient\Util::getCurrentUrl(),
- *       'keys'      => ['id' => '', 'key' => '', 'secret' => ''],
- *   ];
-
- *   $adapter = new Hybridauth\Provider\Odnoklassniki($config);
- *
- *   try {
- *       if (!$adapter->isConnected()) {
- *           $adapter->authenticate();
- *       }
- *
- *       $userProfile = $adapter->getUserProfile();
- *   }
- *   catch(\Exception $e) {
- *       print $e->getMessage() ;
- *   }
  */
 class Odnoklassniki extends OAuth2
 {
     /**
     * {@inheritdoc}
     */
-    protected $apiBaseUrl = 'https://api.ok.ru/';
+    protected $apiBaseUrl = 'http://api.odnoklassniki.ru/fb.do';
+
 
     /**
     * {@inheritdoc}
     */
-    protected $authorizeUrl = 'https://connect.ok.ru/oauth/authorize';
+    protected $authorizeUrl = 'https://www.odnoklassniki.ru/oauth/authorize';
 
     /**
     * {@inheritdoc}
     */
-    protected $accessTokenUrl = 'https://api.ok.ru/oauth/token.do';
+    protected $accessTokenUrl = 'https://api.odnoklassniki.ru/oauth/token.do';
 
     /**
     * {@inheritdoc}
@@ -70,14 +52,13 @@ class Odnoklassniki extends OAuth2
         );
 
         $parameters = [
-            'access_token'    => $this->getStoredData('access_token'),
             'application_key' => $this->config->get('keys')['key'],
             'method'          => 'users.getCurrentUser',
             'fields'          => implode(',', $fields),
             'sig'             => $sig,
         ];
 
-        $response = $this->apiRequest('fb.do', 'GET', $parameters);
+        $response = $this->apiRequest('', 'GET', $parameters);
 
         $data = new Data\Collection($response);
 

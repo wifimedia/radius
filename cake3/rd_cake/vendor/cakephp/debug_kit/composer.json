@@ -23,8 +23,7 @@
         "source": "https://github.com/cakephp/debug_kit"
     },
     "require": {
-        "php": ">=5.6.0",
-        "cakephp/cakephp": "^3.6.0",
+        "cakephp/cakephp": "^3.4.0",
         "cakephp/chronos": "^1.0.0",
         "cakephp/plugin-installer": "^1.0.0",
         "composer/composer": "^1.3.0",
@@ -32,7 +31,7 @@
     },
     "require-dev": {
         "cakephp/cakephp-codesniffer": "^3.0",
-        "phpunit/phpunit": "^5.7.14|^6.0"
+        "phpunit/phpunit": "<6.0"
     },
     "autoload": {
         "psr-4": {
@@ -42,13 +41,12 @@
     },
     "autoload-dev": {
         "psr-4": {
-            "Cake\\Test\\": "vendor/cakephp/cakephp/tests/",
-            "DebugKit\\Test\\": "tests/",
-            "DebugKit\\TestApp\\": "tests/test_app/"
+            "Cake\\Test\\": "vendor/cakephp/cakephp/tests",
+            "DebugKit\\Test\\": "tests"
         }
     },
     "suggest": {
-        "ext-pdo_sqlite": "DebugKit needs to store panel data in a database. SQLite is simple and easy to use."
+        "ext-sqlite": "DebugKit needs to store panel data in a database. SQLite is simple and easy to use."
     },
-    "minimum-stability": "stable"
+    "minimum-stability": "beta"
 }

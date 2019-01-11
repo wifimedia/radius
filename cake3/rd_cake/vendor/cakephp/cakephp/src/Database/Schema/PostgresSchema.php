@@ -1,21 +1,20 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Database\Schema;
 
 use Cake\Database\Exception;
-use Cake\Database\Schema\TableSchema;
 
 /**
  * Schema management/reflection features for Postgres.
@@ -91,56 +90,56 @@ class PostgresSchema extends BaseSchema
             return ['type' => $col, 'length' => null];
         }
         if (strpos($col, 'timestamp') !== false) {
-            return ['type' => TableSchema::TYPE_TIMESTAMP, 'length' => null];
+            return ['type' => 'timestamp', 'length' => null];
         }
         if (strpos($col, 'time') !== false) {
-            return ['type' => TableSchema::TYPE_TIME, 'length' => null];
+            return ['type' => 'time', 'length' => null];
         }
         if ($col === 'serial' || $col === 'integer') {
-            return ['type' => TableSchema::TYPE_INTEGER, 'length' => 10];
+            return ['type' => 'integer', 'length' => 10];
         }
         if ($col === 'bigserial' || $col === 'bigint') {
-            return ['type' => TableSchema::TYPE_BIGINTEGER, 'length' => 20];
+            return ['type' => 'biginteger', 'length' => 20];
         }
         if ($col === 'smallint') {
-            return ['type' => TableSchema::TYPE_SMALLINTEGER, 'length' => 5];
+            return ['type' => 'integer', 'length' => 5];
         }
         if ($col === 'inet') {
-            return ['type' => TableSchema::TYPE_STRING, 'length' => 39];
+            return ['type' => 'string', 'length' => 39];
         }
         if ($col === 'uuid') {
-            return ['type' => TableSchema::TYPE_UUID, 'length' => null];
+            return ['type' => 'uuid', 'length' => null];
         }
         if ($col === 'char' || $col === 'character') {
-            return ['type' => TableSchema::TYPE_STRING, 'fixed' => true, 'length' => $length];
+            return ['type' => 'string', 'fixed' => true, 'length' => $length];
         }
         // money is 'string' as it includes arbitrary text content
         // before the number value.
         if (strpos($col, 'char') !== false ||
             strpos($col, 'money') !== false
         ) {
-            return ['type' => TableSchema::TYPE_STRING, 'length' => $length];
+            return ['type' => 'string', 'length' => $length];
         }
         if (strpos($col, 'text') !== false) {
-            return ['type' => TableSchema::TYPE_TEXT, 'length' => null];
+            return ['type' => 'text', 'length' => null];
         }
         if ($col === 'bytea') {
-            return ['type' => TableSchema::TYPE_BINARY, 'length' => null];
+            return ['type' => 'binary', 'length' => null];
         }
         if ($col === 'real' || strpos($col, 'double') !== false) {
-            return ['type' => TableSchema::TYPE_FLOAT, 'length' => null];
+            return ['type' => 'float', 'length' => null];
         }
         if (strpos($col, 'numeric') !== false ||
             strpos($col, 'decimal') !== false
         ) {
-            return ['type' => TableSchema::TYPE_DECIMAL, 'length' => null];
+            return ['type' => 'decimal', 'length' => null];
         }
 
         if (strpos($col, 'json') !== false) {
-            return ['type' => TableSchema::TYPE_JSON, 'length' => null];
+            return ['type' => 'json', 'length' => null];
         }
 
-        return ['type' => TableSchema::TYPE_STRING, 'length' => null];
+        return ['type' => 'string', 'length' => null];
     }
 
     /**
@@ -150,7 +149,7 @@ class PostgresSchema extends BaseSchema
     {
         $field = $this->_convertColumn($row['type']);
 
-        if ($field['type'] === TableSchema::TYPE_BOOLEAN) {
+        if ($field['type'] === 'boolean') {
             if ($row['default'] === 'true') {
                 $row['default'] = 1;
             }
@@ -193,10 +192,6 @@ class PostgresSchema extends BaseSchema
         }
         // Sequences
         if (strpos($default, 'nextval') === 0) {
-            return null;
-        }
-
-        if (strpos($default, 'NULL::') === 0) {
             return null;
         }
 
@@ -254,7 +249,7 @@ class PostgresSchema extends BaseSchema
 
             return;
         }
-        $index = $schema->getIndex($name);
+        $index = $schema->index($name);
         if (!$index) {
             $index = [
                 'type' => $type,
@@ -276,7 +271,7 @@ class PostgresSchema extends BaseSchema
      */
     protected function _convertConstraint($schema, $name, $type, $row)
     {
-        $constraint = $schema->getConstraint($name);
+        $constraint = $schema->constraint($name);
         if (!$constraint) {
             $constraint = [
                 'type' => $type,
@@ -353,44 +348,39 @@ class PostgresSchema extends BaseSchema
      */
     public function columnSql(TableSchema $schema, $name)
     {
-        $data = $schema->getColumn($name);
+        $data = $schema->column($name);
         $out = $this->_driver->quoteIdentifier($name);
         $typeMap = [
-            TableSchema::TYPE_TINYINTEGER => ' SMALLINT',
-            TableSchema::TYPE_SMALLINTEGER => ' SMALLINT',
-            TableSchema::TYPE_BINARY_UUID => ' UUID',
-            TableSchema::TYPE_BINARY => ' BYTEA',
-            TableSchema::TYPE_BOOLEAN => ' BOOLEAN',
-            TableSchema::TYPE_FLOAT => ' FLOAT',
-            TableSchema::TYPE_DECIMAL => ' DECIMAL',
-            TableSchema::TYPE_DATE => ' DATE',
-            TableSchema::TYPE_TIME => ' TIME',
-            TableSchema::TYPE_DATETIME => ' TIMESTAMP',
-            TableSchema::TYPE_TIMESTAMP => ' TIMESTAMP',
-            TableSchema::TYPE_UUID => ' UUID',
-            TableSchema::TYPE_JSON => ' JSONB'
+            'boolean' => ' BOOLEAN',
+            'binary' => ' BYTEA',
+            'float' => ' FLOAT',
+            'decimal' => ' DECIMAL',
+            'date' => ' DATE',
+            'time' => ' TIME',
+            'datetime' => ' TIMESTAMP',
+            'timestamp' => ' TIMESTAMP',
+            'uuid' => ' UUID',
+            'json' => ' JSONB'
         ];
 
         if (isset($typeMap[$data['type']])) {
             $out .= $typeMap[$data['type']];
         }
 
-        if ($data['type'] === TableSchema::TYPE_INTEGER || $data['type'] === TableSchema::TYPE_BIGINTEGER) {
-            $type = $data['type'] === TableSchema::TYPE_INTEGER ? ' INTEGER' : ' BIGINT';
+        if ($data['type'] === 'integer' || $data['type'] === 'biginteger') {
+            $type = $data['type'] === 'integer' ? ' INTEGER' : ' BIGINT';
             if ([$name] === $schema->primaryKey() || $data['autoIncrement'] === true) {
-                $type = $data['type'] === TableSchema::TYPE_INTEGER ? ' SERIAL' : ' BIGSERIAL';
+                $type = $data['type'] === 'integer' ? ' SERIAL' : ' BIGSERIAL';
                 unset($data['null'], $data['default']);
             }
             $out .= $type;
         }
 
-        if ($data['type'] === TableSchema::TYPE_TEXT && $data['length'] !== TableSchema::LENGTH_TINY) {
+        if ($data['type'] === 'text' && $data['length'] !== TableSchema::LENGTH_TINY) {
             $out .= ' TEXT';
         }
 
-        if ($data['type'] === TableSchema::TYPE_STRING ||
-            ($data['type'] === TableSchema::TYPE_TEXT && $data['length'] === TableSchema::LENGTH_TINY)
-        ) {
+        if ($data['type'] === 'string' || ($data['type'] === 'text' && $data['length'] === TableSchema::LENGTH_TINY)) {
             $isFixed = !empty($data['fixed']);
             $type = ' VARCHAR';
             if ($isFixed) {
@@ -402,16 +392,16 @@ class PostgresSchema extends BaseSchema
             }
         }
 
-        $hasCollate = [TableSchema::TYPE_TEXT, TableSchema::TYPE_STRING];
+        $hasCollate = ['text', 'string'];
         if (in_array($data['type'], $hasCollate, true) && isset($data['collate']) && $data['collate'] !== '') {
             $out .= ' COLLATE "' . $data['collate'] . '"';
         }
 
-        if ($data['type'] === TableSchema::TYPE_FLOAT && isset($data['precision'])) {
+        if ($data['type'] === 'float' && isset($data['precision'])) {
             $out .= '(' . (int)$data['precision'] . ')';
         }
 
-        if ($data['type'] === TableSchema::TYPE_DECIMAL &&
+        if ($data['type'] === 'decimal' &&
             (isset($data['length']) || isset($data['precision']))
         ) {
             $out .= '(' . (int)$data['length'] . ',' . (int)$data['precision'] . ')';
@@ -422,9 +412,8 @@ class PostgresSchema extends BaseSchema
         }
 
         if (isset($data['default']) &&
-            in_array($data['type'], [TableSchema::TYPE_TIMESTAMP, TableSchema::TYPE_DATETIME]) &&
-            strtolower($data['default']) === 'current_timestamp'
-        ) {
+            in_array($data['type'], ['timestamp', 'datetime']) &&
+            strtolower($data['default']) === 'current_timestamp') {
             $out .= ' DEFAULT CURRENT_TIMESTAMP';
         } elseif (isset($data['default'])) {
             $defaultValue = $data['default'];
@@ -448,7 +437,7 @@ class PostgresSchema extends BaseSchema
         $sql = [];
 
         foreach ($schema->constraints() as $name) {
-            $constraint = $schema->getConstraint($name);
+            $constraint = $schema->constraint($name);
             if ($constraint['type'] === TableSchema::CONSTRAINT_FOREIGN) {
                 $tableName = $this->_driver->quoteIdentifier($schema->name());
                 $sql[] = sprintf($sqlPattern, $tableName, $this->constraintSql($schema, $name));
@@ -467,7 +456,7 @@ class PostgresSchema extends BaseSchema
         $sql = [];
 
         foreach ($schema->constraints() as $name) {
-            $constraint = $schema->getConstraint($name);
+            $constraint = $schema->constraint($name);
             if ($constraint['type'] === TableSchema::CONSTRAINT_FOREIGN) {
                 $tableName = $this->_driver->quoteIdentifier($schema->name());
                 $constraintName = $this->_driver->quoteIdentifier($name);
@@ -483,7 +472,7 @@ class PostgresSchema extends BaseSchema
      */
     public function indexSql(TableSchema $schema, $name)
     {
-        $data = $schema->getIndex($name);
+        $data = $schema->index($name);
         $columns = array_map(
             [$this->_driver, 'quoteIdentifier'],
             $data['columns']
@@ -502,7 +491,7 @@ class PostgresSchema extends BaseSchema
      */
     public function constraintSql(TableSchema $schema, $name)
     {
-        $data = $schema->getConstraint($name);
+        $data = $schema->constraint($name);
         $out = 'CONSTRAINT ' . $this->_driver->quoteIdentifier($name);
         if ($data['type'] === TableSchema::CONSTRAINT_PRIMARY) {
             $out = 'PRIMARY KEY';
@@ -556,7 +545,7 @@ class PostgresSchema extends BaseSchema
             $out[] = $index;
         }
         foreach ($schema->columns() as $column) {
-            $columnData = $schema->getColumn($column);
+            $columnData = $schema->column($column);
             if (isset($columnData['comment'])) {
                 $out[] = sprintf(
                     'COMMENT ON COLUMN %s.%s IS %s',

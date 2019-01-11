@@ -1,4 +1,4 @@
-<?php declare(strict_types=1);
+<?php
 
 namespace PhpParser\Node\Expr;
 
@@ -18,23 +18,13 @@ abstract class BinaryOp extends Expr
      * @param Expr  $right      The right hand side expression
      * @param array $attributes Additional attributes
      */
-    public function __construct(Expr $left, Expr $right, array $attributes = []) {
+    public function __construct(Expr $left, Expr $right, array $attributes = array()) {
         parent::__construct($attributes);
         $this->left = $left;
         $this->right = $right;
     }
 
-    public function getSubNodeNames() : array {
-        return ['left', 'right'];
+    public function getSubNodeNames() {
+        return array('left', 'right');
     }
-
-    /**
-     * Get the operator sigil for this binary operation.
-     *
-     * In the case there are multiple possible sigils for an operator, this method does not
-     * necessarily return the one used in the parsed code.
-     *
-     * @return string
-     */
-    abstract public function getOperatorSigil() : string;
 }

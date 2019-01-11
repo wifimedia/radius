@@ -23,12 +23,10 @@ use Symfony\Component\Console\Output\OutputInterface;
 class ScriptAliasCommand extends BaseCommand
 {
     private $script;
-    private $description;
 
-    public function __construct($script, $description)
+    public function __construct($script)
     {
         $this->script = $script;
-        $this->description = empty($description) ? 'Runs the '.$script.' script as defined in composer.json.' : $description;
 
         parent::__construct();
     }
@@ -37,7 +35,7 @@ class ScriptAliasCommand extends BaseCommand
     {
         $this
             ->setName($this->script)
-            ->setDescription($this->description)
+            ->setDescription('Run the '.$this->script.' script as defined in composer.json.')
             ->setDefinition(array(
                 new InputOption('dev', null, InputOption::VALUE_NONE, 'Sets the dev mode.'),
                 new InputOption('no-dev', null, InputOption::VALUE_NONE, 'Disables the dev mode.'),

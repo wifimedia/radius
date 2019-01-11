@@ -1,22 +1,18 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Http\Client;
 
-// This alias is necessary to avoid class name conflicts
-// with the deprecated class in this namespace.
-use Cake\Http\Cookie\CookieCollection as CookiesCollection;
-use Cake\Http\Cookie\CookieInterface;
 use Psr\Http\Message\ResponseInterface;
 use RuntimeException;
 use Zend\Diactoros\MessageTrait;
@@ -107,13 +103,6 @@ class Response extends Message implements ResponseInterface
     protected $code;
 
     /**
-     * Cookie Collection instance
-     *
-     * @var \Cake\Http\Cookie\CookieCollection
-     */
-    protected $cookies;
-
-    /**
      * The reason phrase for the status code
      *
      * @var string
@@ -140,7 +129,7 @@ class Response extends Message implements ResponseInterface
      * @var array
      */
     protected $_exposedProperties = [
-        'cookies' => '_getCookies',
+        'cookies' => '_cookies',
         'body' => '_getBody',
         'code' => 'code',
         'json' => '_getJson',
@@ -162,7 +151,6 @@ class Response extends Message implements ResponseInterface
         }
         $stream = new Stream('php://memory', 'wb+');
         $stream->write($body);
-        $stream->rewind();
         $this->stream = $stream;
     }
 
@@ -216,6 +204,9 @@ class Response extends Message implements ResponseInterface
             $name = trim($name);
 
             $normalized = strtolower($name);
+            if ($normalized === 'set-cookie') {
+                $this->_parseCookie($value);
+            }
 
             if (isset($this->headers[$name])) {
                 $this->headers[$name][] = $value;
@@ -224,6 +215,46 @@ class Response extends Message implements ResponseInterface
                 $this->headerNames[$normalized] = $name;
             }
         }
+    }
+
+    /**
+     * Parse a cookie header into data.
+     *
+     * @param string $value The cookie value to parse.
+     * @return void
+     */
+    protected function _parseCookie($value)
+    {
+        $value = rtrim($value, ';');
+        $nestedSemi = '";"';
+        if (strpos($value, $nestedSemi) !== false) {
+            $value = str_replace($nestedSemi, '{__cookie_replace__}', $value);
+            $parts = explode(';', $value);
+            $parts = str_replace('{__cookie_replace__}', $nestedSemi, $parts);
+        } else {
+            $parts = preg_split('/\;[ \t]*/', $value);
+        }
+
+        $name = false;
+        foreach ($parts as $i => $part) {
+            if (strpos($part, '=') !== false) {
+                list($key, $value) = explode('=', $part, 2);
+            } else {
+                $key = $part;
+                $value = true;
+            }
+            if ($i === 0) {
+                $name = $key;
+                $cookie['value'] = $value;
+                continue;
+            }
+            $key = strtolower($key);
+            if (!isset($cookie[$key])) {
+                $cookie[$key] = $value;
+            }
+        }
+        $cookie['name'] = $name;
+        $this->_cookies[$name] = $cookie;
     }
 
     /**
@@ -236,9 +267,7 @@ class Response extends Message implements ResponseInterface
         $codes = [
             static::STATUS_OK,
             static::STATUS_CREATED,
-            static::STATUS_ACCEPTED,
-            static::STATUS_NON_AUTHORITATIVE_INFORMATION,
-            static::STATUS_NO_CONTENT
+            static::STATUS_ACCEPTED
         ];
 
         return in_array($this->code, $codes);
@@ -272,11 +301,6 @@ class Response extends Message implements ResponseInterface
      */
     public function statusCode()
     {
-        deprecationWarning(
-            'Response::statusCode() is deprecated. ' .
-            'Use Response::getStatusCode() instead.'
-        );
-
         return $this->code;
     }
 
@@ -324,11 +348,6 @@ class Response extends Message implements ResponseInterface
      */
     public function encoding()
     {
-        deprecationWarning(
-            'Response::encoding() is deprecated. ' .
-            'Use Response::getEncoding() instead.'
-        );
-
         return $this->getEncoding();
     }
 
@@ -364,11 +383,6 @@ class Response extends Message implements ResponseInterface
      */
     public function header($name = null)
     {
-        deprecationWarning(
-            'Response::header() is deprecated. ' .
-            'Use Response::getHeader() and getHeaderLine() instead.'
-        );
-
         if ($name === null) {
             return $this->_getHeaders();
         }
@@ -396,11 +410,6 @@ class Response extends Message implements ResponseInterface
      */
     public function cookie($name = null, $all = false)
     {
-        deprecationWarning(
-            'Response::cookie() is deprecated. ' .
-            'Use Response::getCookie(), getCookieData() or getCookies() instead.'
-        );
-
         if ($name === null) {
             return $this->getCookies();
         }
@@ -418,38 +427,22 @@ class Response extends Message implements ResponseInterface
      */
     public function getCookies()
     {
-        return $this->_getCookies();
-    }
-
-    /**
-     * Get the cookie collection from this response.
-     *
-     * This method exposes the response's CookieCollection
-     * instance allowing you to interact with cookie objects directly.
-     *
-     * @return \Cake\Http\Cookie\CookieCollection
-     */
-    public function getCookieCollection()
-    {
-        $this->buildCookieCollection();
-
-        return $this->cookies;
+        return $this->_cookies;
     }
 
     /**
      * Get the value of a single cookie.
      *
      * @param string $name The name of the cookie value.
-     * @return string|array|null Either the cookie's value or null when the cookie is undefined.
+     * @return string|null Either the cookie's value or null when the cookie is undefined.
      */
     public function getCookie($name)
     {
-        $this->buildCookieCollection();
-        if (!$this->cookies->has($name)) {
+        if (!isset($this->_cookies[$name])) {
             return null;
         }
 
-        return $this->cookies->get($name)->getValue();
+        return $this->_cookies[$name]['value'];
     }
 
     /**
@@ -460,67 +453,11 @@ class Response extends Message implements ResponseInterface
      */
     public function getCookieData($name)
     {
-        $this->buildCookieCollection();
-
-        if (!$this->cookies->has($name)) {
+        if (!isset($this->_cookies[$name])) {
             return null;
         }
 
-        $cookie = $this->cookies->get($name);
-
-        return $this->convertCookieToArray($cookie);
-    }
-
-    /**
-     * Convert the cookie into an array of its properties.
-     *
-     * This method is compatible with older client code that
-     * expects date strings instead of timestamps.
-     *
-     * @param \Cake\Http\Cookie\CookieInterface $cookie Cookie object.
-     * @return array
-     */
-    protected function convertCookieToArray(CookieInterface $cookie)
-    {
-        return [
-            'name' => $cookie->getName(),
-            'value' => $cookie->getValue(),
-            'path' => $cookie->getPath(),
-            'domain' => $cookie->getDomain(),
-            'secure' => $cookie->isSecure(),
-            'httponly' => $cookie->isHttpOnly(),
-            'expires' => $cookie->getFormattedExpires()
-        ];
-    }
-
-    /**
-     * Lazily build the CookieCollection and cookie objects from the response header
-     *
-     * @return void
-     */
-    protected function buildCookieCollection()
-    {
-        if ($this->cookies) {
-            return;
-        }
-        $this->cookies = CookiesCollection::createFromHeader($this->getHeader('Set-Cookie'));
-    }
-
-    /**
-     * Property accessor for `$this->cookies`
-     *
-     * @return array Array of Cookie data.
-     */
-    protected function _getCookies()
-    {
-        $this->buildCookieCollection();
-
-        $cookies = [];
-        foreach ($this->cookies as $cookie) {
-            $cookies[$cookie->getName()] = $this->convertCookieToArray($cookie);
-        }
-
-        return $cookies;
+        return $this->_cookies[$name];
     }
 
     /**
@@ -531,11 +468,6 @@ class Response extends Message implements ResponseInterface
      */
     public function version()
     {
-        deprecationWarning(
-            'Response::version() is deprecated. ' .
-            'Use Response::getProtocolVersion() instead.'
-        );
-
         return $this->protocol;
     }
 

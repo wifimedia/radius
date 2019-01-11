@@ -57,24 +57,22 @@ trait MagicPropertyTrait
      */
     public function __get($name)
     {
-        static $formats = [
-            'year' => 'Y',
-            'yearIso' => 'o',
-            'month' => 'n',
-            'day' => 'j',
-            'hour' => 'G',
-            'minute' => 'i',
-            'second' => 's',
-            'micro' => 'u',
-            'dayOfWeek' => 'N',
-            'dayOfYear' => 'z',
-            'weekOfYear' => 'W',
-            'daysInMonth' => 't',
-            'timestamp' => 'U',
-        ];
-
         switch (true) {
-            case isset($formats[$name]):
+            case array_key_exists($name, $formats = [
+                'year' => 'Y',
+                'yearIso' => 'o',
+                'month' => 'n',
+                'day' => 'j',
+                'hour' => 'G',
+                'minute' => 'i',
+                'second' => 's',
+                'micro' => 'u',
+                'dayOfWeek' => 'N',
+                'dayOfYear' => 'z',
+                'weekOfYear' => 'W',
+                'daysInMonth' => 't',
+                'timestamp' => 'U',
+            ]):
                 return (int)$this->format($formats[$name]);
 
             case $name === 'weekOfMonth':

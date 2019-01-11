@@ -13,13 +13,12 @@
  */
 
 /**
- * @var \DebugKit\View\AjaxView $this
- * @var array $paths
- * @var array $app
- * @var array $cake
- * @var array $plugins
- * @var array $vendor
- * @var array $other
+ * @type \DebugKit\View\AjaxView $this
+ * @type string $cake
+ * @type string $core
+ * @type array $paths
+ * @type string $app
+ * @type string $plugins
  */
 
 // Backwards compat for old DebugKit data.
@@ -27,8 +26,8 @@ if (!isset($cake) && isset($core)) {
     $cake = $core;
 }
 ?>
-<h4><?= __d('debug_kit', 'Include Paths') ?></h4>
+<h4>Include Paths</h4>
 <?= $this->Toolbar->makeNeatArray($paths) ?>
 
-<h4><?= __d('debug_kit', 'Included Files') ?></h4>
-<?= $this->Toolbar->makeNeatArray(compact('app', 'cake', 'plugins', 'vendor', 'other')) ?>
+<h4>Included Files</h4>
+<?= $this->Toolbar->makeNeatArray(['cake' => $cake, 'app' => $app, 'plugins' => $plugins]) ?>

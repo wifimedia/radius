@@ -1,22 +1,21 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\ORM\Association;
 
 use Cake\Datasource\EntityInterface;
 use Cake\ORM\Association;
-use Cake\ORM\Association\DependentDeleteHelper;
 use Cake\ORM\Association\Loader\SelectLoader;
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
@@ -29,6 +28,9 @@ use Cake\Utility\Inflector;
  */
 class HasOne extends Association
 {
+
+    use DependentDeleteTrait;
+
     /**
      * Valid strategies for this type of association
      *
@@ -95,7 +97,8 @@ class HasOne extends Association
      * `$options`
      *
      * @param \Cake\Datasource\EntityInterface $entity an entity from the source table
-     * @param array $options options to be passed to the save method in the target table
+     * @param array|\ArrayObject $options options to be passed to the save method in
+     * the target table
      * @return bool|\Cake\Datasource\EntityInterface false if $entity could not be saved, otherwise it returns
      * the saved entity
      * @see \Cake\ORM\Table::save()
@@ -125,7 +128,7 @@ class HasOne extends Association
     /**
      * {@inheritDoc}
      *
-     * @return \Closure
+     * @return callable
      */
     public function eagerLoader(array $options)
     {
@@ -141,15 +144,5 @@ class HasOne extends Association
         ]);
 
         return $loader->buildEagerLoader($options);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function cascadeDelete(EntityInterface $entity, array $options = [])
-    {
-        $helper = new DependentDeleteHelper();
-
-        return $helper->cascadeDelete($this, $entity, $options);
     }
 }

@@ -22,9 +22,7 @@ use Iterator;
  * Provides Base methods for content specific debug toolbar helpers.
  * Acts as a facade for other toolbars helpers as well.
  *
- * @property \Cake\View\Helper\HtmlHelper $Html
- * @property \Cake\View\Helper\FormHelper $Form
- * @property \Cake\View\Helper\UrlHelper $Url
+ * @since         DebugKit 0.1
  */
 class ToolbarHelper extends Helper
 {
@@ -103,7 +101,7 @@ class ToolbarHelper extends Helper
             if (is_array($value) && count($value) > 0) {
                 $out .= '(array)';
             } elseif (is_object($value)) {
-                $out .= '(' . (get_class($value) ?: 'object') . ')';
+                $out .= '(object)';
             }
             if ($value === null) {
                 $value = '(null)';

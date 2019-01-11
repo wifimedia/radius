@@ -29,12 +29,12 @@ class Orders
 		$event = new Event('Orders.afterPlace', $this, [
 			'order' => $order
 		]);
-		$this->getEventManager()->dispatch($event);
+		$this->eventManager()->dispatch($event);
 	}
 }
 
 $orders = new Orders();
-$orders->getEventManager()->on(function ($event) {
+$orders->eventManager()->on(function ($event) {
 	// Do something after the order was placed
 	...
 }, 'Orders.afterPlace');

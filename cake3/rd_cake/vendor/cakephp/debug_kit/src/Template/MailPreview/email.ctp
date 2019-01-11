@@ -14,14 +14,14 @@
     }
 </style>
 
-<?php if (!$this->request->getQuery('part')) : ?>
+<?php if (!$this->request->query('part')) : ?>
     <?= $this->element('preview_header'); ?>
 <?php endif; ?>
 
 <?php if (!empty($part)) : ?>
     <iframe seamless name="messageBody" class="messageBody" src="?part=<?= h($part); ?>&plugin=<?= h($plugin); ?>"></iframe>
 <?php else : ?>
-    <p><?= __d('debug_kit', 'You are trying to preview an email that does not have any content.') ?></p>
+    <p>You are trying to preview an email that does not have any content.</p>
 <?php endif; ?>
 
 <script>

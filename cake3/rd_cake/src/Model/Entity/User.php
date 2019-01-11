@@ -5,7 +5,6 @@ namespace App\Model\Entity;
 use Cake\Auth\WeakPasswordHasher;
 use Cake\ORM\Entity;
 use Cake\Utility\Text;
-use Cake\ORM\TableRegistry;
 
 /**
  * User Entity.
@@ -23,7 +22,7 @@ class User extends Entity
             return Text::uuid();
         }
     }
-    
+    /*
     public function parentNode(){
         if (!$this->id) {
             return null;
@@ -40,6 +39,6 @@ class User extends Entity
         }
         return ['Groups' => ['id' => $groupId]]; //Change to 'Group'
     }
-    
+    */
       
 }

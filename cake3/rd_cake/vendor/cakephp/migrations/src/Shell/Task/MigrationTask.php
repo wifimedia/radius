@@ -21,9 +21,6 @@ use Migrations\Util\ColumnParser;
 
 /**
  * Task class for generating migration snapshot files.
- *
- * @property \Bake\Shell\Task\BakeTemplateTask $BakeTemplate
- * @property \Bake\Shell\Task\TestTask $Test
  */
 class MigrationTask extends SimpleMigrationTask
 {
@@ -34,7 +31,7 @@ class MigrationTask extends SimpleMigrationTask
     public function bake($name)
     {
         EventManager::instance()->on('Bake.initialize', function (Event $event) {
-            $event->getSubject()->loadHelper('Migrations.Migration');
+            $event->subject->loadHelper('Migrations.Migration');
         });
 
         return parent::bake($name);
@@ -86,7 +83,6 @@ class MigrationTask extends SimpleMigrationTask
         }
 
         list($action, $table) = $action;
-
         return [
             'plugin' => $this->plugin,
             'pluginPath' => $pluginPath,

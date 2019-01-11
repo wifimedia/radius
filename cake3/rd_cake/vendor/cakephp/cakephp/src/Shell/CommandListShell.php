@@ -1,16 +1,16 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP Project
  * @since         2.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Shell;
 
@@ -19,13 +19,12 @@ use Cake\Console\Shell;
 use Cake\Core\Configure;
 use Cake\Core\Plugin;
 use Cake\Utility\Inflector;
-use SimpleXMLElement;
+use SimpleXmlElement;
 
 /**
  * Shows a list of commands available from the console.
  *
  * @property \Cake\Shell\Task\CommandTask $Command
- * @deprecated 3.5.0 Replaced by Cake\Shell\HelpShell
  */
 class CommandListShell extends Shell
 {
@@ -36,22 +35,6 @@ class CommandListShell extends Shell
      * @var array
      */
     public $tasks = ['Command'];
-
-    /**
-     * Displays a header for the shell
-     *
-     * @return void
-     */
-    protected function _welcome()
-    {
-        $this->out();
-        $this->out(sprintf('<info>Welcome to CakePHP %s Console</info>', 'v' . Configure::version()));
-        $this->hr();
-        $this->out(sprintf('App : %s', APP_DIR));
-        $this->out(sprintf('Path: %s', APP));
-        $this->out(sprintf('PHP : %s', PHP_VERSION));
-        $this->hr();
-    }
 
     /**
      * startup
@@ -73,13 +56,13 @@ class CommandListShell extends Shell
     public function main()
     {
         if (!$this->param('xml') && !$this->param('version')) {
-            $this->out('<info>Current Paths:</info>', 2);
-            $this->out('* app:  ' . APP_DIR);
-            $this->out('* root: ' . rtrim(ROOT, DIRECTORY_SEPARATOR));
-            $this->out('* core: ' . rtrim(CORE_PATH, DIRECTORY_SEPARATOR));
-            $this->out('');
+            $this->out("<info>Current Paths:</info>", 2);
+            $this->out("* app:  " . APP_DIR);
+            $this->out("* root: " . rtrim(ROOT, DIRECTORY_SEPARATOR));
+            $this->out("* core: " . rtrim(CORE_PATH, DIRECTORY_SEPARATOR));
+            $this->out("");
 
-            $this->out('<info>Available Shells:</info>', 2);
+            $this->out("<info>Available Shells:</info>", 2);
         }
 
         if ($this->param('version')) {
@@ -114,9 +97,9 @@ class CommandListShell extends Shell
             $this->out();
         }
 
-        $this->out('To run an app or core command, type <info>`cake shell_name [args]`</info>');
-        $this->out('To run a plugin command, type <info>`cake Plugin.shell_name [args]`</info>');
-        $this->out('To get help on a specific command, type <info>`cake shell_name --help`</info>', 2);
+        $this->out("To run an app or core command, type <info>`cake shell_name [args]`</info>");
+        $this->out("To run a plugin command, type <info>`cake Plugin.shell_name [args]`</info>");
+        $this->out("To get help on a specific command, type <info>`cake shell_name --help`</info>", 2);
     }
 
     /**
@@ -128,7 +111,7 @@ class CommandListShell extends Shell
     protected function _asXml($shellList)
     {
         $plugins = Plugin::loaded();
-        $shells = new SimpleXMLElement('<shells></shells>');
+        $shells = new SimpleXmlElement('<shells></shells>');
         foreach ($shellList as $plugin => $commands) {
             foreach ($commands as $command) {
                 $callable = $command;
@@ -143,7 +126,7 @@ class CommandListShell extends Shell
                 $shell->addAttribute('help', $callable . ' -h');
             }
         }
-        $this->_io->setOutputAs(ConsoleOutput::RAW);
+        $this->_io->outputAs(ConsoleOutput::RAW);
         $this->out($shells->saveXML());
     }
 
@@ -162,7 +145,7 @@ class CommandListShell extends Shell
             'help' => 'Get the listing as XML.',
             'boolean' => true
         ])->addOption('version', [
-            'help' => 'Prints the currently installed version of CakePHP. (deprecated - use `cake --version` instead)',
+            'help' => 'Prints the currently installed version of CakePHP.',
             'boolean' => true
         ]);
 

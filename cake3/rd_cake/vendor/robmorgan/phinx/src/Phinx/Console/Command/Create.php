@@ -34,7 +34,6 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
-use Symfony\Component\Console\Question\ChoiceQuestion;
 use Symfony\Component\Console\Question\ConfirmationQuestion;
 
 class Create extends AbstractCommand
@@ -53,7 +52,7 @@ class Create extends AbstractCommand
 
         $this->setName('create')
             ->setDescription('Create a new migration')
-            ->addArgument('name', InputArgument::REQUIRED, 'What is the name of the migration (in CamelCase)?')
+            ->addArgument('name', InputArgument::REQUIRED, 'What is the name of the migration?')
             ->setHelp(sprintf(
                 '%sCreates a new database migration%s',
                 PHP_EOL,
@@ -66,9 +65,6 @@ class Create extends AbstractCommand
         // A classname to be used to gain access to the template content as well as the ability to
         // have a callback once the migration file has been created.
         $this->addOption('class', 'l', InputOption::VALUE_REQUIRED, 'Use a class implementing "' . self::CREATION_INTERFACE . '" to generate the template');
-
-        // Allow the migration path to be chosen non-interactively.
-        $this->addOption('path', null, InputOption::VALUE_REQUIRED, 'Specify the path in which to create this migration');
     }
 
     /**
@@ -80,63 +76,6 @@ class Create extends AbstractCommand
     protected function getCreateMigrationDirectoryQuestion()
     {
         return new ConfirmationQuestion('Create migrations directory? [y]/n ', true);
-    }
-
-    /**
-     * Get the question that allows the user to select which migration path to use.
-     *
-     * @param string[] $paths
-     * @return ChoiceQuestion
-     */
-    protected function getSelectMigrationPathQuestion(array $paths)
-    {
-        return new ChoiceQuestion('Which migrations path would you like to use?', $paths, 0);
-    }
-
-    /**
-     * Returns the migration path to create the migration in.
-     *
-     * @param InputInterface $input
-     * @param OutputInterface $output
-     * @return mixed
-     * @throws \Exception
-     */
-    protected function getMigrationPath(InputInterface $input, OutputInterface $output)
-    {
-        // First, try the non-interactive option:
-        $path = $input->getOption('path');
-
-        if (!empty($path)) {
-            return $path;
-        }
-
-        $paths = $this->getConfig()->getMigrationPaths();
-
-        // No paths? That's a problem.
-        if (empty($paths)) {
-            throw new \Exception('No migration paths set in your Phinx configuration file.');
-        }
-
-        $paths = Util::globAll($paths);
-
-        if (empty($paths)) {
-            throw new \Exception(
-                'You probably used curly braces to define migration path in your Phinx configuration file, ' .
-                'but no directories have been matched using this pattern. ' .
-                'You need to create a migration directory manually.'
-            );
-        }
-
-        // Only one path set, so select that:
-        if (1 === count($paths)) {
-            return array_shift($paths);
-        }
-
-        // Ask the user which of their defined paths they'd like to use:
-        $helper = $this->getHelper('question');
-        $question = $this->getSelectMigrationPathQuestion($paths);
-
-        return $helper->ask($input, $output, $question);
     }
 
     /**
@@ -153,7 +92,7 @@ class Create extends AbstractCommand
         $this->bootstrap($input, $output);
 
         // get the migration path from the config
-        $path = $this->getMigrationPath($input, $output);
+        $path = $this->getConfig()->getMigrationPath();
 
         if (!file_exists($path)) {
             $helper   = $this->getHelper('question');
@@ -289,7 +228,7 @@ class Create extends AbstractCommand
         }
 
         // Do we need to do the post creation call to the creation class?
-        if (isset($creationClass)) {
+        if ($creationClassName) {
             $creationClass->postMigrationCreation($filePath, $className, $this->getConfig()->getMigrationBaseClassName());
         }
 
@@ -303,6 +242,6 @@ class Create extends AbstractCommand
             $output->writeln('<info>using default template</info>');
         }
 
-        $output->writeln('<info>created</info> ' . str_replace(getcwd() . DIRECTORY_SEPARATOR, '', $filePath));
+        $output->writeln('<info>created</info> ' . str_replace(getcwd(), '', $filePath));
     }
 }

@@ -1,16 +1,16 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Collection;
 
@@ -47,7 +47,7 @@ trait CollectionTrait
      */
     public function each(callable $c)
     {
-        foreach ($this->optimizeUnwrap() as $k => $v) {
+        foreach ($this->unwrap() as $k => $v) {
             $c($v, $k);
         }
 
@@ -87,7 +87,7 @@ trait CollectionTrait
      */
     public function every(callable $c)
     {
-        foreach ($this->optimizeUnwrap() as $key => $value) {
+        foreach ($this->unwrap() as $key => $value) {
             if (!$c($value, $key)) {
                 return false;
             }
@@ -101,7 +101,7 @@ trait CollectionTrait
      */
     public function some(callable $c)
     {
-        foreach ($this->optimizeUnwrap() as $key => $value) {
+        foreach ($this->unwrap() as $key => $value) {
             if ($c($value, $key) === true) {
                 return true;
             }
@@ -115,7 +115,7 @@ trait CollectionTrait
      */
     public function contains($value)
     {
-        foreach ($this->optimizeUnwrap() as $v) {
+        foreach ($this->unwrap() as $v) {
             if ($value === $v) {
                 return true;
             }
@@ -145,7 +145,7 @@ trait CollectionTrait
         }
 
         $result = $zero;
-        foreach ($this->optimizeUnwrap() as $k => $value) {
+        foreach ($this->unwrap() as $k => $value) {
             if ($isFirst) {
                 $result = $value;
                 $isFirst = false;
@@ -193,55 +193,6 @@ trait CollectionTrait
     /**
      * {@inheritDoc}
      */
-    public function avg($matcher = null)
-    {
-        $result = $this;
-        if ($matcher != null) {
-            $result = $result->extract($matcher);
-        }
-        $result = $result
-            ->reduce(function ($acc, $current) {
-                list($count, $sum) = $acc;
-
-                return [$count + 1, $sum + $current];
-            }, [0, 0]);
-
-        if ($result[0] === 0) {
-            return null;
-        }
-
-        return $result[1] / $result[0];
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function median($matcher = null)
-    {
-        $elements = $this;
-        if ($matcher != null) {
-            $elements = $elements->extract($matcher);
-        }
-        $values = $elements->toList();
-        sort($values);
-        $count = count($values);
-
-        if ($count === 0) {
-            return null;
-        }
-
-        $middle = (int)($count / 2);
-
-        if ($count % 2) {
-            return $values[$middle];
-        }
-
-        return ($values[$middle - 1] + $values[$middle]) / 2;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
     public function sortBy($callback, $dir = SORT_DESC, $type = SORT_NUMERIC)
     {
         return new SortIterator($this->unwrap(), $callback, $dir, $type);
@@ -254,7 +205,7 @@ trait CollectionTrait
     {
         $callback = $this->_propertyExtractor($callback);
         $group = [];
-        foreach ($this->optimizeUnwrap() as $value) {
+        foreach ($this as $value) {
             $group[$callback($value)][] = $value;
         }
 
@@ -268,7 +219,7 @@ trait CollectionTrait
     {
         $callback = $this->_propertyExtractor($callback);
         $group = [];
-        foreach ($this->optimizeUnwrap() as $value) {
+        foreach ($this as $value) {
             $group[$callback($value)] = $value;
         }
 
@@ -304,7 +255,7 @@ trait CollectionTrait
 
         $callback = $this->_propertyExtractor($matcher);
         $sum = 0;
-        foreach ($this->optimizeUnwrap() as $k => $v) {
+        foreach ($this as $k => $v) {
             $sum += $callback($v, $k);
         }
 
@@ -335,7 +286,7 @@ trait CollectionTrait
      */
     public function take($size = 1, $from = 0)
     {
-        return new Collection(new LimitIterator($this, $from, $size));
+        return new Collection(new LimitIterator($this->unwrap(), $from, $size));
     }
 
     /**
@@ -343,7 +294,7 @@ trait CollectionTrait
      */
     public function skip($howMany)
     {
-        return new Collection(new LimitIterator($this, $howMany));
+        return new Collection(new LimitIterator($this->unwrap(), $howMany));
     }
 
     /**
@@ -367,8 +318,7 @@ trait CollectionTrait
      */
     public function first()
     {
-        $iterator = new LimitIterator($this, 0, 1);
-        foreach ($iterator as $result) {
+        foreach ($this->take(1) as $result) {
             return $result;
         }
     }
@@ -378,25 +328,18 @@ trait CollectionTrait
      */
     public function last()
     {
-        $iterator = $this->optimizeUnwrap();
-        if (is_array($iterator)) {
-            return array_pop($iterator);
+        $iterator = $this->unwrap();
+        $count = $iterator instanceof Countable ?
+            count($iterator) :
+            iterator_count($iterator);
+
+        if ($count === 0) {
+            return null;
         }
 
-        if ($iterator instanceof Countable) {
-            $count = count($iterator);
-            if ($count === 0) {
-                return null;
-            }
-            $iterator = new LimitIterator($iterator, $count - 1, 1);
+        foreach ($this->take(1, $count - 1) as $last) {
+            return $last;
         }
-
-        $result = null;
-        foreach ($iterator as $result) {
-            // No-op
-        }
-
-        return $result;
     }
 
     /**
@@ -409,42 +352,6 @@ trait CollectionTrait
         $list->append((new Collection($items))->unwrap());
 
         return new Collection($list);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function appendItem($item, $key = null)
-    {
-        if ($key !== null) {
-            $data = [$key => $item];
-        } else {
-            $data = [$item];
-        }
-
-        return $this->append($data);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function prepend($items)
-    {
-        return (new Collection($items))->append($this);
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function prependItem($item, $key = null)
-    {
-        if ($key !== null) {
-            $data = [$key => $item];
-        } else {
-            $data = [$item];
-        }
-
-        return $this->prepend($data);
     }
 
     /**
@@ -593,7 +500,7 @@ trait CollectionTrait
      */
     public function buffered()
     {
-        return new BufferedIterator($this->unwrap());
+        return new BufferedIterator($this);
     }
 
     /**
@@ -627,7 +534,7 @@ trait CollectionTrait
             $condition = $this->_createMatcherFilter($condition);
         }
 
-        return new StoppableIterator($this->unwrap(), $condition);
+        return new StoppableIterator($this, $condition);
     }
 
     /**
@@ -643,7 +550,7 @@ trait CollectionTrait
 
         return new Collection(
             new RecursiveIteratorIterator(
-                new UnfoldIterator($this->unwrap(), $transformer),
+                new UnfoldIterator($this, $transformer),
                 RecursiveIteratorIterator::LEAVES_ONLY
             )
         );
@@ -664,7 +571,7 @@ trait CollectionTrait
      */
     public function zip($items)
     {
-        return new ZipIterator(array_merge([$this->unwrap()], func_get_args()));
+        return new ZipIterator(array_merge([$this], func_get_args()));
     }
 
     /**
@@ -679,7 +586,7 @@ trait CollectionTrait
             $items = [$items];
         }
 
-        return new ZipIterator(array_merge([$this->unwrap()], $items), $callable);
+        return new ZipIterator(array_merge([$this], $items), $callable);
     }
 
     /**
@@ -733,7 +640,7 @@ trait CollectionTrait
      */
     public function isEmpty()
     {
-        foreach ($this as $el) {
+        foreach ($this->unwrap() as $el) {
             return false;
         }
 
@@ -750,24 +657,18 @@ trait CollectionTrait
             $iterator = $iterator->getInnerIterator();
         }
 
-        if ($iterator !== $this && $iterator instanceof CollectionInterface) {
-            $iterator = $iterator->unwrap();
-        }
-
         return $iterator;
     }
 
     /**
      * Backwards compatible wrapper for unwrap()
      *
-     * @return \Traversable
-     * @deprecated 3.0.10 Will be removed in 4.0.0
+     * @return \Iterator
+     * @deprecated
      */
     // @codingStandardsIgnoreLine
     public function _unwrap()
     {
-        deprecationWarning('CollectionTrait::_unwrap() is deprecated. Use CollectionTrait::unwrap() instead.');
-
         return $this->unwrap();
     }
 
@@ -845,48 +746,5 @@ trait CollectionTrait
         }
 
         return new Collection($result);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return int
-     */
-    public function count()
-    {
-        $traversable = $this->optimizeUnwrap();
-
-        if (is_array($traversable)) {
-            return count($traversable);
-        }
-
-        return iterator_count($traversable);
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return int
-     */
-    public function countKeys()
-    {
-        return count($this->toArray());
-    }
-
-    /**
-     * Unwraps this iterator and returns the simplest
-     * traversable that can be used for getting the data out
-     *
-     * @return \Traversable|array
-     */
-    protected function optimizeUnwrap()
-    {
-        $iterator = $this->unwrap();
-
-        if (get_class($iterator) === ArrayIterator::class) {
-            $iterator = $iterator->getArrayCopy();
-        }
-
-        return $iterator;
     }
 }

@@ -4,10 +4,10 @@
                 <td>View As</td>
                 <td>
                     <?php $partNames = array_keys($email->getParts()) ?>
-                    <?= $this->Form->control('part', [
+                    <?= $this->Form->input('part', [
                         'type' => 'select',
                         'label' => false,
-                        'value' => $this->request->getQuery('part') ?: 'html',
+                        'value' => $this->request->query('part') ?: 'html',
                         'onChange' => 'formatChanged(this);',
                         'options' => array_combine($partNames, $partNames),
                     ]);

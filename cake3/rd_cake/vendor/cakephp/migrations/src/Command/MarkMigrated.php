@@ -16,13 +16,12 @@ use Migrations\ConfigurationTrait;
 use Phinx\Console\Command\AbstractCommand;
 use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
-use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
+use Symfony\Component\Console\Input\InputOption;
 
 class MarkMigrated extends AbstractCommand
 {
 
-    use CommandTrait;
     use ConfigurationTrait;
 
     /**
@@ -33,7 +32,7 @@ class MarkMigrated extends AbstractCommand
     protected $output;
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output The output object.
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return mixed
      */
     public function output(OutputInterface $output = null)
@@ -41,7 +40,6 @@ class MarkMigrated extends AbstractCommand
         if ($output !== null) {
             $this->output = $output;
         }
-
         return $this->output;
     }
 
@@ -106,14 +104,12 @@ class MarkMigrated extends AbstractCommand
         $this->bootstrap($input, $output);
         $this->output($output);
 
-        $migrationPaths = $this->getConfig()->getMigrationPaths();
-        $path = array_pop($migrationPaths);
+        $path = $this->getConfig()->getMigrationPath();
 
         if ($this->invalidOnlyOrExclude()) {
             $output->writeln(
                 "<error>You should use `--exclude` OR `--only` (not both) along with a `--target` !</error>"
             );
-
             return;
         }
 
@@ -129,7 +125,6 @@ class MarkMigrated extends AbstractCommand
             $versions = $this->getManager()->getVersionsToMark($input);
         } catch (InvalidArgumentException $e) {
             $output->writeln(sprintf("<error>%s</error>", $e->getMessage()));
-
             return;
         }
 
@@ -144,7 +139,6 @@ class MarkMigrated extends AbstractCommand
     protected function isUsingDeprecatedAll()
     {
         $version = $this->input->getArgument('version');
-
         return $version === 'all' || $version === '*';
     }
 
@@ -176,7 +170,6 @@ class MarkMigrated extends AbstractCommand
     protected function isUsingDeprecatedVersion()
     {
         $version = $this->input->getArgument('version');
-
         return $version && $version !== 'all' && $version !== '*';
     }
 

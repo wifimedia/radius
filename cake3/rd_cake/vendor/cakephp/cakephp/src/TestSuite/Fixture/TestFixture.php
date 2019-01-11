@@ -1,28 +1,26 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  * @since         1.2.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\TestSuite\Fixture;
 
 use Cake\Core\Exception\Exception as CakeException;
 use Cake\Database\Schema\TableSchema;
-use Cake\Database\Schema\TableSchemaAwareInterface;
-use Cake\Database\Schema\TableSchemaInterface as DatabaseTableSchemaInterface;
 use Cake\Datasource\ConnectionInterface;
 use Cake\Datasource\ConnectionManager;
 use Cake\Datasource\FixtureInterface;
 use Cake\Datasource\TableSchemaInterface;
 use Cake\Log\Log;
-use Cake\ORM\Locator\LocatorAwareTrait;
+use Cake\ORM\TableRegistry;
 use Cake\Utility\Inflector;
 use Exception;
 
@@ -30,10 +28,8 @@ use Exception;
  * Cake TestFixture is responsible for building and destroying tables to be used
  * during testing.
  */
-class TestFixture implements FixtureInterface, TableSchemaInterface, TableSchemaAwareInterface
+class TestFixture implements FixtureInterface, TableSchemaInterface
 {
-
-    use LocatorAwareTrait;
 
     /**
      * Fixture Datasource
@@ -223,7 +219,7 @@ class TestFixture implements FixtureInterface, TableSchemaInterface, TableSchema
             if (!empty($import['table'])) {
                 throw new CakeException('You cannot define both table and model.');
             }
-            $import['table'] = $this->getTableLocator()->get($import['model'])->getTable();
+            $import['table'] = TableRegistry::get($import['model'])->getTable();
         }
 
         if (empty($import['table'])) {
@@ -233,7 +229,7 @@ class TestFixture implements FixtureInterface, TableSchemaInterface, TableSchema
         $this->table = $import['table'];
 
         $db = ConnectionManager::get($import['connection'], false);
-        $schemaCollection = $db->getSchemaCollection();
+        $schemaCollection = $db->schemaCollection();
         $table = $schemaCollection->describe($import['table']);
         $this->_schema = $table;
     }
@@ -247,7 +243,7 @@ class TestFixture implements FixtureInterface, TableSchemaInterface, TableSchema
     protected function _schemaFromReflection()
     {
         $db = ConnectionManager::get($this->connection());
-        $schemaCollection = $db->getSchemaCollection();
+        $schemaCollection = $db->schemaCollection();
         $tables = $schemaCollection->listTables();
 
         if (!in_array($this->table, $tables)) {
@@ -268,19 +264,16 @@ class TestFixture implements FixtureInterface, TableSchemaInterface, TableSchema
      *
      * @param \Cake\Database\Schema\TableSchema|null $schema The table to set.
      * @return \Cake\Database\Schema\TableSchema|null
-     * @deprecated 3.5.0 Use getTableSchema/setTableSchema instead.
      */
     public function schema(TableSchema $schema = null)
     {
-        deprecationWarning(
-            'TestFixture::schema() is deprecated. ' .
-            'Use TestFixture::setTableSchema()/getTableSchema() instead.'
-        );
         if ($schema) {
-            $this->setTableSchema($schema);
+            $this->_schema = $schema;
+
+            return null;
         }
 
-        return $this->getTableSchema();
+        return $this->_schema;
     }
 
     /**
@@ -432,7 +425,7 @@ class TestFixture implements FixtureInterface, TableSchemaInterface, TableSchema
         }
         $fields = array_values(array_unique($fields));
         foreach ($fields as $field) {
-            $types[$field] = $this->_schema->getColumn($field)['type'];
+            $types[$field] = $this->_schema->column($field)['type'];
         }
         $default = array_fill_keys($fields, null);
         foreach ($this->records as $record) {
@@ -453,23 +446,5 @@ class TestFixture implements FixtureInterface, TableSchemaInterface, TableSchema
         }
 
         return true;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function getTableSchema()
-    {
-        return $this->_schema;
-    }
-
-    /**
-     * {@inheritDoc}
-     */
-    public function setTableSchema(DatabaseTableSchemaInterface $schema)
-    {
-        $this->_schema = $schema;
-
-        return $this;
     }
 }

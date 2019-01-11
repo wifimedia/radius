@@ -13,7 +13,6 @@
  */
 namespace DebugKit\Panel;
 
-use Cake\Core\Configure;
 use Cake\Event\Event;
 use Cake\Routing\Router;
 use DebugKit\DebugPanel;
@@ -31,11 +30,6 @@ class RoutesPanel extends DebugPanel
      */
     public function summary()
     {
-        $appClass = Configure::read('App.namespace') . '\Application';
-        if (class_exists($appClass, false) && !Router::$initialized) {
-            return 0;
-        }
-
         return count(Router::routes());
     }
 
@@ -47,11 +41,11 @@ class RoutesPanel extends DebugPanel
      */
     public function shutdown(Event $event)
     {
-        $controller = $event->getSubject();
-        /* @var \Cake\Http\ServerRequest $request */
+        $controller = $event->subject();
+        /* @var \Cake\Network\Request $request */
         $request = $controller ? $controller->request : null;
         $this->_data = [
-            'matchedRoute' => $request ? $request->getParam('_matchedRoute') : null,
+            'matchedRoute' => $request ? $request->param('_matchedRoute') : null,
         ];
     }
 }

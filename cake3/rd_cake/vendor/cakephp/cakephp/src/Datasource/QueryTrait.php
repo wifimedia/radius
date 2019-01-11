@@ -1,16 +1,16 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Datasource;
 
@@ -28,7 +28,7 @@ trait QueryTrait
     /**
      * Instance of a table object this query is bound to
      *
-     * @var \Cake\ORM\Table|\Cake\Datasource\RepositoryInterface
+     * @var \Cake\Datasource\RepositoryInterface
      */
     protected $_repository;
 
@@ -87,34 +87,17 @@ trait QueryTrait
      * When called with a Table argument, the default table object will be set
      * and this query object will be returned for chaining.
      *
-     * @param \Cake\Datasource\RepositoryInterface|\Cake\ORM\Table|null $table The default table object to use
-     * @return \Cake\Datasource\RepositoryInterface|\Cake\ORM\Table|$this
+     * @param \Cake\Datasource\RepositoryInterface|null $table The default table object to use
+     * @return \Cake\Datasource\RepositoryInterface|$this
      */
     public function repository(RepositoryInterface $table = null)
     {
         if ($table === null) {
-            deprecationWarning(
-                'Using Query::repository() as getter is deprecated. ' .
-                'Use getRepository() instead.'
-            );
-
-            return $this->getRepository();
+            return $this->_repository;
         }
-
         $this->_repository = $table;
 
         return $this;
-    }
-
-    /**
-     * Returns the default table object that will be used by this query,
-     * that is, the table that will appear in the from clause.
-     *
-     * @return \Cake\Datasource\RepositoryInterface|\Cake\ORM\Table
-     */
-    public function getRepository()
-    {
-        return $this->_repository;
     }
 
     /**
@@ -198,31 +181,15 @@ trait QueryTrait
     }
 
     /**
-     * Returns the current configured query `_eagerLoaded` value
-     *
-     * @return bool
-     */
-    public function isEagerLoaded()
-    {
-        return $this->_eagerLoaded;
-    }
-
-    /**
      * Sets the query instance to be an eager loaded query. If no argument is
      * passed, the current configured query `_eagerLoaded` value is returned.
      *
-     * @deprecated 3.5.0 Use isEagerLoaded() for the getter part instead.
      * @param bool|null $value Whether or not to eager load.
      * @return $this|\Cake\ORM\Query
      */
     public function eagerLoaded($value = null)
     {
         if ($value === null) {
-            deprecationWarning(
-                'Using ' . get_called_class() . '::eagerLoaded() as a getter is deprecated. ' .
-                'Use isEagerLoaded() instead.'
-            );
-
             return $this->_eagerLoaded;
         }
         $this->_eagerLoaded = $value;
@@ -252,7 +219,7 @@ trait QueryTrait
         }
 
         if (!$alias) {
-            $alias = $this->getRepository()->getAlias();
+            $alias = $this->repository()->alias();
         }
 
         $key = sprintf('%s__%s', $alias, $field);
@@ -334,7 +301,7 @@ trait QueryTrait
      * result is attempted to be fetched.
      *
      * If the first argument is set to null, it will return the list of previously
-     * registered map reduce routines. This is deprecated as of 3.6.0 - use getMapReducers() instead.
+     * registered map reduce routines.
      *
      * If the third argument is set to true, it will erase previous map reducers
      * and replace it with the arguments passed.
@@ -351,13 +318,6 @@ trait QueryTrait
             $this->_mapReduce = [];
         }
         if ($mapper === null) {
-            if (!$overwrite) {
-                deprecationWarning(
-                    'Using QueryTrait::mapReduce() as a getter is deprecated. ' .
-                    'Use getMapReducers() instead.'
-                );
-            }
-
             return $this->_mapReduce;
         }
         $this->_mapReduce[] = compact('mapper', 'reducer');
@@ -366,28 +326,18 @@ trait QueryTrait
     }
 
     /**
-     * Returns the list of previously registered map reduce routines.
-     *
-     * @return array
-     */
-    public function getMapReducers()
-    {
-        return $this->_mapReduce;
-    }
-
-    /**
      * Registers a new formatter callback function that is to be executed when trying
      * to fetch the results from the database.
      *
-     * Formatting callbacks will get a first parameter, an object implementing
-     * `\Cake\Collection\CollectionInterface`, that can be traversed and modified at will.
+     * Formatting callbacks will get a first parameter, a `ResultSetDecorator`, that
+     * can be traversed and modified at will.
      *
      * Callbacks are required to return an iterator object, which will be used as
      * the return value for this query's result. Formatter functions are applied
      * after all the `MapReduce` routines for this query have been executed.
      *
      * If the first argument is set to null, it will return the list of previously
-     * registered format routines. This is deprecated as of 3.6.0 - use getResultFormatters() instead.
+     * registered map reduce routines.
      *
      * If the second argument is set to true, it will erase previous formatters
      * and replace them with the passed first argument.
@@ -419,13 +369,6 @@ trait QueryTrait
             $this->_formatters = [];
         }
         if ($formatter === null) {
-            if ($mode !== self::OVERWRITE) {
-                deprecationWarning(
-                    'Using QueryTrait::formatResults() as a getter is deprecated. ' .
-                    'Use getResultFormatters() instead.'
-                );
-            }
-
             return $this->_formatters;
         }
 
@@ -438,16 +381,6 @@ trait QueryTrait
         $this->_formatters[] = $formatter;
 
         return $this;
-    }
-
-    /**
-     * Returns the list of previously registered format routines.
-     *
-     * @return array
-     */
-    public function getResultFormatters()
-    {
-        return $this->_formatters;
     }
 
     /**
@@ -483,7 +416,7 @@ trait QueryTrait
         if (!$entity) {
             throw new RecordNotFoundException(sprintf(
                 'Record not found in table "%s"',
-                $this->getRepository()->getTable()
+                $this->repository()->table()
             ));
         }
 
@@ -582,6 +515,6 @@ trait QueryTrait
      */
     protected function _decoratorClass()
     {
-        return ResultSetDecorator::class;
+        return 'Cake\Datasource\ResultSetDecorator';
     }
 }

@@ -1,16 +1,16 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\ORM\Behavior;
 
@@ -33,7 +33,7 @@ use RuntimeException;
  * order will be cached.
  *
  * For more information on what is a nested set and a how it works refer to
- * https://www.sitepoint.com/hierarchical-data-database-2/
+ * http://www.sitepoint.com/hierarchical-data-database-2/
  */
 class TreeBehavior extends Behavior
 {
@@ -100,7 +100,7 @@ class TreeBehavior extends Behavior
         $config = $this->getConfig();
         $parent = $entity->get($config['parent']);
         $primaryKey = $this->_getPrimaryKey();
-        $dirty = $entity->isDirty($config['parent']);
+        $dirty = $entity->dirty($config['parent']);
         $level = $config['level'];
 
         if ($parent && $entity->get($primaryKey) == $parent) {
@@ -224,16 +224,12 @@ class TreeBehavior extends Behavior
         $diff = $right - $left + 1;
 
         if ($diff > 2) {
-            $query = $this->_scope($this->_table->query())
-                ->delete()
-                ->where(function ($exp) use ($config, $left, $right) {
-                    /* @var \Cake\Database\Expression\QueryExpression $exp */
-                    return $exp
-                        ->gte($config['leftField'], $left + 1)
-                        ->lte($config['leftField'], $right - 1);
-                });
-            $statement = $query->execute();
-            $statement->closeCursor();
+            $this->_table->deleteAll(function ($exp) use ($config, $left, $right) {
+                /* @var \Cake\Database\Expression\QueryExpression $exp */
+                return $exp
+                    ->gte($config['leftField'], $left + 1)
+                    ->lte($config['leftField'], $right - 1);
+            });
         }
 
         $this->_sync($diff, '-', "> {$right}");
@@ -349,7 +345,7 @@ class TreeBehavior extends Behavior
             function ($exp) use ($config) {
                 /* @var \Cake\Database\Expression\QueryExpression $exp */
                 $leftInverse = clone $exp;
-                $leftInverse->setConjunction('*')->add('-1');
+                $leftInverse->type('*')->add('-1');
                 $rightInverse = clone $leftInverse;
 
                 return $exp
@@ -589,7 +585,7 @@ class TreeBehavior extends Behavior
         $this->_table->updateAll($node->extract($fields), [$primary => $node->get($primary)]);
 
         foreach ($fields as $field) {
-            $node->setDirty($field, false);
+            $node->dirty($field, false);
         }
 
         return $node;
@@ -679,8 +675,8 @@ class TreeBehavior extends Behavior
         $node->set($left, $targetLeft);
         $node->set($right, $targetLeft + ($nodeRight - $nodeLeft));
 
-        $node->setDirty($left, false);
-        $node->setDirty($right, false);
+        $node->dirty($left, false);
+        $node->dirty($right, false);
 
         return $node;
     }
@@ -769,8 +765,8 @@ class TreeBehavior extends Behavior
         $node->set($left, $targetRight - ($nodeRight - $nodeLeft));
         $node->set($right, $targetRight);
 
-        $node->setDirty($left, false);
-        $node->setDirty($right, false);
+        $node->dirty($left, false);
+        $node->dirty($right, false);
 
         return $node;
     }
@@ -905,7 +901,7 @@ class TreeBehavior extends Behavior
             $exp = $query->newExpr();
 
             $movement = clone $exp;
-            $movement->add($field)->add((string)$shift)->setConjunction($dir);
+            $movement->add($field)->add("$shift")->setConjunction($dir);
 
             $inverse = clone $exp;
             $movement = $mark ?
@@ -932,13 +928,13 @@ class TreeBehavior extends Behavior
      */
     protected function _scope($query)
     {
-        $scope = $this->getConfig('scope');
+        $config = $this->getConfig();
 
-        if (is_array($scope)) {
-            return $query->where($scope);
+        if (is_array($config['scope'])) {
+            return $query->where($config['scope']);
         }
-        if (is_callable($scope)) {
-            return $scope($query);
+        if (is_callable($config['scope'])) {
+            return $config['scope']($query);
         }
 
         return $query;
@@ -964,7 +960,7 @@ class TreeBehavior extends Behavior
         $entity->set($fresh->extract($fields), ['guard' => false]);
 
         foreach ($fields as $field) {
-            $entity->setDirty($field, false);
+            $entity->dirty($field, false);
         }
     }
 

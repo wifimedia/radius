@@ -223,7 +223,9 @@ class JsonFile
             return $json;
         }
 
-        return JsonFormatter::format($json, $unescapeUnicode, $unescapeSlashes);
+        $result = JsonFormatter::format($json, $unescapeUnicode, $unescapeSlashes);
+
+        return $result;
     }
 
     /**

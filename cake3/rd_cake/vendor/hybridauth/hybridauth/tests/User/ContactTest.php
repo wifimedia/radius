@@ -2,7 +2,7 @@
 
 use Hybridauth\User\Contact;
 
-class ContactTest extends \PHPUnit\Framework\TestCase
+class ContactTest extends \PHPUnit_Framework_TestCase
 {
     public function test_instance_of()
     {

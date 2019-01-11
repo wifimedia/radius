@@ -45,6 +45,18 @@ class Discord extends OAuth2
     /**
     * {@inheritdoc}
     */
+    protected function initialize()
+    {
+        parent::initialize();
+
+        $this->apiRequestHeaders = [
+            'Authorization' => 'Bearer ' . $this->getStoredData('access_token')
+        ];
+    }
+
+    /**
+    * {@inheritdoc}
+    */
     public function getUserProfile()
     {
         $response = $this->apiRequest('users/@me');
@@ -54,17 +66,11 @@ class Discord extends OAuth2
         if (! $data->exists('id')) {
             throw new UnexpectedApiResponseException('Provider API returned an unexpected response.');
         }
-        
-        // Makes display name more unique.
-        $displayName = $data->get('username') ?: $data->get('login');
-        if ($discriminator = $data->get('discriminator')) {
-            $displayName .= "#{$discriminator}";
-        }
 
         $userProfile = new User\Profile();
 
         $userProfile->identifier  = $data->get('id');
-        $userProfile->displayName = $displayName;
+        $userProfile->displayName = $data->get('username') ?: $data->get('login');
         $userProfile->email       = $data->get('email');
 
         if ($data->get('verified')) {

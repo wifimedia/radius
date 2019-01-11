@@ -23,9 +23,6 @@ use Symfony\Component\Console\Input\ArrayInput;
 
 /**
  * Task class for generating migration diff files.
- *
- * @property \Bake\Shell\Task\BakeTemplateTask $BakeTemplate
- * @property \Bake\Shell\Task\TestTask $Test
  */
 class MigrationDiffTask extends SimpleMigrationTask
 {
@@ -104,7 +101,6 @@ class MigrationDiffTask extends SimpleMigrationTask
         if (!$this->checkSync()) {
             $this->error('Your migrations history is not in sync with your migrations files. ' .
                 'Make sure all your migrations have been migrated before baking a diff.');
-
             return 1;
         }
 
@@ -114,7 +110,7 @@ class MigrationDiffTask extends SimpleMigrationTask
 
         $collection = $this->getCollection($this->connection);
         EventManager::instance()->on('Bake.initialize', function (Event $event) use ($collection) {
-            $event->getSubject()->loadHelper('Migrations.Migration', [
+            $event->subject->loadHelper('Migrations.Migration', [
                 'collection' => $collection
             ]);
         });
@@ -134,7 +130,7 @@ class MigrationDiffTask extends SimpleMigrationTask
         $this->phinxTable = $this->getPhinxTable($this->plugin);
 
         $connection = ConnectionManager::get($this->connection);
-        $this->tables = $connection->getSchemaCollection()->listTables();
+        $this->tables = $connection->schemaCollection()->listTables();
         $tableExists = in_array($this->phinxTable, $this->tables);
 
         $migratedItems = [];
@@ -159,8 +155,7 @@ class MigrationDiffTask extends SimpleMigrationTask
     public function getCollection($connection)
     {
         $connection = ConnectionManager::get($connection);
-
-        return $connection->getSchemaCollection();
+        return $connection->schemaCollection();
     }
 
     /**
@@ -233,7 +228,7 @@ class MigrationDiffTask extends SimpleMigrationTask
             // brand new columns
             $addedColumns = array_diff($currentColumns, $oldColumns);
             foreach ($addedColumns as $columnName) {
-                $column = $currentSchema->getColumn($columnName);
+                $column = $currentSchema->column($columnName);
                 $key = array_search($columnName, $currentColumns);
                 if ($key > 0) {
                     $column['after'] = $currentColumns[$key - 1];
@@ -243,8 +238,8 @@ class MigrationDiffTask extends SimpleMigrationTask
 
             // changes in columns meta-data
             foreach ($currentColumns as $columnName) {
-                $column = $currentSchema->getColumn($columnName);
-                $oldColumn = $this->dumpSchema[$table]->getColumn($columnName);
+                $column = $currentSchema->column($columnName);
+                $oldColumn = $this->dumpSchema[$table]->column($columnName);
                 unset($column['collate']);
                 unset($oldColumn['collate']);
 
@@ -282,7 +277,7 @@ class MigrationDiffTask extends SimpleMigrationTask
             $removedColumns = array_diff($oldColumns, $currentColumns);
             if (!empty($removedColumns)) {
                 foreach ($removedColumns as $columnName) {
-                    $column = $this->dumpSchema[$table]->getColumn($columnName);
+                    $column = $this->dumpSchema[$table]->column($columnName);
                     $key = array_search($columnName, $oldColumns);
                     if ($key > 0) {
                         $column['after'] = $oldColumns[$key - 1];
@@ -312,19 +307,19 @@ class MigrationDiffTask extends SimpleMigrationTask
             $addedConstraints = array_diff($currentConstraints, $oldConstraints);
             foreach ($addedConstraints as $constraintName) {
                 $this->templateData[$table]['constraints']['add'][$constraintName] =
-                    $currentSchema->getConstraint($constraintName);
+                    $currentSchema->constraint($constraintName);
             }
 
             // constraints having the same name between new and old schema
             // if present in both, check if they are the same : if not, remove the old one and add the new one
             foreach ($currentConstraints as $constraintName) {
-                $constraint = $currentSchema->getConstraint($constraintName);
+                $constraint = $currentSchema->constraint($constraintName);
 
                 if (in_array($constraintName, $oldConstraints) &&
-                    $constraint !== $this->dumpSchema[$table]->getConstraint($constraintName)
+                    $constraint !== $this->dumpSchema[$table]->constraint($constraintName)
                 ) {
                     $this->templateData[$table]['constraints']['remove'][$constraintName] =
-                        $this->dumpSchema[$table]->getConstraint($constraintName);
+                        $this->dumpSchema[$table]->constraint($constraintName);
                     $this->templateData[$table]['constraints']['add'][$constraintName] =
                         $constraint;
                 }
@@ -333,7 +328,7 @@ class MigrationDiffTask extends SimpleMigrationTask
             // removed constraints
             $removedConstraints = array_diff($oldConstraints, $currentConstraints);
             foreach ($removedConstraints as $constraintName) {
-                $constraint = $this->dumpSchema[$table]->getConstraint($constraintName);
+                $constraint = $this->dumpSchema[$table]->constraint($constraintName);
                 if ($constraint['type'] === Table::CONSTRAINT_FOREIGN) {
                     $this->templateData[$table]['constraints']['remove'][$constraintName] = $constraint;
                 } else {
@@ -363,19 +358,19 @@ class MigrationDiffTask extends SimpleMigrationTask
             // brand new indexes
             $addedIndexes = array_diff($currentIndexes, $oldIndexes);
             foreach ($addedIndexes as $indexName) {
-                $this->templateData[$table]['indexes']['add'][$indexName] = $currentSchema->getIndex($indexName);
+                $this->templateData[$table]['indexes']['add'][$indexName] = $currentSchema->index($indexName);
             }
 
             // indexes having the same name between new and old schema
             // if present in both, check if they are the same : if not, remove the old one and add the new one
             foreach ($currentIndexes as $indexName) {
-                $index = $currentSchema->getIndex($indexName);
+                $index = $currentSchema->index($indexName);
 
                 if (in_array($indexName, $oldIndexes) &&
-                    $index !== $this->dumpSchema[$table]->getIndex($indexName)
+                    $index !== $this->dumpSchema[$table]->index($indexName)
                 ) {
                     $this->templateData[$table]['indexes']['remove'][$indexName] =
-                        $this->dumpSchema[$table]->getIndex($indexName);
+                        $this->dumpSchema[$table]->index($indexName);
                     $this->templateData[$table]['indexes']['add'][$indexName] = $index;
                 }
             }
@@ -389,7 +384,7 @@ class MigrationDiffTask extends SimpleMigrationTask
             $parts = [];
             if (!empty($removedIndexes)) {
                 foreach ($removedIndexes as $index) {
-                    $parts[$index] = $this->dumpSchema[$table]->getIndex($index);
+                    $parts[$index] = $this->dumpSchema[$table]->index($index);
                 }
             }
             $this->templateData[$table]['indexes']['remove'] = array_merge(
@@ -424,7 +419,6 @@ class MigrationDiffTask extends SimpleMigrationTask
      * Fallback method called to bake a snapshot when the phinx log history is empty and
      * there are no migration files.
      *
-     * @param string $name Name.
      * @return int Value of the snapshot baking dispatch process
      */
     protected function bakeSnapshot($name)
@@ -499,7 +493,7 @@ class MigrationDiffTask extends SimpleMigrationTask
             return $schema;
         }
 
-        $collection = ConnectionManager::get($this->connection)->getSchemaCollection();
+        $collection = ConnectionManager::get($this->connection)->schemaCollection();
         foreach ($this->tables as $table) {
             if (preg_match("/^.*phinxlog$/", $table) === 1) {
                 continue;
@@ -532,7 +526,6 @@ class MigrationDiffTask extends SimpleMigrationTask
             'help' => 'Name of the migration to bake. Can use Plugin.name to bake migration files into plugins.',
             'required' => true
         ]);
-
         return $parser;
     }
 }

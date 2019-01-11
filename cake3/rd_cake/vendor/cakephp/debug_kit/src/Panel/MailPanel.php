@@ -84,7 +84,7 @@ class MailPanel extends DebugPanel
      */
     public function summary()
     {
-        if (empty($this->emailLog)) {
+        if (count($this->emailLog) === 0) {
             return '';
         }
 

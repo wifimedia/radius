@@ -111,7 +111,7 @@ class FlattenExceptionTest extends TestCase
     /**
      * @dataProvider flattenDataProvider
      */
-    public function testFlattenHttpException(\Exception $exception)
+    public function testFlattenHttpException(\Exception $exception, $statusCode)
     {
         $flattened = FlattenException::create($exception);
         $flattened2 = FlattenException::create($exception);
@@ -126,7 +126,7 @@ class FlattenExceptionTest extends TestCase
     /**
      * @dataProvider flattenDataProvider
      */
-    public function testPrevious(\Exception $exception)
+    public function testPrevious(\Exception $exception, $statusCode)
     {
         $flattened = FlattenException::create($exception);
         $flattened2 = FlattenException::create($exception);
@@ -138,6 +138,9 @@ class FlattenExceptionTest extends TestCase
         $this->assertSame(array($flattened2), $flattened->getAllPrevious());
     }
 
+    /**
+     * @requires PHP 7.0
+     */
     public function testPreviousError()
     {
         $exception = new \Exception('test', 123, new \ParseError('Oh noes!', 42));
@@ -170,7 +173,7 @@ class FlattenExceptionTest extends TestCase
     /**
      * @dataProvider flattenDataProvider
      */
-    public function testToArray(\Exception $exception)
+    public function testToArray(\Exception $exception, $statusCode)
     {
         $flattened = FlattenException::create($exception);
         $flattened->setTrace(array(), 'foo.php', 123);
@@ -190,7 +193,7 @@ class FlattenExceptionTest extends TestCase
     public function flattenDataProvider()
     {
         return array(
-            array(new \Exception('test', 123)),
+            array(new \Exception('test', 123), 500),
         );
     }
 
@@ -233,7 +236,7 @@ class FlattenExceptionTest extends TestCase
         $this->assertSame(array('object', 'stdClass'), $array[$i++]);
         $this->assertSame(array('object', 'Symfony\Component\HttpKernel\Exception\NotFoundHttpException'), $array[$i++]);
         $this->assertSame(array('incomplete-object', 'BogusTestClass'), $array[$i++]);
-        $this->assertSame(array('resource', 'stream'), $array[$i++]);
+        $this->assertSame(array('resource', defined('HHVM_VERSION') ? 'Directory' : 'stream'), $array[$i++]);
         $this->assertSame(array('resource', 'stream'), $array[$i++]);
 
         $args = $array[$i++];
@@ -258,7 +261,6 @@ class FlattenExceptionTest extends TestCase
 
     public function testRecursionInArguments()
     {
-        $a = null;
         $a = array('foo', array(2, &$a));
         $exception = $this->createException($a);
 

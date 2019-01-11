@@ -34,7 +34,7 @@ final class Collection
     }
 
     /**
-    * Retrieves the whole collection as array
+    * Retrieves the whole colletion as array
     *
     * @return mixed
     */
@@ -55,8 +55,6 @@ final class Collection
         if ($this->exists($property)) {
             return $this->collection->$property;
         }
-
-        return null;
     }
 
     /**

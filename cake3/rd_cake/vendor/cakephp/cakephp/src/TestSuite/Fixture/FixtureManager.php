@@ -1,26 +1,24 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         2.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\TestSuite\Fixture;
-
-loadPHPUnitAliases();
 
 use Cake\Core\Configure;
 use Cake\Core\Exception\Exception;
 use Cake\Database\Schema\TableSchema;
-use Cake\Database\Schema\TableSchemaAwareInterface;
 use Cake\Datasource\ConnectionManager;
+use Cake\Datasource\TableSchemaInterface;
 use Cake\Utility\Inflector;
 use PDOException;
 use UnexpectedValueException;
@@ -188,18 +186,12 @@ class FixtureManager
                     $baseNamespace = Configure::read('App.namespace');
                 } elseif ($type === 'plugin') {
                     list($plugin, $name) = explode('.', $pathName);
-                    // Flip vendored plugin separators
-                    $path = str_replace('/', '\\', $plugin);
+                    $path = implode('\\', explode('/', $plugin));
                     $baseNamespace = Inflector::camelize(str_replace('\\', '\ ', $path));
                     $additionalPath = null;
                 } else {
                     $baseNamespace = '';
                     $name = $fixture;
-                }
-
-                // Tweak subdirectory names, so camelize() can make the correct name
-                if (strpos($name, '/') > 0) {
-                    $name = str_replace('/', '\\ ', $name);
                 }
 
                 $name = Inflector::camelize($name);
@@ -250,9 +242,9 @@ class FixtureManager
         $table = $fixture->sourceName();
         $exists = in_array($table, $sources);
 
-        $hasSchema = $fixture instanceof TableSchemaAwareInterface && $fixture->getTableSchema() instanceof TableSchema;
-
-        if (($drop && $exists) || ($exists && !$isFixtureSetup && $hasSchema)) {
+        if (($drop && $exists) ||
+            ($exists && !$isFixtureSetup && $fixture instanceof TableSchemaInterface && $fixture->schema() instanceof TableSchema)
+        ) {
             $fixture->drop($db);
             $fixture->create($db);
         } elseif (!$exists) {
@@ -284,13 +276,13 @@ class FixtureManager
 
         try {
             $createTables = function ($db, $fixtures) use ($test) {
-                $tables = $db->getSchemaCollection()->listTables();
+                $tables = $db->schemaCollection()->listTables();
                 $configName = $db->configName();
                 if (!isset($this->_insertionMap[$configName])) {
                     $this->_insertionMap[$configName] = [];
                 }
 
-                foreach ($fixtures as $fixture) {
+                foreach ($fixtures as $name => $fixture) {
                     if (in_array($fixture->table, $tables)) {
                         try {
                             $fixture->dropConstraints($db);
@@ -301,7 +293,7 @@ class FixtureManager
                                 get_class($test),
                                 $e->getMessage()
                             );
-                            throw new Exception($msg, null, $e);
+                            throw new Exception($msg);
                         }
                     }
                 }
@@ -314,7 +306,7 @@ class FixtureManager
                     }
                 }
 
-                foreach ($fixtures as $fixture) {
+                foreach ($fixtures as $name => $fixture) {
                     try {
                         $fixture->createConstraints($db);
                     } catch (PDOException $e) {
@@ -324,7 +316,7 @@ class FixtureManager
                             get_class($test),
                             $e->getMessage()
                         );
-                        throw new Exception($msg, null, $e);
+                        throw new Exception($msg);
                     }
                 }
             };
@@ -342,7 +334,7 @@ class FixtureManager
                             get_class($test),
                             $e->getMessage()
                         );
-                        throw new Exception($msg, null, $e);
+                        throw new Exception($msg);
                     }
                 }
             };
@@ -353,7 +345,7 @@ class FixtureManager
                 get_class($test),
                 $e->getMessage()
             );
-            throw new Exception($msg, null, $e);
+            throw new Exception($msg);
         }
     }
 
@@ -453,7 +445,7 @@ class FixtureManager
         }
 
         if (!$this->isFixtureSetup($db->configName(), $fixture)) {
-            $sources = $db->getSchemaCollection()->listTables();
+            $sources = $db->schemaCollection()->listTables();
             $this->_setupTable($fixture, $db, $sources, $dropTables);
         }
 

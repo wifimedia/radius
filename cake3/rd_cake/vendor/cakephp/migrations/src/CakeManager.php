@@ -53,9 +53,9 @@ class CakeManager extends Manager
     /**
      * Prints the specified environment's migration status.
      *
-     * @param string $environment Environment name.
-     * @param null|string $format Format (`json` or `array`).
-     * @return array|string Array of migrations or json string.
+     * @param string $environment
+     * @param null|string $format
+     * @return array Array of migrations
      */
     public function printStatus($environment, $format = null)
     {
@@ -132,7 +132,6 @@ class CakeManager extends Manager
             $this->getOutput()->writeln(
                 'No migrations to run'
             );
-
             return;
         }
 
@@ -153,20 +152,17 @@ class CakeManager extends Manager
         sort($versions);
         $versions = array_reverse($versions);
 
-        if (empty($versions) || $dateString > $versions[0]) {
+        if ($dateString > $versions[0]) {
             $this->getOutput()->writeln('No migrations to rollback');
-
             return;
         }
 
         if ($dateString < end($versions)) {
             $this->getOutput()->writeln('Rolling back all migrations');
             $this->rollback($environment, 0);
-
             return;
         }
 
-        $index = 0;
         foreach ($versions as $index => $version) {
             if ($dateString > $version) {
                 break;
@@ -220,7 +216,6 @@ class CakeManager extends Manager
         $time = date('Y-m-d H:i:s', time());
 
         $adapter->migrated($Migration, 'up', $time, $time);
-
         return true;
     }
 
@@ -282,7 +277,6 @@ class CakeManager extends Manager
 
         if (empty($versions)) {
             $output->writeln('<info>No migrations were found. Nothing to mark as migrated.</info>');
-
             return;
         }
 
@@ -308,7 +302,6 @@ class CakeManager extends Manager
                     )
                 );
                 $output->writeln('<error>All marked migrations during this process were unmarked.</error>');
-
                 return;
             }
         }

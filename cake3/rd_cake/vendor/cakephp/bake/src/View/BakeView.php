@@ -17,10 +17,13 @@ namespace Bake\View;
 use Cake\Core\Configure;
 use Cake\Core\ConventionsTrait;
 use Cake\Core\InstanceConfigTrait;
+use Cake\Event\EventManager;
+use Cake\Network\Request;
+use Cake\Network\Response;
 use Cake\Utility\Text;
-use WyriHaximus\TwigView\View\TwigView;
+use Cake\View\View;
 
-class BakeView extends TwigView
+class BakeView extends View
 {
     use ConventionsTrait;
     use InstanceConfigTrait;
@@ -72,29 +75,22 @@ class BakeView extends TwigView
     protected $_tmpLocation;
 
     /**
-     * Templates extensions to search for.
+     * Upon construction, append the plugin's template paths to the paths to check
      *
-     * @var array
+     * @param \Cake\Network\Request|null $request Request instance.
+     * @param \Cake\Network\Response|null $response Response instance.
+     * @param \Cake\Event\EventManager|null $eventManager Event manager instance.
+     * @param array $viewOptions View options. See View::$_passedVars for list of
+     *   options which get set as class properties.
      */
-    protected $extensions = [
-        '.twig',
-        '.ctp',
-    ];
+    public function __construct(
+        Request $request = null,
+        Response $response = null,
+        EventManager $eventManager = null,
+        array $viewOptions = []
+    ) {
+        parent::__construct($request, $response, $eventManager, $viewOptions);
 
-    /**
-     * View file being evaluated.
-     *
-     * @var string
-     */
-    protected $__viewFile;
-
-    /**
-     * Initialize view
-     *
-     * @return void
-     */
-    public function initialize()
-    {
         $bakeTemplates = dirname(dirname(__FILE__)) . DS . 'Template' . DS;
         $paths = (array)Configure::read('App.paths.templates');
 
@@ -107,8 +103,6 @@ class BakeView extends TwigView
         if (!file_exists($this->_tmpLocation)) {
             mkdir($this->_tmpLocation);
         }
-
-        parent::initialize();
     }
 
     /**
@@ -135,8 +129,8 @@ class BakeView extends TwigView
     {
         $viewFileName = $this->_getViewFileName($view);
         $templateEventName = str_replace(
-            ['.ctp', '.twig', DS],
-            ['', '', '.'],
+            ['.ctp', DS],
+            ['', '.'],
             explode('Template' . DS . 'Bake' . DS, $viewFileName)[1]
         );
 
@@ -188,13 +182,9 @@ class BakeView extends TwigView
      */
     protected function _evaluate($viewFile, $dataForView)
     {
-        if (substr($viewFile, -4) === 'twig') {
-            return parent::_evaluate($viewFile, $dataForView);
-        }
-
         $viewString = $this->_getViewFileContents($viewFile);
 
-        $replacements = $this->getConfig('phpTagReplacements') + $this->getConfig('replacements');
+        $replacements = array_merge($this->getConfig('phpTagReplacements') + $this->getConfig('replacements'));
 
         foreach ($replacements as $find => $replace) {
             if ($this->_isRegex($find)) {

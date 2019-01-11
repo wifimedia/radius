@@ -79,15 +79,6 @@ class ProxyAdapter extends AdapterWrapper
         $this->recordCommand('dropTable', array($tableName));
     }
 
-
-    /**
-     * {@inheritdoc}
-     */
-    public function truncateTable($tableName)
-    {
-        $this->recordCommand('truncateTable', array($tableName));
-    }
-
     /**
      * {@inheritdoc}
      */

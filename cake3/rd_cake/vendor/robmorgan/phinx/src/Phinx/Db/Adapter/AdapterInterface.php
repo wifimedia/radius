@@ -81,9 +81,8 @@ interface AdapterInterface
     public function getVersions();
 
     /**
-     * Get all migration log entries, indexed by version creation time and sorted ascendingly by the configuration's 
-     * version order option
-     * 
+     * Get all migration log entries, indexed by version number.
+     *
      * @return array
      */
     public function getVersionLog();
@@ -331,15 +330,6 @@ interface AdapterInterface
      */
     public function dropTable($tableName);
 
-
-    /**
-     * Truncates the specified table
-     *
-     * @param string $tableName
-     * @return void
-     */
-    public function truncateTable($tableName);
-
     /**
      * Returns table columns
      *
@@ -489,7 +479,7 @@ interface AdapterInterface
      *
      * @param string $type
      * @param integer $limit
-     * @return string[]
+     * @return string
      */
     public function getSqlType($type, $limit = null);
 
@@ -517,13 +507,4 @@ interface AdapterInterface
      * @return void
      */
     public function dropDatabase($name);
-
-    /**
-     * Cast a value to a boolean appropriate for the adapter.
-     *
-     * @param mixed $value The value to be cast
-     *
-     * @return mixed
-     */
-    public function castToBool($value);
 }

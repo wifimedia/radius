@@ -26,11 +26,20 @@ class RedisCasterTest extends TestCase
     {
         $redis = new \Redis();
 
-        $xCast = <<<'EODUMP'
+        if (defined('HHVM_VERSION_ID')) {
+            $xCast = <<<'EODUMP'
+Redis {
+  #host: ""
+%A
+}
+EODUMP;
+        } else {
+            $xCast = <<<'EODUMP'
 Redis {
   isConnected: false
 }
 EODUMP;
+        }
 
         $this->assertDumpMatchesFormat($xCast, $redis);
     }
@@ -43,8 +52,17 @@ EODUMP;
             self::markTestSkipped($e['message']);
         }
 
-        $xCast = <<<'EODUMP'
-Redis {%A
+        if (defined('HHVM_VERSION_ID')) {
+            $xCast = <<<'EODUMP'
+Redis {
+  #host: "127.0.0.1"
+%A
+}
+EODUMP;
+        } else {
+            $xCast = <<<'EODUMP'
+Redis {
+  +"socket": Redis Socket Buffer resource
   isConnected: true
   host: "127.0.0.1"
   port: 6379
@@ -60,6 +78,7 @@ Redis {%A
   }
 }
 EODUMP;
+        }
 
         $this->assertDumpMatchesFormat($xCast, $redis);
     }

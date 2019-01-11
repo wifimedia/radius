@@ -30,7 +30,6 @@ trait UtilTrait
     protected function getPlugin(InputInterface $input)
     {
         $plugin = $input->getOption('plugin') ?: null;
-
         return $plugin;
     }
     /**
@@ -49,7 +48,6 @@ trait UtilTrait
 
         $plugin = Inflector::underscore($plugin) . '_';
         $plugin = str_replace(['\\', '/', '.'], '_', $plugin);
-
         return $plugin . $table;
     }
 

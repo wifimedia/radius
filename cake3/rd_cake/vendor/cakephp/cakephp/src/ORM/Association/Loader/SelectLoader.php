@@ -1,16 +1,16 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.4.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\ORM\Association\Loader;
 
@@ -116,7 +116,7 @@ class SelectLoader
      * iterator. The options accepted by this method are the same as `Association::eagerLoader()`
      *
      * @param array $options Same options as `Association::eagerLoader()`
-     * @return \Closure
+     * @return callable
      */
     public function buildEagerLoader(array $options)
     {
@@ -163,14 +163,7 @@ class SelectLoader
             $options['fields'] = [];
         }
 
-        /* @var \Cake\ORM\Query $query */
-        $query = $finder();
-        if (isset($options['finder'])) {
-            list($finderName, $opts) = $this->_extractFinder($options['finder']);
-            $query = $query->find($finderName, $opts);
-        }
-
-        $fetchQuery = $query
+        $fetchQuery = $finder()
             ->select($options['fields'])
             ->where($options['conditions'])
             ->eagerLoaded(true)
@@ -201,33 +194,6 @@ class SelectLoader
     }
 
     /**
-     * Helper method to infer the requested finder and its options.
-     *
-     * Returns the inferred options from the finder $type.
-     *
-     * ### Examples:
-     *
-     * The following will call the finder 'translations' with the value of the finder as its options:
-     * $query->contain(['Comments' => ['finder' => ['translations']]]);
-     * $query->contain(['Comments' => ['finder' => ['translations' => []]]]);
-     * $query->contain(['Comments' => ['finder' => ['translations' => ['locales' => ['en_US']]]]]);
-     *
-     * @param string|array $finderData The finder name or an array having the name as key
-     * and options as value.
-     * @return array
-     */
-    protected function _extractFinder($finderData)
-    {
-        $finderData = (array)$finderData;
-
-        if (is_numeric(key($finderData))) {
-            return [current($finderData), []];
-        }
-
-        return [key($finderData), current($finderData)];
-    }
-
-    /**
      * Checks that the fetching query either has auto fields on or
      * has the foreignKey fields selected.
      * If the required fields are missing, throws an exception.
@@ -235,7 +201,7 @@ class SelectLoader
      * @param \Cake\ORM\Query $fetchQuery The association fetching query
      * @param array $key The foreign key fields to check
      * @return void
-     * @throws \InvalidArgumentException
+     * @throws InvalidArgumentException
      */
     protected function _assertFieldsPresent($fetchQuery, $key)
     {
@@ -255,7 +221,7 @@ class SelectLoader
 
         $missingFields = $missingKey($select, $key);
         if ($missingFields) {
-            $driver = $fetchQuery->getConnection()->getDriver();
+            $driver = $fetchQuery->getConnection()->driver();
             $quoted = array_map([$driver, 'quoteIdentifier'], $key);
             $missingFields = $missingKey($select, $quoted);
         }
@@ -276,7 +242,7 @@ class SelectLoader
      * filtering needs to be done using a subquery.
      *
      * @param \Cake\ORM\Query $query Target table's query
-     * @param string|array $key the fields that should be used for filtering
+     * @param string $key the fields that should be used for filtering
      * @param \Cake\ORM\Query $subquery The Subquery to use for filtering
      * @return \Cake\ORM\Query
      */
@@ -294,14 +260,13 @@ class SelectLoader
         }
         $subquery->select($filter, true);
 
-        $conditions = null;
         if (is_array($key)) {
             $conditions = $this->_createTupleCondition($query, $key, $filter, '=');
         } else {
             $filter = current($filter);
         }
 
-        $conditions = $conditions ?: $query->newExpr([$key => $filter]);
+        $conditions = isset($conditions) ? $conditions : $query->newExpr([$key => $filter]);
 
         return $query->innerJoin(
             [$aliasedTable => $subquery],
@@ -314,8 +279,8 @@ class SelectLoader
      * target table query given a filter key and some filtering values.
      *
      * @param \Cake\ORM\Query $query Target table's query
-     * @param string|array $key The fields that should be used for filtering
-     * @param mixed $filter The value that should be used to match for $key
+     * @param string|array $key the fields that should be used for filtering
+     * @param mixed $filter the value that should be used to match for $key
      * @return \Cake\ORM\Query
      */
     protected function _addFilteringCondition($query, $key, $filter)
@@ -400,7 +365,7 @@ class SelectLoader
         $filterQuery->mapReduce(null, null, true);
         $filterQuery->formatResults(null, true);
         $filterQuery->contain([], true);
-        $filterQuery->setValueBinder(new ValueBinder());
+        $filterQuery->valueBinder(new ValueBinder());
 
         if (!$filterQuery->clause('limit')) {
             $filterQuery->limit(null);

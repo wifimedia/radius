@@ -103,14 +103,7 @@ class Curl implements HttpClientInterface
     */
     public function request($uri, $method = 'GET', $parameters = [], $headers = [])
     {
-        $this->requestHeader = array_replace($this->requestHeader, (array) $headers);
-
-        $this->requestArguments = [
-            'uri' => $uri,
-            'method' => $method,
-            'parameters' => $parameters,
-            'headers' => $this->requestHeader,
-        ];
+        $this->requestArguments = [ 'uri' => $uri, 'method' => $method, 'parameters' => $parameters, 'headers' => $headers ];
 
         $curl = curl_init();
 
@@ -122,24 +115,13 @@ class Curl implements HttpClientInterface
         }
 
         if ('POST' == $method) {
-            $body_content = http_build_query($parameters);
-            if (isset($this->requestHeader['Content-Type']) && $this->requestHeader['Content-Type'] == 'application/json') {
-                $body_content = json_encode($parameters);
-            }
-
-            $this->curlOptions[CURLOPT_POST] = true;
-            $this->curlOptions[CURLOPT_POSTFIELDS] = $body_content;
+            $this->curlOptions[CURLOPT_POST]       = true;
+            $this->curlOptions[CURLOPT_POSTFIELDS] = http_build_query($parameters);
         }
 
-        if ('PUT' == $method) {
-            $body_content = http_build_query($parameters);
-            if (isset($this->requestHeader['Content-Type']) && $this->requestHeader['Content-Type'] == 'application/json') {
-                $body_content = json_encode($parameters);
-            }
+        $this->requestHeader = array_merge($this->requestHeader, (array)$headers);
 
-            $this->curlOptions[CURLOPT_CUSTOMREQUEST] = 'PUT';
-            $this->curlOptions[CURLOPT_POSTFIELDS] = $body_content;
-        }
+        $this->requestArguments['headers'] = $this->requestHeader;
 
         $this->curlOptions[CURLOPT_URL]            = $uri;
         $this->curlOptions[CURLOPT_HTTPHEADER]     = $this->prepareRequestHeaders();
@@ -179,12 +161,12 @@ class Curl implements HttpClientInterface
         $curlOptions[CURLOPT_HEADERFUNCTION] = '*omitted';
 
         return [
-            'request' => $this->getRequestArguments(),
             'response' => [
                 'code'    => $this->getResponseHttpCode(),
                 'headers' => $this->getResponseHeader(),
                 'body'    => $this->getResponseBody(),
             ],
+            'request' => $this->getRequestArguments(),
             'client' => [
                 'error' => $this->getResponseClientError(),
                 'info'  => $this->getResponseClientInfo(),

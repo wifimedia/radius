@@ -90,7 +90,7 @@ class RequestsTable extends Table
         }
         $noPurge = $this->find()
             ->select(['id'])
-            ->enableHydration(false)
+            ->hydrate(false)
             ->order(['requested_at' => 'desc'])
             ->limit(Configure::read('DebugKit.requestCount') ?: 20)
             ->extract('id')

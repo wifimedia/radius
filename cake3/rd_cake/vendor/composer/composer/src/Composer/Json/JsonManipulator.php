@@ -69,15 +69,11 @@ class JsonManipulator
 
         $links = $matches['value'];
 
-        // try to find existing link
-        $packageRegex = str_replace('/', '\\\\?/', preg_quote($package));
-        $regex = '{'.self::$DEFINES.'"(?P<package>'.$packageRegex.')"(\s*:\s*)(?&string)}ix';
-        if ($this->pregMatch($regex, $links, $packageMatches)) {
+        if (isset($decoded[$type][$package])) {
             // update existing link
-            $existingPackage = $packageMatches['package'];
-            $packageRegex = str_replace('/', '\\\\?/', preg_quote($existingPackage));
-            $links = preg_replace_callback('{'.self::$DEFINES.'"'.$packageRegex.'"(?P<separator>\s*:\s*)(?&string)}ix', function ($m) use ($existingPackage, $constraint) {
-                return JsonFile::encode(str_replace('\\/', '/', $existingPackage)) . $m['separator'] . '"' . $constraint . '"';
+            $packageRegex = str_replace('/', '\\\\?/', preg_quote($package));
+            $links = preg_replace_callback('{'.self::$DEFINES.'"'.$packageRegex.'"(?P<separator>\s*:\s*)(?&string)}ix', function ($m) use ($package, $constraint) {
+                return JsonFile::encode($package) . $m['separator'] . '"' . $constraint . '"';
             }, $links);
         } else {
             if ($this->pregMatch('#^\s*\{\s*\S+.*?(\s*\}\s*)$#s', $links, $match)) {
@@ -188,7 +184,7 @@ class JsonManipulator
         $decoded = JsonFile::parseJson($this->contents);
 
         $subName = null;
-        if (in_array($mainNode, array('config', 'extra')) && false !== strpos($name, '.')) {
+        if (in_array($mainNode, array('config', 'repositories', 'extra')) && false !== strpos($name, '.')) {
             list($name, $subName) = explode('.', $name, 2);
         }
 
@@ -308,7 +304,7 @@ class JsonManipulator
         }
 
         $subName = null;
-        if (in_array($mainNode, array('config', 'extra')) && false !== strpos($name, '.')) {
+        if (in_array($mainNode, array('config', 'repositories', 'extra')) && false !== strpos($name, '.')) {
             list($name, $subName) = explode('.', $name, 2);
         }
 
@@ -417,7 +413,7 @@ class JsonManipulator
     {
         $decoded = JsonFile::parseJson($this->contents);
 
-        if (!array_key_exists($key, $decoded)) {
+        if (!isset($decoded[$key])) {
             return true;
         }
 
@@ -428,11 +424,6 @@ class JsonManipulator
             // invalid match due to un-regexable content, abort
             if (!@json_decode('{'.$matches['removal'].'}')) {
                 return false;
-            }
-
-            // check that we are not leaving a dangling comma on the previous line if the last line was removed
-            if (preg_match('#,\s*$#', $matches['start']) && preg_match('#^\}$#', $matches['end'])) {
-                $matches['start'] = rtrim(preg_replace('#,(\s*)$#', '$1', $matches['start']), $this->indent);
             }
 
             $this->contents = $matches['start'] . $matches['end'];

@@ -1,23 +1,30 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         2.1.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Event;
 
 /**
- * Class Event
+ * Represents the transport class of events across the system. It receives a name, subject and an optional
+ * payload. The name can be any string that uniquely identifies the event across the application, while the subject
+ * represents the object that the event applies to.
+ *
+ * @property string $name (deprecated) Name of the event
+ * @property object $subject (deprecated) The object this event applies to
+ * @property mixed $result (deprecated) Property used to retain the result value of the event listeners
+ * @property array $data (deprecated) Custom data for the method that receives the event
  */
-class Event implements EventInterface
+class Event
 {
 
     /**
@@ -30,7 +37,7 @@ class Event implements EventInterface
     /**
      * The object this event applies to (usually the same object that generates the event)
      *
-     * @var object|null
+     * @var object
      */
     protected $_subject;
 
@@ -43,8 +50,6 @@ class Event implements EventInterface
 
     /**
      * Property used to retain the result value of the event listeners
-     *
-     * Note: Public access is deprecated, use setResult() and getResult() instead.
      *
      * @var mixed
      */
@@ -74,8 +79,8 @@ class Event implements EventInterface
     public function __construct($name, $subject = null, $data = null)
     {
         $this->_name = $name;
-        $this->_subject = $subject;
         $this->_data = (array)$data;
+        $this->_subject = $subject;
     }
 
     /**
@@ -87,15 +92,6 @@ class Event implements EventInterface
      */
     public function __get($attribute)
     {
-        if (!in_array($attribute, ['name', 'subject', 'data', 'result'])) {
-            return $this->{$attribute};
-        }
-
-        $method = 'get' . ucfirst($attribute);
-        deprecationWarning(
-            "Event::\${$attribute} is deprecated. " .
-            "Use Event::{$method}() instead."
-        );
         if ($attribute === 'name' || $attribute === 'subject') {
             return $this->{$attribute}();
         }
@@ -117,11 +113,6 @@ class Event implements EventInterface
      */
     public function __set($attribute, $value)
     {
-        $method = 'set' . ucfirst($attribute);
-        deprecationWarning(
-            "Event::\${$attribute} is deprecated. " .
-            "Use Event::{$method}() instead."
-        );
         if ($attribute === 'data') {
             $this->_data = (array)$value;
         }
@@ -138,8 +129,6 @@ class Event implements EventInterface
      */
     public function name()
     {
-        deprecationWarning('Event::name() is deprecated. Use Event::getName() instead.');
-
         return $this->_name;
     }
 
@@ -161,8 +150,6 @@ class Event implements EventInterface
      */
     public function subject()
     {
-        deprecationWarning('Event::subject() is deprecated. Use Event::getSubject() instead.');
-
         return $this->_subject;
     }
 
@@ -204,8 +191,6 @@ class Event implements EventInterface
      */
     public function result()
     {
-        deprecationWarning('Event::result() is deprecated. Use Event::getResult() instead.');
-
         return $this->result;
     }
 

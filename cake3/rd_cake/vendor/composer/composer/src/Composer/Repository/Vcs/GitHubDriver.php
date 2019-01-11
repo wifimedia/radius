@@ -361,9 +361,7 @@ class GitHubDriver extends VcsDriver
                         }
                     }
                     $scopesFailed = array_diff($scopesNeeded, $scopesIssued);
-                    // non-authenticated requests get no scopesNeeded, so ask for credentials
-                    // authenticated requests which failed some scopes should ask for new credentials too
-                    if (!$headers || !count($scopesNeeded) || count($scopesFailed)) {
+                    if (!$headers || count($scopesFailed)) {
                         $gitHubUtil->authorizeOAuthInteractively($this->originUrl, 'Your GitHub credentials are required to fetch private repository metadata (<info>'.$this->url.'</info>)');
                     }
 
@@ -514,8 +512,8 @@ class GitHubDriver extends VcsDriver
     {
         $headers = $this->remoteFilesystem->getLastHeaders();
         foreach ($headers as $header) {
-            if (preg_match('{^link:\s*(.+?)\s*$}i', $header, $match)) {
-                $links = explode(',', $match[1]);
+            if (substr($header, 0, 5) === 'Link:') {
+                $links = explode(',', substr($header, 5));
                 foreach ($links as $link) {
                     if (preg_match('{<(.+?)>; *rel="next"}', $link, $match)) {
                         return $match[1];

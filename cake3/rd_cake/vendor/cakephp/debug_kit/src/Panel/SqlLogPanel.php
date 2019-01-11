@@ -12,7 +12,6 @@
  */
 namespace DebugKit\Panel;
 
-use Cake\Core\Configure;
 use Cake\Datasource\ConnectionManager;
 use Cake\ORM\Table;
 use Cake\ORM\TableRegistry;
@@ -44,8 +43,6 @@ class SqlLogPanel extends DebugPanel
     public function initialize()
     {
         $configs = ConnectionManager::configured();
-        $includeSchemaReflection = (bool)Configure::read('DebugKit.includeSchemaReflection');
-
         foreach ($configs as $name) {
             $connection = ConnectionManager::get($name);
             if ($connection->configName() === 'debug_kit') {
@@ -53,18 +50,17 @@ class SqlLogPanel extends DebugPanel
             }
             $logger = null;
             if ($connection->logQueries()) {
-                $logger = $connection->getLogger();
+                $logger = $connection->logger();
             }
 
             if ($logger instanceof DebugLog) {
-                $logger->setIncludeSchema($includeSchemaReflection);
                 $this->_loggers[] = $logger;
                 continue;
             }
-            $logger = new DebugLog($logger, $name, $includeSchemaReflection);
+            $logger = new DebugLog($logger, $name);
 
             $connection->logQueries(true);
-            $connection->setLogger($logger);
+            $connection->logger($logger);
             $this->_loggers[] = $logger;
         }
     }
@@ -78,8 +74,8 @@ class SqlLogPanel extends DebugPanel
     {
         return [
             'tables' => array_map(function (Table $table) {
-                return $table->getAlias();
-            }, TableRegistry::getTableLocator()->genericInstances()),
+                return $table->alias();
+            }, TableRegistry::genericInstances()),
             'loggers' => $this->_loggers,
         ];
     }

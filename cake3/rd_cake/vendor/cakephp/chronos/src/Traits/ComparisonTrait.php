@@ -246,7 +246,7 @@ trait ComparisonTrait
      */
     public function isNextWeek()
     {
-        return $this->format('W o') === static::now($this->tz)->addWeek()->format('W o');
+        return $this->weekOfYear === static::now($this->tz)->addWeek()->weekOfYear;
     }
 
     /**
@@ -256,7 +256,7 @@ trait ComparisonTrait
      */
     public function isLastWeek()
     {
-        return $this->format('W o') === static::now($this->tz)->subWeek()->format('W o');
+        return $this->weekOfYear === static::now($this->tz)->subWeek()->weekOfYear;
     }
 
     /**
@@ -266,7 +266,7 @@ trait ComparisonTrait
      */
     public function isNextMonth()
     {
-        return $this->format('m Y') === static::now($this->tz)->addMonth()->format('m Y');
+        return $this->month === static::now($this->tz)->addMonth()->month;
     }
 
     /**
@@ -276,7 +276,7 @@ trait ComparisonTrait
      */
     public function isLastMonth()
     {
-        return $this->format('m Y') === static::now($this->tz)->subMonth()->format('m Y');
+        return $this->month === static::now($this->tz)->subMonth()->month;
     }
 
     /**

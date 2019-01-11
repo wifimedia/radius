@@ -9,12 +9,11 @@
  * file that was distributed with this source code.
  */
 
-use PHPUnit\Framework\TestCase;
 use Seld\JsonLint\JsonParser;
 use Seld\JsonLint\ParsingException;
 use Seld\JsonLint\DuplicateKeyException;
 
-class JsonParserTest extends TestCase
+class JsonParserTest extends PHPUnit_Framework_TestCase
 {
     protected $json = array(
         '42', '42.3', '0.3', '-42', '-42.3', '-0.3',
@@ -33,8 +32,6 @@ class JsonParserTest extends TestCase
         '["http:\/\/foo\\\\zomg"]',
         '{"":"foo"}',
         '{"a":"b", "b":"c"}',
-        '0',
-        '""',
     );
 
     /**

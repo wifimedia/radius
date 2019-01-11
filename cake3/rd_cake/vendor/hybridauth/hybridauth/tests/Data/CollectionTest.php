@@ -2,7 +2,7 @@
 
 use Hybridauth\Data\Collection;
 
-class CollectionTest extends \PHPUnit\Framework\TestCase
+class CollectionTest extends \PHPUnit_Framework_TestCase
 {
     public function some_random_id()
     {

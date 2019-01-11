@@ -37,6 +37,14 @@ namespace Phinx\Config;
 interface ConfigInterface extends \ArrayAccess
 {
     /**
+     * Class Constructor
+     *
+     * @param array $configArray Config Array
+     * @param string $configFilePath Optional File Path
+     */
+    public function __construct(array $configArray, $configFilePath = null);
+
+    /**
      * Returns the configuration for each environment.
      *
      * This method returns <code>null</code> if no environments exist.
@@ -73,15 +81,6 @@ interface ConfigInterface extends \ArrayAccess
     public function getDefaultEnvironment();
 
     /**
-     * Get the aliased value from a supplied alias.
-     *
-     * @param string $alias
-     *
-     * @return string|null
-     */
-    public function getAlias($alias);
-
-    /**
      * Gets the config file path.
      *
      * @return string
@@ -89,18 +88,18 @@ interface ConfigInterface extends \ArrayAccess
     public function getConfigFilePath();
 
     /**
-     * Gets the paths to search for migration files.
+     * Gets the path of the migration files.
      *
-     * @return string[]
+     * @return string
      */
-    public function getMigrationPaths();
+    public function getMigrationPath();
 
     /**
-     * Gets the paths to search for seed files.
+     * Gets the path of the seed files.
      *
-     * @return string[]
+     * @return string
      */
-    public function getSeedPaths();
+    public function getSeedPath();
 
      /**
      * Get the template file name.
@@ -115,20 +114,6 @@ interface ConfigInterface extends \ArrayAccess
      * @return string|false
      */
     public function getTemplateClass();
-
-    /**
-     * Get the version order.
-     *
-     * @return string
-     */
-    public function getVersionOrder();
-
-    /**
-     * Is version order creation time?
-     *
-     * @return boolean
-     */
-    public function isVersionOrderCreationTime();
 
     /**
      * Gets the base class name for migrations.

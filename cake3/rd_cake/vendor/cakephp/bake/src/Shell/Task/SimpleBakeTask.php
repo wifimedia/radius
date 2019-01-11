@@ -19,9 +19,6 @@ use Cake\Utility\Inflector;
 
 /**
  * Base class for simple bake tasks code generator.
- *
- * @property \Bake\Shell\Task\BakeTemplateTask $BakeTemplate
- * @property \Bake\Shell\Task\TestTask $Test
  */
 abstract class SimpleBakeTask extends BakeTask
 {
@@ -82,9 +79,7 @@ abstract class SimpleBakeTask extends BakeTask
     {
         parent::main();
         if (empty($name)) {
-            $this->abort('You must provide a name to bake a ' . $this->name());
-
-            return null;
+            return $this->error('You must provide a name to bake a ' . $this->name());
         }
         $name = $this->_getName($name);
         $name = Inflector::camelize($name);

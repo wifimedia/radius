@@ -7,7 +7,7 @@
 
 namespace Hybridauth\Adapter;
 
-use Hybridauth\Exception\Exception;
+use Hybridauth\Exception;
 use Hybridauth\Exception\InvalidApplicationCredentialsException;
 use Hybridauth\Exception\InvalidAuthorizationStateException;
 use Hybridauth\Exception\InvalidAuthorizationCodeException;
@@ -63,6 +63,8 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     * Base URL to provider API
     *
     * This var will be used to build urls when sending signed requests
+    *
+    * ...
     *
     * @var string
     */
@@ -124,13 +126,6 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     protected $callback = '';
 
     /**
-    * Authorization Url Parameters
-    *
-    * @var boolean
-    */
-    protected $AuthorizeUrlParameters = [];
-
-    /**
     * Authorization Request State
     *
     * @var boolean
@@ -150,7 +145,7 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     /**
     * Authorization Request HTTP method.
     *
-    * @see exchangeCodeForAccessToken()
+    * See exchangeCodeForAccessToken()
     *
     * @var string
     */
@@ -161,7 +156,7 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     *
     * Sub classes may change add any additional parameter when necessary.
     *
-    * @see exchangeCodeForAccessToken()
+    * See exchangeCodeForAccessToken()
     *
     * @var array
     */
@@ -172,49 +167,18 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     *
     * Sub classes may add any additional header when necessary.
     *
-    * @see exchangeCodeForAccessToken()
+    * See exchangeCodeForAccessToken()
     *
     * @var array
     */
     protected $tokenExchangeHeaders = [];
 
     /**
-    * Refresh Token Request HTTP method.
-    *
-    * @see refreshAccessToken()
-    *
-    * @var string
-    */
-    protected $tokenRefreshMethod = 'POST';
-
-    /**
-    * Refresh Token Request URL parameters.
-    *
-    * Sub classes may change add any additional parameter when necessary.
-    *
-    * @see refreshAccessToken()
-    *
-    * @var array
-    */
-    protected $tokenRefreshParameters = [];
-
-    /**
-    * Refresh Token Request HTTP headers.
-    *
-    * Sub classes may add any additional header when necessary.
-    *
-    * @see refreshAccessToken()
-    *
-    * @var array
-    */
-    protected $tokenRefreshHeaders = [];
-
-    /**
     * Authorization Request URL parameters.
     *
     * Sub classes may change add any additional parameter when necessary.
     *
-    * @see apiRequest()
+    * See apiRequest()
     *
     * @var array
     */
@@ -225,7 +189,7 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     *
     * Sub classes may add any additional header when necessary.
     *
-    * @see apiRequest()
+    * See apiRequest()
     *
     * @var array
     */
@@ -260,27 +224,18 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     */
     protected function initialize()
     {
-        $this->AuthorizeUrlParameters = [
-            'response_type' => 'code',
-            'client_id'     => $this->clientId,
-            'redirect_uri'  => $this->callback,
-            'scope'         => $this->scope,
-        ];
-
+        /**
+        * Set the default Access Token Request parameters
+        *
+        * Sub classes may reset this when necessary
+        *
+        * See exchangeCodeForAccessToken()
+        */
         $this->tokenExchangeParameters = [
             'client_id'     => $this->clientId,
             'client_secret' => $this->clientSecret,
             'grant_type'    => 'authorization_code',
             'redirect_uri'  => $this->callback
-        ];
-
-        $this->tokenRefreshParameters = [
-            'grant_type'    => 'refresh_token',
-            'refresh_token' => $this->getStoredData('refresh_token'),
-        ];
-
-        $this->apiRequestHeaders = [
-            'Authorization' => 'Bearer ' . $this->getStoredData('access_token')
         ];
     }
 
@@ -305,13 +260,11 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
             } else {
                 $this->authenticateFinish();
             }
-        } catch (Exception $e) {
+        } catch (\Exception $e) {
             $this->clearStoredData();
 
             throw $e;
         }
-
-        return null;
     }
 
     /**
@@ -355,17 +308,12 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     /**
     * Finalize the authorization process
     *
-    * @throws \Hybridauth\Exception\HttpClientFailureException
-    * @throws \Hybridauth\Exception\HttpRequestFailedException
-    * @throws InvalidAccessTokenException
     * @throws InvalidAuthorizationStateException
+    * @throws InvalidAuthorizationCodeException
     */
     protected function authenticateFinish()
     {
-        $this->logger->debug(
-            sprintf('%s::authenticateFinish(), callback url:', get_class($this)),
-            [HttpClient\Util::getCurrentUrl(true)]
-        );
+        $this->logger->debug(sprintf('%s::authenticateFinish(), callback url:', get_class($this)), [HttpClient\Util::getCurrentUrl(true)]);
 
         $state = filter_input(INPUT_GET, 'state');
         $code = filter_input(INPUT_GET, 'code');
@@ -425,22 +373,24 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     */
     protected function getAuthorizeUrl($parameters = [])
     {
-        $this->AuthorizeUrlParameters = !empty($parameters)
-            ? $parameters
-            : array_replace(
-                (array) $this->AuthorizeUrlParameters,
-                (array) $this->config->get('authorize_url_parameters')
-            );
+        $defaults = [
+            'response_type' => 'code',
+            'client_id'     => $this->clientId,
+            'redirect_uri'  => $this->callback,
+            'scope'         => $this->scope,
+        ];
+ 
+        $parameters = array_replace($defaults, (array) $this->config->get("authorize_url_parameters"), (array)$parameters);
 
         if ($this->supportRequestState) {
-            if (!isset($this->AuthorizeUrlParameters['state'])) {
-                $this->AuthorizeUrlParameters['state'] = 'HA-' . str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
-            }
+            $state = 'HA-' . str_shuffle('ABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890');
 
-            $this->storeData('authorization_state', $this->AuthorizeUrlParameters['state']);
+            $this->storeData('authorization_state', $state);
+
+            $parameters['state'] = $state;
         }
 
-        return $this->authorizeUrl . '?' . http_build_query($this->AuthorizeUrlParameters, '', '&');
+        return $this->authorizeUrl . '?' . http_build_query($parameters, '', '&');
     }
 
     /**
@@ -462,8 +412,6 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     * @param string $code
     *
     * @return string Raw Provider API response
-    * @throws \Hybridauth\Exception\HttpClientFailureException
-    * @throws \Hybridauth\Exception\HttpRequestFailedException
     */
     protected function exchangeCodeForAccessToken($code)
     {
@@ -528,22 +476,17 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
 
         $this->storeData('access_token', $collection->get('access_token'));
         $this->storeData('token_type', $collection->get('token_type'));
-
-        if ($collection->get('refresh_token')) {
-            $this->storeData('refresh_token', $collection->get('refresh_token'));
-        }
+        $this->storeData('refresh_token', $collection->get('refresh_token'));
+        $this->storeData('expires_in', $collection->get('expires_in'));
 
         // calculate when the access token expire
         if ($collection->exists('expires_in')) {
             $expires_at = time() + (int) $collection->get('expires_in');
 
-            $this->storeData('expires_in', $collection->get('expires_in'));
             $this->storeData('expires_at', $expires_at);
         }
 
         $this->deleteStoredData('authorization_state');
-
-        $this->initialize();
 
         return $collection;
     }
@@ -551,9 +494,9 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     /**
     * Refreshing an Access Token
     *
-    * RFC6749: If the authorization server issued a refresh token to the
-    * client, the client makes a refresh request to the token endpoint by
-    * adding the following parameters ... in the HTTP request entity-body:
+    * RFC6749: If the authorization server issued a refresh token to the client, the
+    * client makes a refresh request to the token endpoint by adding the
+    * following parameters ... in the HTTP request entity-body:
     *
     *    - grant_type     REQUIRED. Value MUST be set to "refresh_token".
     *    - refresh_token  REQUIRED. The refresh token issued to the client.
@@ -561,27 +504,25 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     *
     * http://tools.ietf.org/html/rfc6749#section-6
     *
-    * This method is similar to exchangeCodeForAccessToken(). The only
-    * difference is here we exchange refresh_token for a new access_token.
-    *
-    * @param array $parameters
+    * This method is similar to exchangeCodeForAccessToken(). The only difference is here
+    * we exchange refresh_token for a new access_token.
     *
     * @return string Raw Provider API response
-    * @throws \Hybridauth\Exception\HttpClientFailureException
-    * @throws \Hybridauth\Exception\HttpRequestFailedException
-    * @throws InvalidAccessTokenException
     */
-    public function refreshAccessToken($parameters = [])
+    public function refreshAccessToken()
     {
-        $this->tokenRefreshParameters = !empty($parameters)
-            ? $parameters
-            : $this->tokenRefreshParameters;
+        $defaults = [
+            'grant_type'    => 'refresh_token',
+            'refresh_token' => $this->getStoredData('refresh_token'),
+        ];
+
+        $this->tokenExchangeParameters = array_replace($defaults, (array) $this->tokenExchangeParameters);
 
         $response = $this->httpClient->request(
             $this->accessTokenUrl,
-            $this->tokenRefreshMethod,
-            $this->tokenRefreshParameters,
-            $this->tokenRefreshHeaders
+            $this->tokenExchangeMethod,
+            $this->tokenExchangeParameters,
+            $this->tokenExchangeHeaders
         );
 
         $this->validateApiResponse('Unable to refresh the access token');
@@ -612,22 +553,21 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     /**
     * Validate Refresh Access Token Request
     *
-    * RFC6749: If valid and authorized, the authorization server issues an
-    * access token as described in Section 5.1.  If the request failed
-    * verification or is invalid, the authorization server returns an error
-    * response as described in Section 5.2.
+    * RFC6749: If valid and authorized, the authorization server issues an access
+    * token as described in Section 5.1.  If the request failed verification or is
+    * invalid, the authorization server returns an error response as described in
+    * Section 5.2.
     *
     * http://tools.ietf.org/html/rfc6749#section-6
     * http://tools.ietf.org/html/rfc6749#section-5.1
     * http://tools.ietf.org/html/rfc6749#section-5.2
     *
-    * This method simply use validateAccessTokenExchange(), however sub
-    * classes may redefine it when necessary.
+    * This method simply use validateAccessTokenExchange(), however sub classes may
+    * redefine it when necessary.
     *
     * @param $response
     *
     * @return \Hybridauth\Data\Collection
-    * @throws InvalidAccessTokenException
     */
     protected function validateRefreshAccessToken($response)
     {
@@ -637,26 +577,23 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
     /**
     * Send a signed request to provider API
     *
-    * RFC6749: Accessing Protected Resources: The client accesses protected
-    * resources by presenting the access token to the resource server. The
-    * resource server MUST validate the access token and ensure that it has
-    * not expired and that its scope covers the requested resource.
+    * RFC6749: Accessing Protected Resources: The client accesses protected resources
+    * by presenting the access token to the resource server. The resource server MUST
+    * validate the access token and ensure that it has not expired and that its scope
+    * covers the requested resource.
     *
-    * Note: Since the specifics of error responses is beyond the scope of
-    * RFC6749 and OAuth specifications, Hybridauth will consider any HTTP
-    * status code that is different than '200 OK' as an ERROR.
+    * Note: Since the specifics of error responses is beyond the scope of RFC6749 and
+    * OAuth specifications, Hybridauth will consider any HTTP status code that is different
+    * than '200 OK' as an ERROR.
     *
     * http://tools.ietf.org/html/rfc6749#section-7
     *
     * @param string $url
     * @param string $method
-    * @param array $parameters
-    * @param array $headers
+    * @param array  $parameters
+    * @param array  $headers
     *
-    * @return mixed
-    * @throws \Hybridauth\Exception\HttpClientFailureException
-    * @throws \Hybridauth\Exception\HttpRequestFailedException
-    * @throws InvalidAccessTokenException
+    * @return object
     */
     public function apiRequest($url, $method = 'GET', $parameters = [], $headers = [])
     {
@@ -666,8 +603,10 @@ abstract class OAuth2 extends AbstractAdapter implements AdapterInterface
         }
 
         if (strrpos($url, 'http://') !== 0 && strrpos($url, 'https://') !== 0) {
-            $url = rtrim($this->apiBaseUrl, '/') . '/' . ltrim($url, '/');
+            $url = $this->apiBaseUrl . $url;
         }
+
+        $this->apiRequestParameters[ $this->accessTokenName ] = $this->getStoredData('access_token');
 
         $parameters = array_replace($this->apiRequestParameters, (array) $parameters);
         $headers = array_replace($this->apiRequestHeaders, (array) $headers);

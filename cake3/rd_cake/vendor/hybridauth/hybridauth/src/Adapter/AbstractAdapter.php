@@ -18,9 +18,10 @@ use Hybridauth\Logger\Logger;
 use Hybridauth\HttpClient\HttpClientInterface;
 use Hybridauth\HttpClient\Curl as HttpClient;
 use Hybridauth\Data;
+use Hybridauth\Deprecated\DeprecatedAdapterTrait;
 
 /**
- * Class AbstractAdapter
+ *
  */
 abstract class AbstractAdapter implements AdapterInterface
 {
@@ -76,9 +77,9 @@ abstract class AbstractAdapter implements AdapterInterface
     public $logger;
 
     /**
-     * Whether to validate API status codes of http responses
+     * Wheteher to validate API status codes of http responses
      *
-     * @var boolean
+     * @var validateApiResponseHttpCode
      */
     protected $validateApiResponseHttpCode = true;
 
@@ -96,7 +97,7 @@ abstract class AbstractAdapter implements AdapterInterface
         StorageInterface    $storage = null,
         LoggerInterface     $logger = null
     ) {
-        $this->providerId = (new \ReflectionClass($this))->getShortName();
+        $this->providerId = str_replace('Hybridauth\\Provider\\', '', get_class($this));
 
         $this->config = new Data\Collection($config);
 
@@ -126,14 +127,6 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function apiRequest($url, $method = 'GET', $parameters = [], $headers = [])
-    {
-        throw new NotImplementedException('Provider does not support this feature.');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getUserProfile()
     {
         throw new NotImplementedException('Provider does not support this feature.');
@@ -150,22 +143,6 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function getUserPages()
-    {
-        throw new NotImplementedException('Provider does not support this feature.');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getUserActivity($stream)
-    {
-        throw new NotImplementedException('Provider does not support this feature.');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setUserStatus($status)
     {
         throw new NotImplementedException('Provider does not support this feature.');
@@ -174,7 +151,7 @@ abstract class AbstractAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function setPageStatus($status, $pageId)
+    public function getUserActivity($stream)
     {
         throw new NotImplementedException('Provider does not support this feature.');
     }
@@ -195,6 +172,8 @@ abstract class AbstractAdapter implements AdapterInterface
     public function disconnect()
     {
         $this->clearStoredData();
+
+        return true;
     }
 
     /**
@@ -232,9 +211,6 @@ abstract class AbstractAdapter implements AdapterInterface
         foreach ($tokens as $token => $value) {
             $this->storeData($token, $value);
         }
-
-        // Re-initialize token parameters.
-        $this->initialize();
     }
 
     /**
@@ -279,8 +255,7 @@ abstract class AbstractAdapter implements AdapterInterface
     public function setLogger(LoggerInterface $logger = null)
     {
         $this->logger = $logger ?: new Logger(
-            $this->config->get('debug_mode'),
-            $this->config->get('debug_file')
+            $this->config->get('debug_mode'), $this->config->get('debug_file')
         );
 
         if (method_exists($this->httpClient, 'setLogger')) {
@@ -298,10 +273,8 @@ abstract class AbstractAdapter implements AdapterInterface
 
     /**
     * Set Adapter's API callback url
-    *
-    * @param string $callback
-    *
-    * @throws InvalidArgumentException
+     *
+     * @throws InvalidArgumentException
     */
     protected function setCallback($callback)
     {
@@ -314,10 +287,8 @@ abstract class AbstractAdapter implements AdapterInterface
 
     /**
     * Overwrite Adapter's API endpoints
-    *
-    * @param Data\Collection $endpoints
     */
-    protected function setApiEndpoints(Data\Collection $endpoints = null)
+    protected function setApiEndpoints($endpoints)
     {
         if (empty($endpoints)) {
             return;
@@ -354,9 +325,7 @@ abstract class AbstractAdapter implements AdapterInterface
             return;
         }
 
-        $status = $this->httpClient->getResponseHttpCode();
-
-        if ($status < 200 || $status > 299) {
+        if (200 != $this->httpClient->getResponseHttpCode()) {
             throw new HttpRequestFailedException(
                 $error . 'HTTP error '.$this->httpClient->getResponseHttpCode().
                 '. Raw Provider API response: '.$this->httpClient->getResponseBody().'.'

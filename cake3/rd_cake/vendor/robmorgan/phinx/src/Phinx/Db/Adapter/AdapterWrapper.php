@@ -148,7 +148,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function connect()
     {
-        $this->getAdapter()->connect();
+        return $this->getAdapter()->connect();
     }
 
     /**
@@ -156,7 +156,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function disconnect()
     {
-        $this->getAdapter()->disconnect();
+        return $this->getAdapter()->disconnect();
     }
 
     /**
@@ -180,7 +180,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function insert(Table $table, $row)
     {
-        $this->getAdapter()->insert($table, $row);
+        return $this->getAdapter()->insert($table, $row);
     }
 
     /**
@@ -254,7 +254,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function createSchemaTable()
     {
-        $this->getAdapter()->createSchemaTable();
+        return $this->getAdapter()->createSchemaTable();
     }
 
     /**
@@ -286,7 +286,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function beginTransaction()
     {
-        $this->getAdapter()->beginTransaction();
+        return $this->getAdapter()->beginTransaction();
     }
 
     /**
@@ -294,7 +294,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function commitTransaction()
     {
-        $this->getAdapter()->commitTransaction();
+        return $this->getAdapter()->commitTransaction();
     }
 
     /**
@@ -302,7 +302,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function rollbackTransaction()
     {
-        $this->getAdapter()->rollbackTransaction();
+        return $this->getAdapter()->rollbackTransaction();
     }
 
     /**
@@ -334,7 +334,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function createTable(Table $table)
     {
-        $this->getAdapter()->createTable($table);
+        return $this->getAdapter()->createTable($table);
     }
 
     /**
@@ -342,7 +342,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function renameTable($tableName, $newTableName)
     {
-        $this->getAdapter()->renameTable($tableName, $newTableName);
+        return $this->getAdapter()->renameTable($tableName, $newTableName);
     }
 
     /**
@@ -350,7 +350,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function dropTable($tableName)
     {
-        $this->getAdapter()->dropTable($tableName);
+        return $this->getAdapter()->dropTable($tableName);
     }
 
     /**
@@ -374,7 +374,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function addColumn(Table $table, Column $column)
     {
-        $this->getAdapter()->addColumn($table, $column);
+        return $this->getAdapter()->addColumn($table, $column);
     }
 
     /**
@@ -382,7 +382,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function renameColumn($tableName, $columnName, $newColumnName)
     {
-        $this->getAdapter()->renameColumn($tableName, $columnName, $newColumnName);
+        return $this->getAdapter()->renameColumn($tableName, $columnName, $newColumnName);
     }
 
     /**
@@ -398,7 +398,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function dropColumn($tableName, $columnName)
     {
-        $this->getAdapter()->dropColumn($tableName, $columnName);
+        return $this->getAdapter()->dropColumn($tableName, $columnName);
     }
 
     /**
@@ -422,15 +422,15 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function addIndex(Table $table, Index $index)
     {
-        $this->getAdapter()->addIndex($table, $index);
+        return $this->getAdapter()->addIndex($table, $index);
     }
 
     /**
      * {@inheritdoc}
      */
-    public function dropIndex($tableName, $columns)
+    public function dropIndex($tableName, $columns, $options = array())
     {
-        $this->getAdapter()->dropIndex($tableName, $columns);
+        return $this->getAdapter()->dropIndex($tableName, $columns, $options);
     }
 
     /**
@@ -438,7 +438,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function dropIndexByName($tableName, $indexName)
     {
-        $this->getAdapter()->dropIndexByName($tableName, $indexName);
+        return $this->getAdapter()->dropIndexByName($tableName, $indexName);
     }
 
     /**
@@ -454,7 +454,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function addForeignKey(Table $table, ForeignKey $foreignKey)
     {
-        $this->getAdapter()->addForeignKey($table, $foreignKey);
+        return $this->getAdapter()->addForeignKey($table, $foreignKey);
     }
 
     /**
@@ -462,7 +462,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function dropForeignKey($tableName, $columns, $constraint = null)
     {
-        $this->getAdapter()->dropForeignKey($tableName, $columns, $constraint);
+        return $this->getAdapter()->dropForeignKey($tableName, $columns, $constraint);
     }
 
     /**
@@ -478,7 +478,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function createDatabase($name, $options = array())
     {
-        $this->getAdapter()->createDatabase($name, $options);
+        return $this->getAdapter()->createDatabase($name, $options);
     }
 
     /**
@@ -486,7 +486,7 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function hasDatabase($name)
     {
-        $this->getAdapter()->hasDatabase($name);
+        return $this->getAdapter()->hasDatabase($name);
     }
 
     /**
@@ -494,11 +494,11 @@ abstract class AdapterWrapper implements AdapterInterface, WrapperInterface
      */
     public function dropDatabase($name)
     {
-        $this->getAdapter()->dropDatabase($name);
+        return $this->getAdapter()->dropDatabase($name);
     }
 
     /**
-     * {@inheritdoc}
+     * @inheritDoc
      */
     public function castToBool($value)
     {

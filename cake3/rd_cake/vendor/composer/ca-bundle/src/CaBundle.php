@@ -130,24 +130,7 @@ class CaBundle
      */
     public static function getBundledCaBundlePath()
     {
-        $caBundleFile = __DIR__.'/../res/cacert.pem';
-
-        // cURL does not understand 'phar://' paths
-        // see https://github.com/composer/ca-bundle/issues/10
-        if (0 === strpos($caBundleFile, 'phar://')) {
-            file_put_contents(
-                $tempCaBundleFile = tempnam(sys_get_temp_dir(), 'openssl-ca-bundle-'),
-                file_get_contents($caBundleFile)
-            );
-
-            register_shutdown_function(function() use ($tempCaBundleFile) {
-                @unlink($tempCaBundleFile);
-            });
-
-            $caBundleFile = $tempCaBundleFile;
-        }
-
-        return $caBundleFile;
+        return __DIR__.'/../res/cacert.pem';
     }
 
     /**

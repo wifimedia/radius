@@ -14,9 +14,7 @@ namespace Migrations;
 use Cake\Datasource\ConnectionManager;
 use Phinx\Config\Config;
 use Phinx\Config\ConfigInterface;
-use Phinx\Migration\Manager;
 use Symfony\Component\Console\Input\ArrayInput;
-use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\NullOutput;
 
 /**
@@ -94,20 +92,7 @@ class Migrations
     public function setCommand($command)
     {
         $this->command = $command;
-
         return $this;
-    }
-
-    /**
-     * Sets the input object that should be used for the command class. This object
-     * is used to inspect the extra options that are needed for CakePHP apps.
-     *
-     * @param \Symfony\Component\Console\Input\InputInterface $input the input object
-     * @return void
-     */
-    public function setInput(InputInterface $input)
-    {
-        $this->input = $input;
     }
 
     /**
@@ -170,7 +155,6 @@ class Migrations
         }
 
         $this->run($method, $params, $input);
-
         return true;
     }
 
@@ -202,7 +186,6 @@ class Migrations
         }
 
         $this->run($method, $params, $input);
-
         return true;
     }
 
@@ -234,15 +217,13 @@ class Migrations
         $input = $this->getInput('MarkMigrated', ['version' => $version], $options);
         $this->setInput($input);
 
-        $migrationPaths = $this->getConfig()->getMigrationPaths();
         $params = [
-            array_pop($migrationPaths),
+            $this->getConfig()->getMigrationPath(),
             $this->getManager()->getVersionsToMark($input),
             $this->output
         ];
 
         $this->run('markVersionsAsMigrated', $params, $input);
-
         return true;
     }
 
@@ -271,7 +252,6 @@ class Migrations
 
         $params = ['default', $seed];
         $this->run('seed', $params, $input);
-
         return true;
     }
 
@@ -280,7 +260,7 @@ class Migrations
      *
      * @param string $method Manager method to call
      * @param array $params Manager params to pass
-     * @param \Symfony\Component\Console\Input\InputInterface $input InputInterface needed for the
+     * @param \Symfony\Component\Console\Input\InputInterface InputInterface needed for the
      * Manager to properly run
      *
      * @return mixed The result of the CakeManager::$method() call
@@ -288,16 +268,8 @@ class Migrations
     protected function run($method, $params, $input)
     {
         if ($this->configuration instanceof Config) {
-            $migrationPaths = $this->getConfig()->getMigrationPaths();
-            $migrationPath = array_pop($migrationPaths);
-            $seedPaths = $this->getConfig()->getSeedPaths();
-            $seedPath = array_pop($seedPaths);
-        }
-
-        if ($this->manager instanceof Manager) {
-            $pdo = $this->manager->getEnvironment('default')
-                ->getAdapter()
-                ->getConnection();
+            $migrationPath = $this->getConfig()->getMigrationPath();
+            $seedPath = $this->getConfig()->getSeedPath();
         }
 
         $this->setInput($input);
@@ -305,18 +277,10 @@ class Migrations
         $manager = $this->getManager($newConfig);
         $manager->setInput($input);
 
-        if (isset($pdo)) {
-            $this->manager->getEnvironment('default')
-                ->getAdapter()
-                ->setConnection($pdo);
-        }
-
-        $newMigrationPaths = $newConfig->getMigrationPaths();
-        if (isset($migrationPath) && array_pop($newMigrationPaths) !== $migrationPath) {
+        if (isset($migrationPath) && $newConfig->getMigrationPath() !== $migrationPath) {
             $manager->resetMigrations();
         }
-        $newSeedPaths = $newConfig->getSeedPaths();
-        if (isset($seedPath) && array_pop($newSeedPaths) !== $seedPath) {
+        if (isset($seedPath) && $newConfig->getSeedPath() !== $seedPath) {
             $manager->resetSeeds();
         }
 
@@ -359,7 +323,6 @@ class Migrations
         }
 
         $this->setAdapter();
-
         return $this->manager;
     }
 
@@ -402,7 +365,6 @@ class Migrations
         $className = '\Migrations\Command\\' . $command;
         $options = $arguments + $this->prepareOptions($options);
         $definition = (new $className())->getDefinition();
-
         return new ArrayInput($options, $definition);
     }
 

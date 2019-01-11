@@ -17,11 +17,11 @@
 use Cake\Error\Debugger;
 
 /**
- * @var \DebugKit\View\AjaxView $this
- * @var array $app
- * @var array $cake
- * @var array $php
- * @var array $hidef
+ * @type \DebugKit\View\AjaxView $this
+ * @type array $app
+ * @type array $cake
+ * @type array $php
+ * @type array $hidef
  */
 ?>
 
@@ -31,8 +31,8 @@ use Cake\Error\Debugger;
 <table cellspacing="0" cellpadding="0" class="debug-table">
     <thead>
         <tr>
-            <th><?= __d('debug_kit', 'Constant') ?></th>
-            <th><?= __d('debug_kit', 'Value') ?></th>
+            <th>Constant</th>
+            <th>Value</th>
         </tr>
     </thead>
     <tbody>
@@ -56,8 +56,8 @@ use Cake\Error\Debugger;
 <table cellspacing="0" cellpadding="0" class="debug-table">
     <thead>
         <tr>
-            <th><?= __d('debug_kit', 'Constant') ?></th>
-            <th><?= __d('debug_kit', 'Value') ?></th>
+            <th>Constant</th>
+            <th>Value</th>
         </tr>
     </thead>
     <tbody>
@@ -75,39 +75,14 @@ use Cake\Error\Debugger;
 </div>
 <?php endif; ?>
 
-<h2><?= __d('debug_kit', 'INI Environment') ?></h2>
-
-<?php if (!empty($ini)): ?>
-<table cellspacing="0" cellpadding="0" class="debug-table">
-    <thead>
-        <tr>
-            <th>INI Variable</th>
-            <th>Value</th>
-        </tr>
-    </thead>
-    <tbody>
-        <?php foreach ($ini as $key => $val): ?>
-        <tr>
-            <td><?= h($key) ?></td>
-            <td><?= $this->Credentials->filter($val) ?></td>
-        </tr>
-        <?php endforeach; ?>
-    </tbody>
-</table>
-<?php else: ?>
-<div class="warning">
-    <?= __d('debug_kit', 'ini environment unavailable.'); ?>
-</div>
-<?php endif; ?>
-
 <h2><?= __d('debug_kit', 'PHP Environment') ?></h2>
 
 <?php if (!empty($php)): ?>
 <table cellspacing="0" cellpadding="0" class="debug-table">
     <thead>
         <tr>
-            <th><?= __d('debug_kit', 'Environment Variable') ?></th>
-            <th><?= __d('debug_kit', 'Value') ?></th>
+            <th>Environment Variable</th>
+            <th>Value</th>
         </tr>
     </thead>
     <tbody>
@@ -132,8 +107,8 @@ use Cake\Error\Debugger;
     <table cellspacing="0" cellpadding="0" class="debug-table">
         <thead>
             <tr>
-                <th><?= __d('debug_kit', 'Constant') ?></th>
-                <th><?= __d('debug_kit', 'Value') ?></th>
+                <th>Constant</th>
+                <th>Value</th>
             </tr>
         </thead>
         <tbody>

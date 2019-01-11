@@ -1,16 +1,16 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\ORM;
 
@@ -175,16 +175,17 @@ class ResultSet implements ResultSetInterface
      */
     public function __construct($query, $statement)
     {
-        $repository = $query->getRepository();
+        $repository = $query->repository();
         $this->_statement = $statement;
         $this->_driver = $query->getConnection()->getDriver();
-        $this->_defaultTable = $query->getRepository();
+        $this->_defaultTable = $query->repository();
         $this->_calculateAssociationMap($query);
         $this->_hydrate = $query->isHydrationEnabled();
         $this->_entityClass = $repository->getEntityClass();
         $this->_useBuffering = $query->isBufferedResultsEnabled();
-        $this->_defaultAlias = $this->_defaultTable->getAlias();
+        $this->_defaultAlias = $this->_defaultTable->alias();
         $this->_calculateColumnMap($query);
+        $this->_calculateTypeMap();
         $this->_autoFields = $query->isAutoFieldsEnabled();
 
         if ($this->_useBuffering) {
@@ -432,7 +433,6 @@ class ResultSet implements ResultSetInterface
      */
     protected function _calculateTypeMap()
     {
-        deprecationWarning('ResultSet::_calculateTypeMap() is deprecated, and will be removed in 4.0.0.');
     }
 
     /**
@@ -460,7 +460,7 @@ class ResultSet implements ResultSetInterface
         }
 
         foreach (array_intersect($fields, $schema->columns()) as $col) {
-            $typeName = $schema->getColumnType($col);
+            $typeName = $schema->columnType($col);
             if (isset($typeMap[$typeName])) {
                 $types[$col] = $typeMap[$typeName];
             }
@@ -492,7 +492,7 @@ class ResultSet implements ResultSetInterface
     /**
      * Correctly nests results keys including those coming from associations
      *
-     * @param array $row Array containing columns and values or false if there is no results
+     * @param mixed $row Array containing columns and values or false if there is no results
      * @return array Results
      */
     protected function _groupResult($row)
@@ -585,7 +585,7 @@ class ResultSet implements ResultSetInterface
             $results[$defaultAlias]['_matchingData'] = $results['_matchingData'];
         }
 
-        $options['source'] = $this->_defaultTable->getRegistryAlias();
+        $options['source'] = $this->_defaultTable->registryAlias();
         if (isset($results[$defaultAlias])) {
             $results = $results[$defaultAlias];
         }
@@ -607,8 +607,6 @@ class ResultSet implements ResultSetInterface
      */
     protected function _castValues($alias, $values)
     {
-        deprecationWarning('ResultSet::_castValues() is deprecated, and will be removed in 4.0.0.');
-
         return $values;
     }
 

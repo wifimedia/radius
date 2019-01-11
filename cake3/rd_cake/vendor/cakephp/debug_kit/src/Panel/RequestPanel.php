@@ -32,15 +32,15 @@ class RequestPanel extends DebugPanel
     public function shutdown(Event $event)
     {
         /* @var Controller $controller */
-        $controller = $event->getSubject();
+        $controller = $event->subject();
         $request = $controller->request;
         $this->_data = [
-            'params' => $request->getAttribute("params"),
-            'query' => $request->getQueryParams(),
-            'data' => $request->getData(),
-            'cookie' => $request->getCookieParams(),
+            'params' => $request->params,
+            'query' => $request->query,
+            'data' => $request->data,
+            'cookie' => $request->cookies,
             'get' => $_GET,
-            'matchedRoute' => $request->getParam('_matchedRoute'),
+            'matchedRoute' => $request->param('_matchedRoute'),
             'headers' => ['response' => headers_sent($file, $line), 'file' => $file, 'line' => $line],
         ];
     }

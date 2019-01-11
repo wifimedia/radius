@@ -13,7 +13,7 @@ namespace Migrations\Command;
 
 use Cake\Datasource\ConnectionManager;
 use Migrations\ConfigurationTrait;
-use Migrations\TableFinderTrait;
+use Migrations\Shell\Task\SnapshotTrait;
 use Phinx\Console\Command\AbstractCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Input\InputOption;
@@ -27,16 +27,8 @@ use Symfony\Component\Console\Output\OutputInterface;
 class Dump extends AbstractCommand
 {
 
-    use CommandTrait;
     use ConfigurationTrait;
-    use TableFinderTrait;
-
-    /**
-     * Output object.
-     *
-     * @var \Symfony\Component\Console\Output\OutputInterface
-     */
-    protected $output;
+    use SnapshotTrait;
 
     /**
      * {@inheritdoc}
@@ -49,14 +41,14 @@ class Dump extends AbstractCommand
                 '%sDumps the current schema of the database to be used while baking a diff%s',
                 PHP_EOL,
                 PHP_EOL
-            ))
-            ->addOption('plugin', 'p', InputOption::VALUE_REQUIRED, 'The plugin the file should be created for')
+            ));
+        $this->addOption('plugin', 'p', InputOption::VALUE_REQUIRED, 'The plugin the file should be created for')
             ->addOption('connection', 'c', InputOption::VALUE_REQUIRED, 'The datasource connection to use')
             ->addOption('source', 's', InputOption::VALUE_REQUIRED, 'The folder where migrations are in');
     }
 
     /**
-     * @param \Symfony\Component\Console\Output\OutputInterface $output The output object.
+     * @param \Symfony\Component\Console\Output\OutputInterface $output
      * @return mixed
      */
     public function output(OutputInterface $output = null)
@@ -64,7 +56,6 @@ class Dump extends AbstractCommand
         if ($output !== null) {
             $this->output = $output;
         }
-
         return $this->output;
     }
 
@@ -84,7 +75,7 @@ class Dump extends AbstractCommand
         $path = $this->getOperationsPath($input);
         $connectionName = $input->getOption('connection') ?: 'default';
         $connection = ConnectionManager::get($connectionName);
-        $collection = $connection->getSchemaCollection();
+        $collection = $connection->schemaCollection();
 
         $options = [
             'require-table' => false,
@@ -104,7 +95,6 @@ class Dump extends AbstractCommand
         $output->writeln(sprintf('<info>Writing dump file `%s`...</info>', $filePath));
         if (file_put_contents($filePath, serialize($dump))) {
             $output->writeln(sprintf('<info>Dump file `%s` was successfully written</info>', $filePath));
-
             return true;
         }
 
@@ -112,7 +102,6 @@ class Dump extends AbstractCommand
             '<error>An error occurred while writing dump file `%s`</error>',
             $filePath
         ));
-
         return false;
     }
 }

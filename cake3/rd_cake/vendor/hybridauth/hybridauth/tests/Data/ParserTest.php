@@ -2,7 +2,7 @@
 
 use Hybridauth\Data\Parser;
 
-class ParserTest extends \PHPUnit\Framework\TestCase
+class ParserTest extends \PHPUnit_Framework_TestCase
 {
     public function test_instance_of()
     {

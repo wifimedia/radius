@@ -1,23 +1,22 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Database\Type;
 
 use Cake\Database\Driver;
 use Cake\Database\Type;
 use Cake\Database\TypeInterface;
-use Cake\Database\Type\BatchCastingInterface;
 use PDO;
 use RuntimeException;
 
@@ -26,7 +25,7 @@ use RuntimeException;
  *
  * Use to convert float/decimal data between PHP and the database types.
  */
-class FloatType extends Type implements TypeInterface, BatchCastingInterface
+class FloatType extends Type implements TypeInterface
 {
     /**
      * Identifier name for this type.
@@ -95,26 +94,11 @@ class FloatType extends Type implements TypeInterface, BatchCastingInterface
         if ($value === null) {
             return null;
         }
-
-        return (float)$value;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return array
-     */
-    public function manyToPHP(array $values, array $fields, Driver $driver)
-    {
-        foreach ($fields as $field) {
-            if (!isset($values[$field])) {
-                continue;
-            }
-
-            $values[$field] = (float)$values[$field];
+        if (is_array($value)) {
+            return 1.0;
         }
 
-        return $values;
+        return (float)$value;
     }
 
     /**

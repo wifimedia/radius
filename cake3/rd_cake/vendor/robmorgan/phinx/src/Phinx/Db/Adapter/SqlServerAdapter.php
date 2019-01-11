@@ -52,8 +52,7 @@ class SqlServerAdapter extends PdoAdapter implements AdapterInterface
         if (null === $this->connection) {
             if (!class_exists('PDO') || !in_array('sqlsrv', \PDO::getAvailableDrivers(), true)) {
                 // try our connection via freetds (Mac/Linux)
-                $this->connectDblib();
-                return;
+                return $this->connectDblib();
             }
 
             $db = null;
@@ -344,19 +343,6 @@ class SqlServerAdapter extends PdoAdapter implements AdapterInterface
         $this->endCommandTimer();
     }
 
-    /**
-     * {@inheritdoc}
-     */
-    public function truncateTable($tableName)
-    {
-        $sql = sprintf(
-            'TRUNCATE TABLE %s',
-            $this->quoteTableName($tableName)
-        );
-
-        $this->execute($sql);
-    }
-
     public function getColumnComment($tableName, $columnName)
     {
         $sql = sprintf("SELECT cast(extended_properties.[value] as nvarchar(4000)) comment
@@ -433,7 +419,7 @@ class SqlServerAdapter extends PdoAdapter implements AdapterInterface
     /**
      * {@inheritdoc}
      */
-    public function hasColumn($tableName, $columnName)
+    public function hasColumn($tableName, $columnName, $options = array())
     {
         $sql = sprintf(
             "SELECT count(*) as [count]

@@ -57,7 +57,7 @@ class AssociationTableMixinClassReflectionExtension implements PropertiesClassRe
      */
     public function getMethod(ClassReflection $classReflection, string $methodName): MethodReflection
     {
-        return $this->getTableReflection()->getNativeMethod($methodName);
+        return $this->getTableReflection()->getMethod($methodName);
     }
 
     /**
@@ -81,6 +81,6 @@ class AssociationTableMixinClassReflectionExtension implements PropertiesClassRe
      */
     public function getProperty(ClassReflection $classReflection, string $propertyName): PropertyReflection
     {
-        return $this->getTableReflection()->getNativeProperty($propertyName);
+        return $this->getTableReflection()->getProperty($propertyName);
     }
 }

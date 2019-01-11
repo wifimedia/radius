@@ -5,7 +5,6 @@ return [
         'Acl' => $baseDir . '/vendor/cakephp/acl/',
         'Bake' => $baseDir . '/vendor/cakephp/bake/',
         'DebugKit' => $baseDir . '/vendor/cakephp/debug_kit/',
-        'Migrations' => $baseDir . '/vendor/cakephp/migrations/',
-        'WyriHaximus/TwigView' => $baseDir . '/vendor/wyrihaximus/twig-view/'
+        'Migrations' => $baseDir . '/vendor/cakephp/migrations/'
     ]
 ];

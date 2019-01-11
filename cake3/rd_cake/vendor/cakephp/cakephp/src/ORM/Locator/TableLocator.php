@@ -1,22 +1,21 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.1.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\ORM\Locator;
 
 use Cake\Core\App;
 use Cake\Datasource\ConnectionManager;
-use Cake\ORM\AssociationCollection;
 use Cake\ORM\Table;
 use Cake\Utility\Inflector;
 use RuntimeException;
@@ -119,10 +118,6 @@ class TableLocator implements LocatorInterface
      */
     public function config($alias = null, $options = null)
     {
-        deprecationWarning(
-            'TableLocator::config() is deprecated. ' .
-            'Use getConfig()/setConfig() instead.'
-        );
         if ($alias !== null) {
             if (is_string($alias) && $options === null) {
                 return $this->getConfig($alias);
@@ -191,13 +186,14 @@ class TableLocator implements LocatorInterface
             $options += $this->_config[$alias];
         }
 
+        if (empty($options['className'])) {
+            $options['className'] = Inflector::camelize($alias);
+        }
+
         $className = $this->_getClassName($alias, $options);
         if ($className) {
             $options['className'] = $className;
         } else {
-            if (empty($options['className'])) {
-                $options['className'] = Inflector::camelize($alias);
-            }
             if (!isset($options['table']) && strpos($options['className'], '\\') === false) {
                 list(, $table) = pluginSplit($options['className']);
                 $options['table'] = Inflector::underscore($table);
@@ -215,10 +211,6 @@ class TableLocator implements LocatorInterface
             }
             $options['connection'] = ConnectionManager::get($connectionName);
         }
-        if (empty($options['associations'])) {
-            $associations = new AssociationCollection($this);
-            $options['associations'] = $associations;
-        }
 
         $options['registryAlias'] = $alias;
         $this->_instances[$alias] = $this->_create($options);
@@ -235,7 +227,7 @@ class TableLocator implements LocatorInterface
      *
      * @param string $alias The alias name you want to get.
      * @param array $options Table options array.
-     * @return string|false
+     * @return string
      */
     protected function _getClassName($alias, array $options = [])
     {

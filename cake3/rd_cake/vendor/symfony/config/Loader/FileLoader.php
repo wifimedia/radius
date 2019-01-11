@@ -25,12 +25,23 @@ use Symfony\Component\Config\Resource\GlobResource;
  */
 abstract class FileLoader extends Loader
 {
+    /**
+     * @var array
+     */
     protected static $loading = array();
 
+    /**
+     * @var FileLocatorInterface
+     */
     protected $locator;
 
     private $currentDir;
 
+    /**
+     * Constructor.
+     *
+     * @param FileLocatorInterface $locator A FileLocatorInterface instance
+     */
     public function __construct(FileLocatorInterface $locator)
     {
         $this->locator = $locator;

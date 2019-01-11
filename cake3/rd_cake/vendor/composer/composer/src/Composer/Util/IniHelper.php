@@ -33,9 +33,7 @@ class IniHelper
      */
     public static function getAll()
     {
-        $env = getenv(self::ENV_ORIGINAL);
-
-        if (false !== $env) {
+        if ($env = strval(getenv(self::ENV_ORIGINAL))) {
             return explode(PATH_SEPARATOR, $env);
         }
 
@@ -49,7 +47,7 @@ class IniHelper
     }
 
     /**
-     * Describes the location of the loaded php.ini file(s)
+     * Describes the location of the loaded php.ini file
      *
      * @return string
      */
@@ -58,19 +56,9 @@ class IniHelper
         $paths = self::getAll();
 
         if (empty($paths[0])) {
-            array_shift($paths);
-        }
-
-        $ini = array_shift($paths);
-
-        if (empty($ini)) {
             return 'A php.ini file does not exist. You will have to create one.';
         }
 
-        if (!empty($paths)) {
-            return 'Your command-line PHP is using multiple ini files. Run `php --ini` to show them.';
-        }
-
-        return 'The php.ini used by your command-line PHP is: '.$ini;
+        return 'The php.ini used by your command-line PHP is: '.$paths[0];
     }
 }

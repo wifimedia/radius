@@ -416,11 +416,12 @@ class Table
      * Checks to see if a column exists.
      *
      * @param string $columnName Column Name
+     * @param array $options Options
      * @return boolean
      */
-    public function hasColumn($columnName)
+    public function hasColumn($columnName, $options = array())
     {
-        return $this->getAdapter()->hasColumn($this->getName(), $columnName);
+        return $this->getAdapter()->hasColumn($this->getName(), $columnName, $options);
     }
 
     /**
@@ -454,11 +455,12 @@ class Table
      * Removes the given index from a table.
      *
      * @param array $columns Columns
+     * @param array $options Options
      * @return Table
      */
-    public function removeIndex($columns)
+    public function removeIndex($columns, $options = array())
     {
-        $this->getAdapter()->dropIndex($this->getName(), $columns);
+        $this->getAdapter()->dropIndex($this->getName(), $columns, $options);
         return $this;
     }
 
@@ -481,9 +483,9 @@ class Table
      * @param array        $options Options
      * @return boolean
      */
-    public function hasIndex($columns)
+    public function hasIndex($columns, $options = array())
     {
-        return $this->getAdapter()->hasIndex($this->getName(), $columns);
+        return $this->getAdapter()->hasIndex($this->getName(), $columns, $options);
     }
 
     /**
@@ -650,16 +652,6 @@ class Table
         foreach ($this->getData() as $row) {
             $this->getAdapter()->insert($this, $row);
         }
-    }
-
-    /**
-     * Truncates the table.
-     *
-     * @return void
-     */
-    public function truncate()
-    {
-        $this->getAdapter()->truncateTable($this->getName());
     }
 
     /**

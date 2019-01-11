@@ -1,25 +1,22 @@
 <?php
 /**
- * CakePHP(tm) : Rapid Development Framework (https://cakephp.org)
- * Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
+ * CakePHP(tm) : Rapid Development Framework (http://cakephp.org)
+ * Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
  *
  * Licensed under The MIT License
  * For full copyright and license information, please see the LICENSE.txt
  * Redistributions of files must retain the above copyright notice.
  *
- * @copyright     Copyright (c) Cake Software Foundation, Inc. (https://cakefoundation.org)
- * @link          https://cakephp.org CakePHP(tm) Project
+ * @copyright     Copyright (c) Cake Software Foundation, Inc. (http://cakefoundation.org)
+ * @link          http://cakephp.org CakePHP(tm) Project
  * @since         3.0.0
- * @license       https://opensource.org/licenses/mit-license.php MIT License
+ * @license       http://www.opensource.org/licenses/mit-license.php MIT License
  */
 namespace Cake\Datasource;
 
 /**
  * Describes the methods that any class representing a data storage should
  * comply with.
- *
- * @method $this setAlias($alias)
- * @method string getAlias()
  */
 interface RepositoryInterface
 {
@@ -27,7 +24,6 @@ interface RepositoryInterface
     /**
      * Returns the table alias or sets a new one
      *
-     * @deprecated 3.4.0 Use setAlias()/getAlias() instead.
      * @param string|null $alias the new table alias
      * @return string
      */
@@ -132,7 +128,7 @@ interface RepositoryInterface
      *
      * @param \Cake\Datasource\EntityInterface $entity the entity to be saved
      * @param array|\ArrayAccess $options The options to use when saving.
-     * @return \Cake\Datasource\EntityInterface|false
+     * @return \Cake\Datasource\EntityInterface|bool
      */
     public function save(EntityInterface $entity, $options = []);
 
@@ -182,7 +178,7 @@ interface RepositoryInterface
      *
      * @param array $data The data to build an entity with.
      * @param array $options A list of options for the objects hydration.
-     * @return \Cake\Datasource\EntityInterface[] An array of hydrated records.
+     * @return array An array of hydrated records.
      */
     public function newEntities(array $data, array $options = []);
 
@@ -217,11 +213,11 @@ interface RepositoryInterface
      * $article = $this->Articles->patchEntities($articles, $this->request->getData());
      * ```
      *
-     * @param \Cake\Datasource\EntityInterface[]|\Traversable $entities the entities that will get the
+     * @param array|\Traversable $entities the entities that will get the
      * data merged in
      * @param array $data list of arrays to be merged into the entities
      * @param array $options A list of options for the objects hydration.
-     * @return \Cake\Datasource\EntityInterface[]
+     * @return array
      */
     public function patchEntities($entities, array $data, array $options = []);
 }
