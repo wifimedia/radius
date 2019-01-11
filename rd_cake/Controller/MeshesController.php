@@ -398,7 +398,7 @@ class MeshesController extends AppController {
                 'isolate'       => $m['MeshEntry']['isolate'],
                 'apply_to_all'  => $m['MeshEntry']['apply_to_all'],
                 'encryption'    => $m['MeshEntry']['encryption'],
-                'special_key'   => $m['MeshEntry']['special_key'],
+                'key'           => $m['MeshEntry']['key'],
                 'auth_server'   => $m['MeshEntry']['auth_server'],
                 'auth_secret'   => $m['MeshEntry']['auth_secret'],
                 'dynamic_vlan'  => $m['MeshEntry']['dynamic_vlan'],
@@ -1094,23 +1094,6 @@ class MeshesController extends AppController {
             '_serialize'=> array('success', 'items')
         ));
     }
-    
-     public function mesh_exit_upstream_list(){
-        $user = $this->Aa->user_for_token($this);
-        if(!$user){   //If not a valid user
-            return;
-        }
-         
-        $items  = [
-            ['name'=> 'LAN (Ethernet0)', 'id' => 0 ]
-        ];
-        
-        $this->set(array(
-            'items'     => $items,
-            'success'   => true,
-            '_serialize'=> array('success', 'items')
-        ));
-    }
 
     public function mesh_exit_delete(){
 
@@ -1710,7 +1693,7 @@ class MeshesController extends AppController {
         }
 
         $node = ClassRegistry::init('Node');
-		$node->contain('NodeMpSetting','NodeWifiSetting','NodeMeshEntry');
+		$node->contain('NodeMpSetting','NodeWifiSetting');
 
         $id    = $this->request->query['node_id'];
         $q_r   = $node->findById($id);
@@ -1729,13 +1712,6 @@ class MeshesController extends AppController {
 				$q_r['Node']["$key"] = $value; 
 			}
 		}
-		
-		$nme_list = [];
-		
-		foreach($q_r['NodeMeshEntry'] as $nme){
-		    array_push($nme_list,$nme['mesh_entry_id']);
-		}
-		$q_r['Node']['static_entries[]'] = $nme_list;
 
         //Return the Advanced WiFi Settings...
         if(count($q_r['NodeWifiSetting'])>0){
@@ -1989,18 +1965,16 @@ class MeshesController extends AppController {
         if(!$user){
             return;
         }
-        
-        $conditions = ['MeshEntry.apply_to_all' => 0];
 
         if(isset($this->request->query['mesh_id'])){
             $mesh_id = $this->request->query['mesh_id'];
-            array_push($conditions,['MeshEntry.mesh_id' => $mesh_id]);
         }
 
         $entry  = ClassRegistry::init('MeshEntry');
         $entry->contain();
-        $q_r    = $entry->find('all',['conditions' => $conditions]);
+        $q_r    = $entry->find('all',array('conditions' => array('MeshEntry.apply_to_all' => 0)));
         $items = array();
+        array_push($items,array('id' => 0, 'name' => "(None)")); //Allow the user not to assign at this stage
         foreach($q_r as $i){
             $id = $i['MeshEntry']['id'];
             $n  = $i['MeshEntry']['name'];
@@ -2012,6 +1986,8 @@ class MeshesController extends AppController {
             'success' => true,
             '_serialize' => array('items','success')
         ));
+        
+
     }
 
     public function static_exit_options(){
@@ -2394,7 +2370,7 @@ class MeshesController extends AppController {
 
 
             //Add
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->base."add")){
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->base."add")){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'iconCls'   => 'b-add',
@@ -2404,7 +2380,7 @@ class MeshesController extends AppController {
                     'tooltip'   => __('Add')));
             }
             //Delete
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->base.'delete')){
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->base.'delete')){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'iconCls'   => 'b-delete',
@@ -2416,7 +2392,7 @@ class MeshesController extends AppController {
             }
 
 			//Edit
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->base.'mesh_entry_edit')){
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->base.'mesh_entry_edit')){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'glyph'     => Configure::read('icnEdit'),  
@@ -2427,7 +2403,7 @@ class MeshesController extends AppController {
             }
 
 			//View
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->base.'mesh_entry_view')){
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->base.'mesh_entry_view')){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'glyph'     => Configure::read('icnView'),  
@@ -2437,7 +2413,7 @@ class MeshesController extends AppController {
                     'tooltip'   => __('View')));
             }
 
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->base.'note_index')){ 
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->base.'note_index')){ 
                 array_push($document_group,array(
                         'xtype'     => 'button', 
                         'iconCls'   => 'b-note',
@@ -2826,11 +2802,11 @@ class MeshesController extends AppController {
                     $view = false;
 
                     //Here we do a special thing to see if the owner of the mesh perhaps allowed the person beneath him to edit and view the mesh
-                    if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $user_id), $this->base.'mesh_entry_edit')){
+                    if($this->Acl->check(array('model' => 'User', 'foreign_key' => $user_id), $this->base.'mesh_entry_edit')){
                         $edit = true;
                     }
 
-                    if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $user_id), $this->base.'mesh_entry_view')){
+                    if($this->Acl->check(array('model' => 'User', 'foreign_key' => $user_id), $this->base.'mesh_entry_view')){
                         $view = true;
                     }
                     return array('update' => $edit, 'delete' => false, 'view' => $view );

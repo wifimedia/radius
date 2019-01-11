@@ -1,0 +1,1258 @@
+2016-11-05 21:51:56 Error: [ParseError] syntax error, unexpected ';', expecting ',' or ')'
+Request URL: /cake2/rd_cake/realms/index_ap.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap.json&_dc=1478375235078&ap_id=196&page=1&start=0&limit=25&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('RealmsControlle...')
+#1 [internal function]: spl_autoload_call('RealmsControlle...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('RealmsControlle...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-05 22:45:41 Error: [ParseError] syntax error, unexpected 'if' (T_IF)
+Request URL: /cake2/rd_cake/realms/index_ap_create.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap_create.json&_dc=1478378214940&query=&ap_id=196&page=1&start=0&limit=25&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('RealmsControlle...')
+#1 [internal function]: spl_autoload_call('RealmsControlle...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('RealmsControlle...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-07 10:37:47 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => model
+    [Aco0.foreign_key] => R
+)
+"
+Request URL: /cake2/rd_cake/vouchers/index.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fvouchers%2Findex.json&_dc=1478507867025&page=1&start=0&limit=100&token=58041890-8d48-45c4-bd0f-1805b2203b89&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'read')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'read')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/VouchersController.php(1930): AclComponent->check(Array, Array, 'read')
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/VouchersController.php(254): VouchersController->_get_action_flags(Array, '215', NULL)
+#5 [internal function]: VouchersController->index()
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(VouchersController), Array)
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(VouchersController), Object(CakeRequest))
+#9 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2016-11-07 10:37:54 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => model
+    [Aco0.foreign_key] => R
+)
+"
+Request URL: /cake2/rd_cake/vouchers/index.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fvouchers%2Findex.json&_dc=1478507874011&page=1&start=0&limit=100&token=58041890-8d48-45c4-bd0f-1805b2203b89&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'read')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'read')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/VouchersController.php(1930): AclComponent->check(Array, Array, 'read')
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/VouchersController.php(254): VouchersController->_get_action_flags(Array, '215', NULL)
+#5 [internal function]: VouchersController->index()
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(VouchersController), Array)
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(VouchersController), Object(CakeRequest))
+#9 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2016-11-07 10:37:59 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => model
+    [Aco0.foreign_key] => R
+)
+"
+Request URL: /cake2/rd_cake/vouchers/index.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fvouchers%2Findex.json&_dc=1478507874011&page=1&start=0&limit=100&token=58041890-8d48-45c4-bd0f-1805b2203b89&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'read')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'read')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/VouchersController.php(1930): AclComponent->check(Array, Array, 'read')
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/VouchersController.php(254): VouchersController->_get_action_flags(Array, '215', NULL)
+#5 [internal function]: VouchersController->index()
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(VouchersController), Array)
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(VouchersController), Object(CakeRequest))
+#9 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2016-11-15 06:11:20 Error: [ParseError] syntax error, unexpected 'public' (T_PUBLIC), expecting end of file
+Request URL: /cake2/rd_cake/ap_profiles/ap_profile_ap_view.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fap_profiles%2Fap_profile_ap_view.json&_dc=1479183080965&ap_id=2&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('ApProfilesContr...')
+#1 [internal function]: spl_autoload_call('ApProfilesContr...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('ApProfilesContr...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-15 06:11:22 Error: [ParseError] syntax error, unexpected 'public' (T_PUBLIC), expecting end of file
+Request URL: /cake2/rd_cake/ap_profiles/index.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fap_profiles%2Findex.json&_dc=1479183082373&query=&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('ApProfilesContr...')
+#1 [internal function]: spl_autoload_call('ApProfilesContr...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('ApProfilesContr...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-15 06:11:37 Error: [ParseError] syntax error, unexpected 'public' (T_PUBLIC), expecting end of file
+Request URL: /cake2/rd_cake/ap_profiles/menu_for_grid.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fap_profiles%2Fmenu_for_grid.json&_dc=1479183097136&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('ApProfilesContr...')
+#1 [internal function]: spl_autoload_call('ApProfilesContr...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('ApProfilesContr...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-15 06:11:37 Error: [ParseError] syntax error, unexpected 'public' (T_PUBLIC), expecting end of file
+Request URL: /cake2/rd_cake/ap_profiles/menu_for_aps_grid.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fap_profiles%2Fmenu_for_aps_grid.json&_dc=1479183097200&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('ApProfilesContr...')
+#1 [internal function]: spl_autoload_call('ApProfilesContr...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('ApProfilesContr...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-15 06:11:37 Error: [ParseError] syntax error, unexpected 'public' (T_PUBLIC), expecting end of file
+Request URL: /cake2/rd_cake/ap_profiles/index.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fap_profiles%2Findex.json&_dc=1479183097787&page=1&start=0&limit=100&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('ApProfilesContr...')
+#1 [internal function]: spl_autoload_call('ApProfilesContr...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('ApProfilesContr...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-22 22:56:22 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/flags/GB.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fflags%2FGB.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-22 22:56:24 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/flags/GB.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fflags%2FGB.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-23 22:52:00 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/nas/logo.jpg?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fnas%2Flogo.jpg
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-23 22:52:03 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/nas/logo.jpg?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fnas%2Flogo.jpg
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-23 22:52:05 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/nas/logo.jpg?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fnas%2Flogo.jpg
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-24 12:35:17 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_photos/1369745727.jpg?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_photos%2F1369745727.jpg
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-24 12:35:17 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_photos/1369745821.jpg?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_photos%2F1369745821.jpg
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-24 12:35:17 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_photos/1369745902.jpg?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_photos%2F1369745902.jpg
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-24 12:35:17 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_photos/1369746009.jpg?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_photos%2F1369746009.jpg
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-24 12:35:17 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_photos/1369746199.jpg?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_photos%2F1369746199.jpg
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-24 12:35:17 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_photos/1369746348.jpg?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_photos%2F1369746348.jpg
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-24 12:35:17 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_photos/1369746423.jpg?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_photos%2F1369746423.jpg
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-11-28 12:23:25 Error: [ParseError] syntax error, unexpected ','
+Request URL: /cake2/rd_cake/dashboard/check_token.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fcheck_token.json&_dc=1480328605168&token=583bef33-9d7c-4439-b858-03ea03662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-28 12:23:28 Error: [ParseError] syntax error, unexpected ','
+Request URL: /cake2/rd_cake/dashboard/check_token.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fcheck_token.json&_dc=1480328605168&token=583bef33-9d7c-4439-b858-03ea03662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-28 12:24:00 Error: [ParseError] syntax error, unexpected ','
+Request URL: /cake2/rd_cake/dashboard/check_token.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fcheck_token.json&_dc=1480328605168&token=583bef33-9d7c-4439-b858-03ea03662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-28 12:25:17 Error: [ParseError] syntax error, unexpected ','
+Request URL: /cake2/rd_cake/dashboard/check_token.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fcheck_token.json&_dc=1480328605168&token=583bef33-9d7c-4439-b858-03ea03662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-28 12:25:18 Error: [ParseError] syntax error, unexpected ','
+Request URL: /cake2/rd_cake/dashboard/check_token.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fcheck_token.json&_dc=1480328605168&token=583bef33-9d7c-4439-b858-03ea03662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-28 12:29:49 Error: [ParseError] syntax error, unexpected '=', expecting ']'
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Core/Configure.php(329): PhpReader->read('RadiusDesk')
+#1 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Config/bootstrap.php(184): Configure::load('RadiusDesk')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Core/Configure.php(98): include('/usr/share/ngin...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/bootstrap.php(432): Configure::bootstrap(true)
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(77): include('/usr/share/ngin...')
+#5 {main}
+2016-11-28 12:30:59 Error: [ParseError] syntax error, unexpected ']', expecting ',' or ')'
+Request URL: /cake2/rd_cake/dashboard/check_token.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fcheck_token.json&_dc=1480328605168&token=583bef33-9d7c-4439-b858-03ea03662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-28 23:37:41 Error: [ParseError] syntax error, unexpected ';', expecting ')'
+Request URL: /cake2/rd_cake/dashboard/authenticate.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fauthenticate.json
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-28 23:37:45 Error: [ParseError] syntax error, unexpected ';', expecting ')'
+Request URL: /cake2/rd_cake/dashboard/authenticate.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fauthenticate.json
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-28 23:37:55 Error: [ParseError] syntax error, unexpected ';', expecting ')'
+Request URL: /cake2/rd_cake/dashboard/authenticate.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fauthenticate.json
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-28 23:37:57 Error: [ParseError] syntax error, unexpected ';', expecting ')'
+Request URL: /cake2/rd_cake/dashboard/authenticate.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fauthenticate.json
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-28 23:38:01 Error: [ParseError] syntax error, unexpected ';', expecting ')'
+Request URL: /cake2/rd_cake/dashboard/authenticate.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fauthenticate.json
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-29 05:35:07 Error: [ParseError] syntax error, unexpected ''data_out'' (T_CONSTANT_ENCAPSED_STRING), expecting ')'
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480390507394&ream_id=34&token=583bef33-9d7c-4439-b858-03ea03662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DataUsageContro...')
+#1 [internal function]: spl_autoload_call('DataUsageContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DataUsageContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-29 05:35:10 Error: [ParseError] syntax error, unexpected ''data_out'' (T_CONSTANT_ENCAPSED_STRING), expecting ')'
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480390507394&ream_id=34&token=583bef33-9d7c-4439-b858-03ea03662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DataUsageContro...')
+#1 [internal function]: spl_autoload_call('DataUsageContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DataUsageContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-29 12:22:48 Error: [ParseError] syntax error, unexpected ''2016-11-28'' (T_CONSTANT_ENCAPSED_STRING), expecting variable (T_VARIABLE)
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480414304424&type=realm&username=55&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DataUsageContro...')
+#1 [internal function]: spl_autoload_call('DataUsageContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DataUsageContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-29 12:36:42 Error: [Error] Call to undefined function now()
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480409454748&ream_id=55&username=false&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: DataUsageController->usage_for_realm()
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(DataUsageController), Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DataUsageController), Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2016-11-29 13:00:37 Error: [ParseError] syntax error, unexpected ';', expecting ')'
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480416499471&type=realm&username=55&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DataUsageContro...')
+#1 [internal function]: spl_autoload_call('DataUsageContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DataUsageContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-29 13:02:26 Error: [PDOException] SQLSTATE[42000]: Syntax error or access violation: 1064 You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '.data_in, sum(`UserStat`.`acctoutputoctets`) as UserStat.data_out, sum(`UserStat' at line 1
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480416499471&type=realm&username=55&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(468): PDOStatement->execute(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(434): DboSource->_execute('SELECT sum(`Use...', Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(671): DboSource->execute('SELECT sum(`Use...', Array, Array)
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(1120): DboSource->fetchAll('SELECT sum(`Use...', Array)
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3038): DboSource->read(Object(AppModel), Array)
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3010): Model->_readDataSource('all', Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/DataUsageController.php(69): Model->find('all', Array)
+#7 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/DataUsageController.php(46): DataUsageController->_getDailyTopTen('2016-11-29')
+#8 [internal function]: DataUsageController->usage_for_realm()
+#9 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(DataUsageController), Array)
+#10 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#11 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DataUsageController), Object(CakeRequest))
+#12 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#13 {main}
+2016-11-29 13:16:26 Error: [ParseError] syntax error, unexpected ''data_out'' (T_CONSTANT_ENCAPSED_STRING), expecting ')'
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480416499471&type=realm&username=55&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DataUsageContro...')
+#1 [internal function]: spl_autoload_call('DataUsageContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DataUsageContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-29 14:35:06 Error: [Error] Call to undefined method DataUsageController::_getDaily()
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480416499471&type=realm&username=55&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: DataUsageController->usage_for_realm()
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(DataUsageController), Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DataUsageController), Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2016-11-29 22:03:24 Error: [Error] Call to undefined method DataUsageController::_getMonthlyGraph()
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480447287407&type=realm&username=55&token=583dcb83-7138-4727-8252-0f8603662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: DataUsageController->usage_for_realm()
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(DataUsageController), Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DataUsageController), Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2016-11-29 22:14:30 Error: [Error] Call to undefined method DataUsageController::_getTopTen()
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480447287407&type=realm&username=55&token=583dcb83-7138-4727-8252-0f8603662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: DataUsageController->usage_for_realm()
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(DataUsageController), Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DataUsageController), Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2016-11-29 22:27:28 Error: [ParseError] syntax error, unexpected '}'
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480447287407&type=realm&username=55&token=583dcb83-7138-4727-8252-0f8603662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DataUsageContro...')
+#1 [internal function]: spl_autoload_call('DataUsageContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DataUsageContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-11-29 22:27:38 Error: [PDOException] SQLSTATE[42S22]: Column not found: 1054 Unknown column 'Rasacct.acctstoptime' in 'where clause'
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480447287407&type=realm&username=55&token=583dcb83-7138-4727-8252-0f8603662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(468): PDOStatement->execute(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(434): DboSource->_execute('SELECT `Radacct...', Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(671): DboSource->execute('SELECT `Radacct...', Array, Array)
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(1120): DboSource->fetchAll('SELECT `Radacct...', Array)
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3038): DboSource->read(Object(Radacct), Array)
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3010): Model->_readDataSource('all', Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/DataUsageController.php(44): Model->find('all', Array)
+#7 [internal function]: DataUsageController->usage_for_realm()
+#8 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(DataUsageController), Array)
+#9 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#10 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DataUsageController), Object(CakeRequest))
+#11 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#12 {main}
+2016-11-29 22:36:57 Error: [Error] Cannot use object of type DataUsageController as array
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480447287407&type=realm&username=55&token=583dcb83-7138-4727-8252-0f8603662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: DataUsageController->usage_for_realm()
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(DataUsageController), Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DataUsageController), Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2016-11-29 22:37:11 Error: [Error] Cannot use object of type DataUsageController as array
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1480447287407&type=realm&username=55&token=583dcb83-7138-4727-8252-0f8603662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: DataUsageController->usage_for_realm()
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(DataUsageController), Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DataUsageController), Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2016-12-04 22:37:14 Error: [ParseError] syntax error, unexpected '(', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$'
+Request URL: /cake2/rd_cake/dashboard/settings_view.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fsettings_view.json&_dc=1480880989530&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-12-04 22:37:49 Error: [ParseError] syntax error, unexpected '(', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$'
+Request URL: /cake2/rd_cake/dashboard/settings_view.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fsettings_view.json&_dc=1480880989530&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-12-04 22:38:15 Error: [ParseError] syntax error, unexpected '(', expecting identifier (T_STRING) or variable (T_VARIABLE) or '{' or '$'
+Request URL: /cake2/rd_cake/dashboard/settings_view.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fsettings_view.json&_dc=1480880989530&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-12-05 00:59:10 Error: [ParseError] syntax error, unexpected ';'
+Request URL: /cake2/rd_cake/dashboard/check_token.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fcheck_token.json&_dc=1480890556563&token=58449891-5654-45b4-b4df-554f03662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DashboardContro...')
+#1 [internal function]: spl_autoload_call('DashboardContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DashboardContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-12-05 00:59:29 Error: [CakeException] AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => model
+    [Aro0.foreign_key] => U
+)
+"
+Request URL: /cake2/rd_cake/dashboard/check_token.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Fcheck_token.json&_dc=1480890556563&token=58449891-5654-45b4-b4df-554f03662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(80): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, 'Access Provider...', '*')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, 'Access Provider...', '*')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/DashboardController.php(627): AclComponent->check(Array, 'Access Provider...')
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/DashboardController.php(304): DashboardController->_build_ap_tabs('190')
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/DashboardController.php(59): DashboardController->_get_user_detail('admin_freddy')
+#6 [internal function]: DashboardController->check_token()
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(DashboardController), Array)
+#8 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#9 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DashboardController), Object(CakeRequest))
+#10 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#11 {main}
+2016-12-09 22:18:14 Error: [Error] Call to undefined method DataUsageController::_getUserDetail()
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1481314317278&type=user&username=dampbath&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: DataUsageController->usage_for_realm()
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(DataUsageController), Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DataUsageController), Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2016-12-09 22:20:47 Error: [ParseError] syntax error, unexpected '_getUserDetail' (T_STRING), expecting variable (T_VARIABLE)
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1481314317278&type=user&username=dampbath&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DataUsageContro...')
+#1 [internal function]: spl_autoload_call('DataUsageContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DataUsageContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-12-09 22:21:00 Error: [ParseError] syntax error, unexpected '_getUserDetail' (T_STRING), expecting variable (T_VARIABLE)
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1481314317278&type=user&username=dampbath&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DataUsageContro...')
+#1 [internal function]: spl_autoload_call('DataUsageContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DataUsageContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-12-09 22:21:01 Error: [ParseError] syntax error, unexpected '_getUserDetail' (T_STRING), expecting variable (T_VARIABLE)
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1481314317278&type=user&username=dampbath&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DataUsageContro...')
+#1 [internal function]: spl_autoload_call('DataUsageContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DataUsageContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-12-09 22:21:18 Error: [ParseError] syntax error, unexpected '=>' (T_DOUBLE_ARROW)
+Request URL: /cake2/rd_cake/data_usage/usage_for_realm.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdata_usage%2Fusage_for_realm.json&_dc=1481314317278&type=user&username=dampbath&token=58103db5-86a8-4206-9ecf-242ab2203b89&sel_language=4_4
+Stack Trace:
+#0 [internal function]: App::load('DataUsageContro...')
+#1 [internal function]: spl_autoload_call('DataUsageContro...')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('DataUsageContro...')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2016-12-24 10:12:53 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_details/1369296799.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_details%2F1369296799.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-12-24 10:13:03 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_details/1369296799.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_details%2F1369296799.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-12-24 10:13:03 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_details/1369296799.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_details%2F1369296799.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-12-24 10:15:00 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_details/1369296799.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_details%2F1369296799.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-12-24 10:15:06 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_details/1369296799.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_details%2F1369296799.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-12-24 10:15:10 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_details/1369296799.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_details%2F1369296799.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-12-24 10:15:33 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_details/1369296799.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_details%2F1369296799.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-12-24 10:15:51 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_details/1369296799.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_details%2F1369296799.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-12-24 10:15:55 Error: [MissingControllerException] Controller class WebrootController could not be found.
+Exception Attributes: array (
+  'class' => 'WebrootController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/webroot/img/dynamic_details/1369296799.png?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fwebroot%2Fimg%2Fdynamic_details%2F1369296799.png
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2016-12-24 10:39:35 Error: [MissingActionException] Action DesktopController::index() could not be found.
+Exception Attributes: array (
+  'controller' => 'DesktopController',
+  'action' => 'index',
+)
+Request URL: /cake2/rd_cake/desktop/?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdesktop%2F
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DesktopController), Object(CakeRequest))
+#2 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2016-12-24 10:39:47 Error: [MissingActionException] Action DashboardController::index() could not be found.
+Exception Attributes: array (
+  'controller' => 'DashboardController',
+  'action' => 'index',
+)
+Request URL: /cake2/rd_cake/dashboard/?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2F
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DashboardController), Object(CakeRequest))
+#2 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2016-12-24 10:44:35 Error: [MissingActionException] Action DashboardController::index() could not be found.
+Exception Attributes: array (
+  'controller' => 'DashboardController',
+  'action' => 'index',
+)
+Request URL: /cake2/rd_cake/dashboard/index.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Findex.json
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DashboardController), Object(CakeRequest))
+#2 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2016-12-24 10:45:18 Error: [MissingActionException] Action DashboardController::index() could not be found.
+Exception Attributes: array (
+  'controller' => 'DashboardController',
+  'action' => 'index',
+)
+Request URL: /cake2/rd_cake/dashboard/index?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2Findex
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DashboardController), Object(CakeRequest))
+#2 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2016-12-24 11:07:14 Error: [MissingActionException] Action DashboardController::index() could not be found.
+Exception Attributes: array (
+  'controller' => 'DashboardController',
+  'action' => 'index',
+)
+Request URL: /cake2/rd_cake/dashboard/?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2F
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DashboardController), Object(CakeRequest))
+#2 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2016-12-24 11:07:16 Error: [MissingActionException] Action DashboardController::index() could not be found.
+Exception Attributes: array (
+  'controller' => 'DashboardController',
+  'action' => 'index',
+)
+Request URL: /cake2/rd_cake/dashboard/?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdashboard%2F
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DashboardController), Object(CakeRequest))
+#2 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2017-01-01 17:40:47 Error: [MissingControllerException] Controller class Access-providersController could not be found.
+Exception Attributes: array (
+  'class' => 'Access-providersController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/access-providers/index.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Faccess-providers%2Findex.json&_dc=1483285216218&page=1&start=0&limit=100&token=521dc362-81a4-4a34-8a0b-052f03662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2017-01-01 20:43:53 Error: [Error] Call to undefined method AccessProvidersController::_is_sibling_of()
+Request URL: /cake2/rd_cake/access_providers/note_del.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Faccess_providers%2Fnote_del.json&_dc=1483296233804&for_id=191&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: AccessProvidersController->note_del()
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(AccessProvidersController), Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(AccessProvidersController), Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2017-01-01 20:44:39 Error: [Error] Call to undefined method AccessProvidersController::_is_sibling_of()
+Request URL: /cake2/rd_cake/access_providers/note_del.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Faccess_providers%2Fnote_del.json&_dc=1483296279421&for_id=182&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: AccessProvidersController->note_del()
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(AccessProvidersController), Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(AccessProvidersController), Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2017-01-01 20:45:50 Error: [Error] Call to undefined method AccessProvidersController::_is_sibling_of()
+Request URL: /cake2/rd_cake/access_providers/note_del.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Faccess_providers%2Fnote_del.json&_dc=1483296350173&for_id=182&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 [internal function]: AccessProvidersController->note_del()
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(AccessProvidersController), Array)
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(AccessProvidersController), Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#5 {main}
+2017-01-07 06:27:58 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap_create.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap_create.json&_dc=1483763278886&ap_id=191&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(95): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap_create()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 06:28:05 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap_create.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap_create.json&_dc=1483763278886&ap_id=191&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(95): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap_create()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 06:35:53 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap_create.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap_create.json&_dc=1483763278886&ap_id=191&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(95): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap_create()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 06:35:55 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap_create.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap_create.json&_dc=1483763278886&ap_id=191&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(95): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap_create()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 06:36:20 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap_create.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap_create.json&_dc=1483763278886&ap_id=191&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(95): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap_create()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 06:36:22 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap_create.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap_create.json&_dc=1483763278886&ap_id=191&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(95): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap_create()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 06:36:23 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap_create.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap_create.json&_dc=1483763278886&ap_id=191&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(95): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap_create()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 06:42:31 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap.json&_dc=1483764151898&ap_id=191&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(259): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 06:42:38 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap.json&_dc=1483764151898&ap_id=191&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(259): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 06:50:54 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap.json&_dc=1483764151898&ap_id=191&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(259): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 20:38:52 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap.json&_dc=1483814332111&ap_id=191&page=1&start=0&limit=25&token=521dc362-81a4-4a34-8a0b-052f03662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(259): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 20:38:57 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap.json&_dc=1483814332111&ap_id=191&page=1&start=0&limit=25&token=521dc362-81a4-4a34-8a0b-052f03662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(259): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 21:18:32 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap.json&_dc=1483816712766&ap_id=191&page=1&start=0&limit=25&token=521dc362-81a4-4a34-8a0b-052f03662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(259): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-07 21:18:39 Error: [CakeException] AclNode::node() - Couldn't find Aco node identified by "Array
+(
+    [Aco0.model] => Realm
+    [Aco0.foreign_key] => 36
+)
+"
+Request URL: /cake2/rd_cake/realms/index_ap.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Frealms%2Findex_ap.json&_dc=1483816719429&ap_id=191&page=1&start=0&limit=25&token=521dc362-81a4-4a34-8a0b-052f03662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Permission.php(81): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/Acl/DbAcl.php(73): Permission->check(Array, Array, 'create')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Component/AclComponent.php(110): DbAcl->check(Array, Array, 'create')
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/RealmsController.php(259): AclComponent->check(Array, Array, 'create')
+#4 [internal function]: RealmsController->index_ap()
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(RealmsController), Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(RealmsController), Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#9 {main}
+2017-01-10 21:58:04 Error: [MissingControllerException] Controller class Dynamic-detailsController could not be found.
+Exception Attributes: array (
+  'class' => 'Dynamic-detailsController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/dynamic-details/index-photo.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdynamic-details%2Findex-photo.json&_dc=1484077117967&dynamic_detail_id=3&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2017-01-10 21:58:16 Error: [MissingActionException] Action DynamicDetailsController::index-photo() could not be found.
+Exception Attributes: array (
+  'controller' => 'DynamicDetailsController',
+  'action' => 'index-photo',
+)
+Request URL: /cake2/rd_cake/dynamic_details/index-photo.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fdynamic_details%2Findex-photo.json&_dc=1484077117967&dynamic_detail_id=3&page=1&start=0&limit=25&token=5772d8bc-b5c4-4962-8fe9-6fc703662c24&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(DynamicDetailsController), Object(CakeRequest))
+#2 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2017-01-31 21:28:21 Error: [MissingControllerException] Controller class SchedulesController could not be found.
+Exception Attributes: array (
+  'class' => 'SchedulesController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/schedules/index-for-filter.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fschedules%2Findex-for-filter.json&_dc=1485890901010&page=1&start=0&limit=25&token=82472b03-0df5-415a-aaac-c42fe557be54&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2017-01-31 21:28:21 Error: [MissingControllerException] Controller class FiltersController could not be found.
+Exception Attributes: array (
+  'class' => 'FiltersController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/filters/index-for-filter.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Ffilters%2Findex-for-filter.json&_dc=1485890901004&page=1&start=0&limit=25&token=82472b03-0df5-415a-aaac-c42fe557be54&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2017-01-31 21:28:47 Error: [MissingControllerException] Controller class FiltersController could not be found.
+Exception Attributes: array (
+  'class' => 'FiltersController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/filters/index-for-filter.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Ffilters%2Findex-for-filter.json&_dc=1485890901004&page=1&start=0&limit=25&token=82472b03-0df5-415a-aaac-c42fe557be54&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2017-02-25 21:21:31 Error: [ParseError] syntax error, unexpected '$start_number' (T_VARIABLE)
+Request URL: /cake2/rd_cake/aps/get_config_for_ap.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Faps%2Fget_config_for_ap.json&mac=78-A3-51-0B-BC-CD&gateway=true
+Stack Trace:
+#0 [internal function]: App::load('ApsController')
+#1 [internal function]: spl_autoload_call('ApsController')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(266): class_exists('ApsController')
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(235): Dispatcher->_loadController(Object(CakeRequest))
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(158): Dispatcher->_getController(Object(CakeRequest), Object(CakeResponse))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#6 {main}
+2017-03-29 12:20:22 Error: [CakeException] AclNode::node() - Couldn't find Aro node identified by "Array
+(
+    [Aro0.model] => User
+    [Aro0.foreign_key] => 186
+)
+"
+Request URL: /cake2/rd_cake/access_providers/delete.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Faccess_providers%2Fdelete.json&token=b4c6ac81-8c7c-4802-b50a-0a6380555b50&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Behavior/AclBehavior.php(90): AclNode->node(Array)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Behavior/AclBehavior.php(137): AclBehavior->node(Object(User), Array, 'Aro')
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Utility/ObjectCollection.php(128): AclBehavior->afterDelete(Object(User))
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Event/CakeEventManager.php(243): ObjectCollection->trigger('afterDelete')
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(2729): CakeEventManager->dispatch(Object(CakeEvent))
+#5 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/AccessProvidersController.php(324): Model->delete()
+#6 [internal function]: AccessProvidersController->delete()
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(AccessProvidersController), Array)
+#8 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#9 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(AccessProvidersController), Object(CakeRequest))
+#10 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#11 {main}
+2017-03-29 12:22:14 Error: [MissingTableException] Table fin_payment_plans for model FinPaymentPlan was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'fin_payment_plans',
+  'class' => 'FinPaymentPlan',
+  'ds' => 'default',
+)
+Request URL: /cake2/rd_cake/permanent_users/add.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fpermanent_users%2Fadd.json
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3667): Model->setSource('fin_payment_pla...')
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(1394): Model->getDataSource()
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(2542): Model->schema()
+#3 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(1776): DboSource->fields(Object(FinPaymentPlan), 'FinPaymentPlan', '')
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(1271): DboSource->generateAssociationQuery(Object(Profile), Object(FinPaymentPlan), 'hasMany', 'FinPaymentPlan', Array, Array, true)
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(1151): DboSource->queryAssociation(Object(Profile), Object(FinPaymentPlan), 'hasMany', 'FinPaymentPlan', Array, Array, true, Array, 0, Array)
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3038): DboSource->read(Object(Profile), Array)
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3010): Model->_readDataSource('first', Array)
+#8 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Datasource/DboSource.php(602): Model->find('first', Array)
+#9 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(834): DboSource->query('findById', Array, Object(Profile))
+#10 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Model/PermanentUser.php(171): Model->__call('findById', Array)
+#11 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Model/PermanentUser.php(124): PermanentUser->_add_radius_user()
+#12 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Event/CakeEventManager.php(241): PermanentUser->afterSave(true, Array)
+#13 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(1968): CakeEventManager->dispatch(Object(CakeEvent))
+#14 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(1758): Model->_doSave(Array, Array)
+#15 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/PermanentUsersController.php(331): Model->save(Array)
+#16 [internal function]: PermanentUsersController->add()
+#17 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(PermanentUsersController), Array)
+#18 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#19 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(PermanentUsersController), Object(CakeRequest))
+#20 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#21 {main}
+2017-04-21 12:40:35 Error: [MissingControllerException] Controller class Permanent-usersController could not be found.
+Exception Attributes: array (
+  'class' => 'Permanent-usersController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/permanent-users/menu-for-grid.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fpermanent-users%2Fmenu-for-grid.json&_dc=1492771211924&token=b4c6ac81-8c7c-4802-b50a-0a6380555b50&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2017-04-21 12:41:02 Error: [MissingActionException] Action PermanentUsersController::menu-for-grid() could not be found.
+Exception Attributes: array (
+  'controller' => 'PermanentUsersController',
+  'action' => 'menu-for-grid',
+)
+Request URL: /cake2/rd_cake/permanentUsers/menu-for-grid.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2FpermanentUsers%2Fmenu-for-grid.json&_dc=1492771211924&token=b4c6ac81-8c7c-4802-b50a-0a6380555b50&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(PermanentUsersController), Object(CakeRequest))
+#2 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#3 {main}
+2017-04-21 12:41:14 Error: [MissingControllerException] Controller class Permanent-usersController could not be found.
+Exception Attributes: array (
+  'class' => 'Permanent-usersController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/permanent-users/menu-for-grid.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fpermanent-users%2Fmenu-for-grid.json&_dc=1492771211924&token=b4c6ac81-8c7c-4802-b50a-0a6380555b50&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2017-04-26 05:05:44 Error: [MissingControllerException] Controller class PoliciesController could not be found.
+Exception Attributes: array (
+  'class' => 'PoliciesController',
+  'plugin' => NULL,
+)
+Request URL: /cake2/rd_cake/policies/schedules-for-device.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fpolicies%2Fschedules-for-device.json
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#1 {main}
+2017-05-10 11:47:44 Error: [SocketException] 
+Request URL: /cake2/rd_cake/vouchers/email_voucher_details.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fvouchers%2Femail_voucher_details.json
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Network/Email/MailTransport.php(52): MailTransport->_mail('dirkvanderwalt@...', 'Your voucher de...', '<!DOCTYPE html ...', 'From: you@local...', NULL)
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Network/Email/CakeEmail.php(1173): MailTransport->send(Object(CakeEmail))
+#2 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/VouchersController.php(1417): CakeEmail->send()
+#3 [internal function]: VouchersController->email_voucher_details()
+#4 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(VouchersController), Array)
+#5 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(VouchersController), Object(CakeRequest))
+#7 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#8 {main}
+2017-05-21 16:06:43 Error: [MissingTableException] Table phrase_values for model PhraseValue was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'phrase_values',
+  'class' => 'PhraseValue',
+  'ds' => 'default',
+)
+Request URL: /cake2/rd_cake/phrase_values/l_languages.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fphrase_values%2Fl_languages.json&_dc=1495375603375&page=1&start=0&limit=25&token=b4c6ac81-8c7c-4802-b50a-0a6380555b50&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3667): Model->setSource('phrase_values')
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3038): Model->getDataSource()
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3010): Model->_readDataSource('all', Array)
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Model/PhraseValue.php(72): Model->find('all', Array)
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/PhraseValuesController.php(43): PhraseValue->list_languages()
+#5 [internal function]: PhraseValuesController->l_languages()
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(PhraseValuesController), Array)
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(PhraseValuesController), Object(CakeRequest))
+#9 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2017-05-21 16:10:33 Error: [MissingTableException] Table phrase_values for model PhraseValue was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'phrase_values',
+  'class' => 'PhraseValue',
+  'ds' => 'default',
+)
+Request URL: /cake2/rd_cake/phrase_values/l_languages.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fphrase_values%2Fl_languages.json&_dc=1495375833594&page=1&start=0&limit=25&token=b4c6ac81-8c7c-4802-b50a-0a6380555b50&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3667): Model->setSource('phrase_values')
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3038): Model->getDataSource()
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3010): Model->_readDataSource('all', Array)
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Model/PhraseValue.php(72): Model->find('all', Array)
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/PhraseValuesController.php(43): PhraseValue->list_languages()
+#5 [internal function]: PhraseValuesController->l_languages()
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(PhraseValuesController), Array)
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(PhraseValuesController), Object(CakeRequest))
+#9 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}
+2017-05-21 16:20:44 Error: [MissingTableException] Table phrase_values for model PhraseValue was not found in datasource default.
+Exception Attributes: array (
+  'table' => 'phrase_values',
+  'class' => 'PhraseValue',
+  'ds' => 'default',
+)
+Request URL: /cake2/rd_cake/phrase_values/l_languages.json?q=%2Fcake2%2Frd_cake%2Fwebroot%2Fphrase_values%2Fl_languages.json&_dc=1495376444044&page=1&start=0&limit=25&token=b4c6ac81-8c7c-4802-b50a-0a6380555b50&sel_language=4_4
+Stack Trace:
+#0 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3667): Model->setSource('phrase_values')
+#1 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3038): Model->getDataSource()
+#2 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Model/Model.php(3010): Model->_readDataSource('all', Array)
+#3 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Model/PhraseValue.php(72): Model->find('all', Array)
+#4 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/Controller/PhraseValuesController.php(43): PhraseValue->list_languages()
+#5 [internal function]: PhraseValuesController->l_languages()
+#6 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Controller/Controller.php(491): ReflectionMethod->invokeArgs(Object(PhraseValuesController), Array)
+#7 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(193): Controller->invokeAction(Object(CakeRequest))
+#8 /usr/share/nginx/html/cakephp-2.9.1/lib/Cake/Routing/Dispatcher.php(167): Dispatcher->_invoke(Object(PhraseValuesController), Object(CakeRequest))
+#9 /usr/share/nginx/html/cakephp-2.9.1/rd_cake/webroot/index.php(92): Dispatcher->dispatch(Object(CakeRequest), Object(CakeResponse))
+#10 {main}

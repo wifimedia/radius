@@ -202,7 +202,7 @@ class DynamicClientsController extends AppController {
             $this->request->data['user_id'] = $user_id;
         }
          
-        $check_items = array('active', 'available_to_siblings', 'on_public_maps', 'session_auto_close','data_limit_active');
+        $check_items = array('active', 'available_to_siblings', 'on_public_maps', 'session_auto_close');
         foreach($check_items as $ci){
             if(isset($this->request->data[$ci])){
                 $this->request->data[$ci] = 1;
@@ -318,7 +318,7 @@ class DynamicClientsController extends AppController {
             //Unfortunately there are many check items which means they will not be in the POST if unchecked
             //so we have to check for them
             $check_items = array(
-				'active', 'available_to_siblings', 'on_public_maps', 'session_auto_close','data_limit_active'
+				'active', 'available_to_siblings', 'on_public_maps', 'session_auto_close'
 			);
 			
             foreach($check_items as $i){
@@ -824,7 +824,7 @@ class DynamicClientsController extends AppController {
                     ));
 
             //Add
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->base."add")){
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->base."add")){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'iconCls'   => 'b-add',
@@ -834,7 +834,7 @@ class DynamicClientsController extends AppController {
                     'tooltip'   => __('Add')));
             }
             //Delete
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->base.'delete')){
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->base.'delete')){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'iconCls'   => 'b-delete',
@@ -846,7 +846,7 @@ class DynamicClientsController extends AppController {
             }
 
             //Edit
-            if($this->Acl->check(array('model' => 'Users', 'foreign_key' => $id), $this->base.'edit')){
+            if($this->Acl->check(array('model' => 'User', 'foreign_key' => $id), $this->base.'edit')){
                 array_push($action_group,array(
                     'xtype'     => 'button', 
                     'iconCls'   => 'b-edit',

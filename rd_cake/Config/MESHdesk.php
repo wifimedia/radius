@@ -83,9 +83,7 @@ $config['common_node_settings']['client_key']	    = 'radiusdesk';
 //== Device types for MESHdesk ==
 
 $config['hardware'][0]      = array(
-		'name' 		=> __('Dragino MS14'),
-		'vendor'    => __('Dragino'),
-	    'model'     => __('MS14'),	   	
+		'name' 		=> __('Dragino MS14'),   	
 		'id'    	=> 'dragino',
 		'radios'	=> 1,
 		'active'    => true, 
@@ -114,29 +112,19 @@ $config['hardware'][0]      = array(
 );
 
 $config['hardware'][1]      = array(
-        'name'          => __('Alix 3D2 (Dual Radio)'),
-        'vendor'        => __('Alix'),
-	    'model'         => __('3D2'),
-        'id'            => 'alix3d2',
-        'radios'        => 2,
-        'active'    	=> true,
-        'eth_br'        => 'eth0',
+		'name' 		=> __('MP2 Basic'),   	
+		'id'    	=> 'mp2_basic',
+		'radios'	=> 1, 
+		'active'    => true, 
+		'max_power' => 18,
+		'eth_br'	=> 'eth0 eth1',
+		'two'		=> true,
+		'five'		=> false,
+		'hwmode'	=> '11g',
 
-        //First radio 
-        'max_power' => '23',
-        'two'           => true,
-        'five'          => false,
-        'hwmode'        => '11g',
-
-        //Second radio - This is extra for two radio devices
-        'max_power1'=> '23',
-        'two1'          => false,
-        'five1'         => true,
-        'hwmode1'       => '11a',
-
-         //Default Advanced WiFi settings (Enchancement made 8/9/15)
+       //Default Advanced WiFi settings (Enchancement made 8/9/15)
         'radio0_htmode'         => 'HT20',
-        'radio0_txpower'        => '23',
+        'radio0_txpower'        => '18',
         'radio0_diversity'      => true,
         'radio0_distance'       => '300',
         'radio0_noscan'         => false,
@@ -148,125 +136,17 @@ $config['hardware'][1]      = array(
             'RX-STBC1',
             'TX-STBC',
             'DSSS_CCK-40'
-        ),
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio1_htmode'         => 'HT20',
-        'radio1_txpower'        => '23',
-        'radio1_diversity'      => true,
-        'radio1_distance'       => '300',
-        'radio1_noscan'         => false,
-        'radio1_ldpc'           => true,
-        'radio1_beacon_int'     => 100,
-        'radio1_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
         )
+	
 );
-
 
 $config['hardware'][2]      = array(
-    'name'          => __('AP 505'),
-    'vendor'        => __('AP'),
-	'model'         => __('505'),
-    'id'            => 'pw_cpe505n' ,
-    'radios'        => 1,
-    'active'        => true,
-    'max_power'     => '30',
-    'eth_br'        => 'eth0', 
-    'two'           => true,
-    'five'          => false,
-    'hwmode'        => '11g',
-
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '30',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )
-);
-
-$config['hardware'][3]      = array(
-    'name'          => __('AP 602'),
-    'vendor'        => __('AP'),
-	'model'         => __('602'),
-    'id'            => 'ap_602' ,
-    'radios'        => 1,
-    'active'        => true,
-    'max_power'     => '23',
-    'eth_br'        => 'eth0 eth1', 
-    'two'           => true,
-    'five'          => false,
-    'hwmode'        => '11g',
-
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '23',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )
-);
-
-$config['hardware'][4]      = array(
-    'name'          => __('EnGenius EAP300'),
-     'vendor'       => __('EnGenius'),
-	'model'         => __('EAP300'),
-    'id'            => 'eap300' ,
-    'radios'        => 1,
-    'active'        => true,
-    'max_power'     => '29',
-    'eth_br'        => 'eth0',
-    'two'           => true,
-    'five'          => false,
-    'hwmode'        => '11g',
-
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '29',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )
-);
-
-
-$config['hardware'][5]      = array(
-		'name' 		=> __('Generic 1 Radio'),
-		'vendor'    => __('Generic'),
-		'model'     => __('Single Radio'), 	
-		'id'    	=> 'genoneradio',
+		'name' 		=> __('MP2 Phone'),   	
+		'id'    	=> 'mp2_phone',
 		'radios'	=> 1, 
 		'active'    => true, 
-		'max_power' => '18',
-		'eth_br'	=> 'eth0',
+		'max_power' => 18,
+		'eth_br'	=> 'eth0 eth1',
 		'two'		=> true,
 		'five'		=> false,
 		'hwmode'	=> '11g',
@@ -285,103 +165,12 @@ $config['hardware'][5]      = array(
             'RX-STBC1',
             'TX-STBC',
             'DSSS_CCK-40'
-        )
-	
+        )	
 );
 
-$config['hardware'][6]      = array(
-        'name'          => __('Generic 2 Radio'),
-        'vendor'        => __('Generic'),
-		'model'         => __('Dual Radio'), 
-        'id'            => 'gentworadio',
-        'radios'        => 2,
-        'active'    	=> true,
-        'eth_br'        => 'eth0',
 
-        //First radio 
-        'max_power' => '18',
-        'two'           => true,
-        'five'          => false,
-        'hwmode'        => '11g',
-
-        //Second radio - This is extra for two radio devices
-        'max_power1'=> '18',
-        'two1'          => false,
-        'five1'         => true,
-        'hwmode1'       => '11a',
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio0_htmode'         => 'HT20',
-        'radio0_txpower'        => '18',
-        'radio0_diversity'      => true,
-        'radio0_distance'       => '300',
-        'radio0_noscan'         => false,
-        'radio0_ldpc'           => true,
-        'radio0_beacon_int'     => 100,
-        'radio0_disable_b'      => true,
-        'radio0_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        ),
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio1_htmode'         => 'HT20',
-        'radio1_txpower'        => '18',
-        'radio1_diversity'      => true,
-        'radio1_distance'       => '300',
-        'radio1_noscan'         => false,
-        'radio1_ldpc'           => true,
-        'radio1_beacon_int'     => 100,
-        'radio1_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        )
-);
-
-$config['hardware'][7]      = array(
-  	'name'          => __('RB433 (Dual Radio)'),
-  	'vendor'        => __('Mikrotik'),
-	'model'         => __('RB433'),         
-  	'id'          	=> 'rb433',
-  	'radios'      	=> 2,
-  	'active'    	=> true,
-  	'eth_br'      	=> 'eth0 eth1',
-  	//First radio
-  	'max_power' 	=> '27',
-  	'two'         	=> true,
-  	'five'        	=> false,
-  	'hwmode'      	=> '11g',
-  	//Second radio - This is extra for two radio devices
-  	'max_power1'	=> '27',
-  	'two1'        	=> false,
-  	'five1'        	=> true,
-  	'hwmode1'     	=> '11a',
-    
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '27',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )
-);
-
-$config['hardware'][8]      = array(
-		'name' 		=> __('OpenMesh OM2P'),
-		'vendor'    => __('OpenMesh'),
-	    'model'     => __('OM2P'),  	
+$config['hardware'][3]      = array(
+		'name' 		=> __('OpenMesh OM2P'),  	
 		'id'    	=> 'om2p' , 
 		'radios'	=> 1,  
 		'active'    => true, 
@@ -409,10 +198,177 @@ $config['hardware'][8]      = array(
 	
 );
 
+$config['hardware'][4]      = array(
+		'name' 		=> __('PicoStation M2'),	
+		'id'    	=> 'pico2',
+		'radios'	=> 1, 
+		'active'    => true, 
+		'max_power' => '28',
+		'eth_br'	=> 'eth0',
+		'two'		=> true,
+		'five'		=> false,
+		'hwmode'	=> '11g',
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio0_htmode'         => 'HT20',
+        'radio0_txpower'        => '28',
+        'radio0_diversity'      => true,
+        'radio0_distance'       => '300',
+        'radio0_noscan'         => false,
+        'radio0_ldpc'           => true,
+        'radio0_beacon_int'     => 100,
+        'radio0_disable_b'      => true,
+        'radio0_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        )
+
+);
+
+$config['hardware'][5]      = array(
+		'name' 		=> __('PicoStation M5'),	
+		'id'    	=> 'pico5', 
+		'radios'	=> 1,
+		'active'    => true, 
+		'max_power' => '28',
+		'eth_br'	=> 'eth0',
+		'two'		=> false,
+		'five'		=> true,
+		'hwmode'	=> '11a',
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio0_htmode'         => 'HT20',
+        'radio0_txpower'        => '28',
+        'radio0_diversity'      => true,
+        'radio0_distance'       => '300',
+        'radio0_noscan'         => false,
+        'radio0_ldpc'           => true,
+        'radio0_beacon_int'     => 100,
+        'radio0_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        )
+
+);
+
+$config['hardware'][6]      = array(
+		'name' 		=> __('NanoStation M2'),	
+		'id'    	=> 'nano2',
+		'radios'	=> 1, 
+		'active'    => true, 
+		'max_power' => '28',
+		'eth_br'	=> 'eth0',
+		'two'		=> true,
+		'five'		=> false,
+		'hwmode'	=> '11g',
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio0_htmode'         => 'HT20',
+        'radio0_txpower'        => '28',
+        'radio0_diversity'      => true,
+        'radio0_distance'       => '300',
+        'radio0_noscan'         => false,
+        'radio0_ldpc'           => true,
+        'radio0_beacon_int'     => 100,
+        'radio0_disable_b'      => true,
+        'radio0_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        )
+);
+
+
+$config['hardware'][7]      = array(
+		'name' 		=> __('NanoStation M5'),	
+		'id'    	=> 'nano5',
+		'radios'	=> 1, 
+		'active'    => true, 
+		'max_power' => '28',
+		'eth_br'	=> 'eth0',
+		'two'		=> false,
+		'five'		=> true,
+		'hwmode'	=> '11a',
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio0_htmode'         => 'HT20',
+        'radio0_txpower'        => '28',
+        'radio0_diversity'      => true,
+        'radio0_distance'       => '300',
+        'radio0_noscan'         => false,
+        'radio0_ldpc'           => true,
+        'radio0_beacon_int'     => 100,
+        'radio0_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        )	
+);
+
+$config['hardware'][8]      = array(
+		'name' 		=> __('UniFi AP'),	
+		'id'    	=> 'unifiap',
+		'radios'	=> 1, 
+		'active'    => true, 
+		'max_power' => '23',
+		'eth_br'	=> 'eth0',
+		'two'		=> true,
+		'five'		=> false,
+		'hwmode'	=> '11g',
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio0_htmode'         => 'HT20',
+        'radio0_txpower'        => '23',
+        'radio0_diversity'      => true,
+        'radio0_distance'       => '300',
+        'radio0_noscan'         => false,
+        'radio0_ldpc'           => true,
+        'radio0_beacon_int'     => 100,
+        'radio0_disable_b'      => true,
+        'radio0_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        )	
+);
+
 $config['hardware'][9]      = array(
-		'name' 		=> __('TP-Link WR841N'),
-		'vendor'    => __('TP-Link'),
-	    'model'     => __('WR841N'),	  	
+		'name' 		=> __('UniFi AP-LR'),	
+		'id'    	=> 'unifilrap',
+		'radios'	=> 1, 
+		'active'    => true, 
+		'max_power' => '27',
+		'eth_br'	=> 'eth0',
+		'two'		=> true,
+		'five'		=> false,
+		'hwmode'	=> '11g',
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio0_htmode'         => 'HT20',
+        'radio0_txpower'        => '27',
+        'radio0_diversity'      => true,
+        'radio0_distance'       => '300',
+        'radio0_noscan'         => false,
+        'radio0_ldpc'           => true,
+        'radio0_beacon_int'     => 100,
+        'radio0_disable_b'      => true,
+        'radio0_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        )	
+);
+
+$config['hardware'][10]      = array(
+		'name' 		=> __('TP-Link WR841N'),  	
 		'id'    	=> 'tl841n' , 
 		'radios'	=> 1,  
 		'active'    => true, 
@@ -439,10 +395,61 @@ $config['hardware'][9]      = array(
         )	
 );
 
-$config['hardware'][10]      = array(
-		'name' 		=> __('TP-Link WDR3500 (Dual Radio)'),
-		'vendor'    => __('TP-Link'),
-	    'model'     => __('WDR3500'),
+$config['hardware'][11]      = array(
+		'name' 		=> __('UniFi AP PRO (Dual Radio)'),	
+		'id'    	=> 'unifiappro',
+		'radios'	=> 2, 
+		'active'    => true,
+		'eth_br'	=> 'eth0',
+
+		//First radio 
+		'max_power' => '17',
+		'two'		=> false,
+		'five'		=> true,
+		'hwmode'	=> '11a',
+
+		//Second radio - This is extra for two radio devices
+		'max_power1'=> '30',
+		'two1'		=> true,
+		'five1'		=> false,
+		'hwmode1'	=> '11g',
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio0_htmode'         => 'HT20',
+        'radio0_txpower'        => '17',
+        'radio0_diversity'      => true,
+        'radio0_distance'       => '300',
+        'radio0_noscan'         => false,
+        'radio0_ldpc'           => true,
+        'radio0_beacon_int'     => 100,
+        'radio0_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        ),
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio1_htmode'         => 'HT20',
+        'radio1_txpower'        => '30',
+        'radio1_diversity'      => true,
+        'radio1_distance'       => '300',
+        'radio1_noscan'         => false,
+        'radio1_ldpc'           => true,
+        'radio1_beacon_int'     => 100,
+        'radio1_disable_b'      => true,
+        'radio1_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        )
+
+);
+
+
+$config['hardware'][12]      = array(
+		'name' 		=> __('TP-Link WDR3500 (Dual Radio)'),	
 		'id'    	=> 'tl_wdr3500',
 		'radios'	=> 2, 
 		'active'    => true,
@@ -493,10 +500,9 @@ $config['hardware'][10]      = array(
 
 );
 
-$config['hardware'][11]      = array(
-		'name' 		=> __('TP-Link WDR3600 (Dual Radio)'),
-		'vendor'    => __('TP-Link'),
-	    'model'     => __('WDR3600'),	
+
+$config['hardware'][13]      = array(
+		'name' 		=> __('TP-Link WDR3600 (Dual Radio)'),	
 		'id'    	=> 'tl_wdr3600',
 		'radios'	=> 2, 
 		'active'    => true,
@@ -548,10 +554,289 @@ $config['hardware'][11]      = array(
 );
 
 
-$config['hardware'][12]      = array(
-    'name'          => __('TP-Link WA850RE'),
-    'vendor'        => __('TP-Link'),
-	'model'         => __('WA850RE'), 
+$config['hardware'][14]      = array(
+
+        'name'          => __('Alix 3D2 (Dual Radio)'),
+        'id'            => 'alix3d2',
+        'radios'        => 2,
+        'active'    	=> true,
+        'eth_br'        => 'eth0',
+
+        //First radio 
+        'max_power' => '23',
+        'two'           => true,
+        'five'          => false,
+        'hwmode'        => '11g',
+
+        //Second radio - This is extra for two radio devices
+        'max_power1'=> '23',
+        'two1'          => false,
+        'five1'         => true,
+        'hwmode1'       => '11a',
+
+         //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio0_htmode'         => 'HT20',
+        'radio0_txpower'        => '23',
+        'radio0_diversity'      => true,
+        'radio0_distance'       => '300',
+        'radio0_noscan'         => false,
+        'radio0_ldpc'           => true,
+        'radio0_beacon_int'     => 100,
+        'radio0_disable_b'      => true,
+        'radio0_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        ),
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio1_htmode'         => 'HT20',
+        'radio1_txpower'        => '23',
+        'radio1_diversity'      => true,
+        'radio1_distance'       => '300',
+        'radio1_noscan'         => false,
+        'radio1_ldpc'           => true,
+        'radio1_beacon_int'     => 100,
+        'radio1_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        )
+);
+
+
+
+$config['hardware'][15]      = array(
+		'name' 		=> __('Generic 1 Radio'),	
+		'id'    	=> 'genoneradio',
+		'radios'	=> 1, 
+		'active'    => true, 
+		'max_power' => '18',
+		'eth_br'	=> 'eth0',
+		'two'		=> true,
+		'five'		=> false,
+		'hwmode'	=> '11g',
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio0_htmode'         => 'HT20',
+        'radio0_txpower'        => '18',
+        'radio0_diversity'      => true,
+        'radio0_distance'       => '300',
+        'radio0_noscan'         => false,
+        'radio0_ldpc'           => true,
+        'radio0_beacon_int'     => 100,
+        'radio0_disable_b'      => true,
+        'radio0_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        )
+	
+);
+
+$config['hardware'][16]      = array(
+        'name'          => __('Generic 2 Radio'),
+        'id'            => 'gentworadio',
+        'radios'        => 2,
+        'active'    	=> true,
+        'eth_br'        => 'eth0',
+
+        //First radio 
+        'max_power' => '18',
+        'two'           => true,
+        'five'          => false,
+        'hwmode'        => '11g',
+
+        //Second radio - This is extra for two radio devices
+        'max_power1'=> '18',
+        'two1'          => false,
+        'five1'         => true,
+        'hwmode1'       => '11a',
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio0_htmode'         => 'HT20',
+        'radio0_txpower'        => '18',
+        'radio0_diversity'      => true,
+        'radio0_distance'       => '300',
+        'radio0_noscan'         => false,
+        'radio0_ldpc'           => true,
+        'radio0_beacon_int'     => 100,
+        'radio0_disable_b'      => true,
+        'radio0_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        ),
+
+        //Default Advanced WiFi settings (Enchancement made 8/9/15)
+        'radio1_htmode'         => 'HT20',
+        'radio1_txpower'        => '18',
+        'radio1_diversity'      => true,
+        'radio1_distance'       => '300',
+        'radio1_noscan'         => false,
+        'radio1_ldpc'           => true,
+        'radio1_beacon_int'     => 100,
+        'radio1_ht_capab'       => array(
+            'SHORT-GI-40',
+            'RX-STBC1',
+            'TX-STBC',
+            'DSSS_CCK-40'
+        )
+);
+
+$config['hardware'][17]      = array(
+	'name'    		=> __('AirGateway'),       
+    'id'          	=> 'airgw',
+    'radios'      	=> 1,
+    'active'    	=> true,
+    'max_power' 	=> 18,
+    'eth_br'      	=> 'eth0 eth1',
+    'two'         	=> true,
+    'five'        	=> false,
+    'hwmode'      	=> '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '18',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )
+     
+);
+
+$config['hardware'][18]      = array(
+	'name'     		=> __('AirRouter'),        
+    'id'          	=> 'airrouter' ,  
+   	'radios'      	=> 1,
+    'active'    	=> true,
+ 	'max_power' 	=> '19',
+   	'eth_br'      	=> 'eth0',
+   	'two'         	=> true,
+   	'five'        	=> false,
+  	'hwmode'      	=> '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '19',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )     
+);
+
+$config['hardware'][19]      = array(
+	'name'          => __('AirRouterHP'),      
+	'id'          	=> 'airrouterhp' ,  
+	'radios'      	=> 1,
+	'active'    	=> true,
+	'max_power'   	=> '26',
+	'eth_br'      	=> 'eth0',
+	'two'         	=> true,
+	'five'        	=> false,
+	'hwmode'      	=> '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '26',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    ) 
+);
+
+$config['hardware'][20]      = array(
+  	'name'          => __('BulletM2'),         
+  	'id'          	=> 'bulm2',
+  	'radios'      	=> 1,
+	'active'    	=> true,
+  	'max_power' 	=> 28,
+  	'eth_br'      	=> 'eth0',
+  	'two'         	=> true,
+  	'five'        	=> false,
+  	'hwmode'      	=> '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '28',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )
+);
+
+$config['hardware'][21]      = array(
+  	'name'          => __('RB433 (Dual Radio)'),      
+  	'id'          	=> 'rb433',
+  	'radios'      	=> 2,
+  	'active'    	=> true,
+  	'eth_br'      	=> 'eth0 eth1',
+  	//First radio
+  	'max_power' 	=> '27',
+  	'two'         	=> true,
+  	'five'        	=> false,
+  	'hwmode'      	=> '11g',
+  	//Second radio - This is extra for two radio devices
+  	'max_power1'	=> '27',
+  	'two1'        	=> false,
+  	'five1'        	=> true,
+  	'hwmode1'     	=> '11a',
+    
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '27',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )
+);
+
+$config['hardware'][22]      = array(
+    'name'          => __('TP-Link WA850RE'), 
     'id'            => 'tl_wa850re',
     'radios'        => 1, 
     'active'        => true,
@@ -578,10 +863,8 @@ $config['hardware'][12]      = array(
     )
 );
 
-$config['hardware'][13]      = array(
+$config['hardware'][23]      = array(
     'name'          => __('TP-Link WA901ND'), 
-    'vendor'        => __('TP-Link'),
-	'model'         => __('WA901ND'), 
     'id'            => 'tl_wa901n' ,
     'radios'        => 1, 
     'active'        => true,
@@ -609,10 +892,66 @@ $config['hardware'][13]      = array(
 
 );
 
-$config['hardware'][14]      = array(
-		'name' 		    => __('TP-Link Archer C7 (AC)'),
-		'vendor'        => __('TP-Link'),
-	    'model'         => __('Archer C7'),	
+$config['hardware'][24]      = array(
+    'name'          => __('ZBT WE1526'),
+    'id'            => 'zbt_we1526' ,
+    'radios'        => 1,
+    'active'        => true,
+    'max_power'     => '20',
+    'eth_br'        => 'eth0 eth1',
+    'two'           => true,
+    'five'          => false,
+    'hwmode'        => '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '22',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )
+);
+
+
+
+$config['hardware'][25]      = array(
+    'name'          => __('ZBT WE2026'),
+    'id'            => 'zbt_we2026' ,
+    'radios'        => 1,
+    'active'        => true,
+    'max_power'     => '20',
+    'eth_br'        => 'eth0.1',
+    'two'           => true,
+    'five'          => false,
+    'hwmode'        => '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '20',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )
+);
+
+$config['hardware'][26]      = array(
+		'name' 		    => __('TP-Link Archer C7 (AC)'),	
 		'id'    	    => 'tl_ac1750_c7',
 		'radios'	    => 2, 
 		'active'        => true,
@@ -658,475 +997,8 @@ $config['hardware'][14]      = array(
         )
 );
 
-$config['hardware'][15]      = array(
-    'name'          => __('TP-Link CPE210'),
-    'vendor'        => __('TP-Link'),
-	'model'         => __('CPE210'),
-    'id'            => 'tl_cpe210' ,
-    'radios'        => 1,
-    'active'        => true,
-    'max_power'     => '29',
-    'eth_br'        => 'eth0 eth1',
-    'two'           => true,
-    'five'          => false,
-    'hwmode'        => '11g',
-
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '29',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )
-);
-
-$config['hardware'][16]      = array(
-    'name'          => __('TP-Link WR1043ND'),
-    'vendor'        => __('TP-Link'),
-	'model'         => __('WR1043ND'),
-    'id'            => 'tl_wr1043' ,
-    'radios'        => 1,
-    'active'        => true,
-    'max_power'     => '22',
-    'eth_br'        => 'eth1',  //Important This guy is swapped around!
-    'two'           => true,
-    'five'          => false,
-    'hwmode'        => '11g',
-
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '22',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )
-);
-
-$config['hardware'][17]      = array(
-		'name' 		=> __('PicoStation M2'),
-	    'vendor'    => __('Ubiquiti'),
-	    'model'     => __('PicoStation M2'),	
-		'id'    	=> 'pico2',
-		'radios'	=> 1, 
-		'active'    => true, 
-		'max_power' => '28',
-		'eth_br'	=> 'eth0',
-		'two'		=> true,
-		'five'		=> false,
-		'hwmode'	=> '11g',
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio0_htmode'         => 'HT20',
-        'radio0_txpower'        => '28',
-        'radio0_diversity'      => true,
-        'radio0_distance'       => '300',
-        'radio0_noscan'         => false,
-        'radio0_ldpc'           => true,
-        'radio0_beacon_int'     => 100,
-        'radio0_disable_b'      => true,
-        'radio0_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        )
-
-);
-
-$config['hardware'][18]      = array(
-		'name' 		=> __('PicoStation M5'),
-		'vendor'    => __('Ubiquiti'),
-	    'model'     => __('PicoStation M5'),		
-		'id'    	=> 'pico5', 
-		'radios'	=> 1,
-		'active'    => true, 
-		'max_power' => '28',
-		'eth_br'	=> 'eth0',
-		'two'		=> false,
-		'five'		=> true,
-		'hwmode'	=> '11a',
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio0_htmode'         => 'HT20',
-        'radio0_txpower'        => '28',
-        'radio0_diversity'      => true,
-        'radio0_distance'       => '300',
-        'radio0_noscan'         => false,
-        'radio0_ldpc'           => true,
-        'radio0_beacon_int'     => 100,
-        'radio0_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        )
-
-);
-
-$config['hardware'][19]      = array(
-		'name' 		=> __('NanoStation M2'),
-		'vendor'    => __('Ubiquiti'),
-	    'model'     => __('NanoStation M2'),	
-		'id'    	=> 'nano2',
-		'radios'	=> 1, 
-		'active'    => true, 
-		'max_power' => '28',
-		'eth_br'	=> 'eth0',
-		'two'		=> true,
-		'five'		=> false,
-		'hwmode'	=> '11g',
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio0_htmode'         => 'HT20',
-        'radio0_txpower'        => '28',
-        'radio0_diversity'      => true,
-        'radio0_distance'       => '300',
-        'radio0_noscan'         => false,
-        'radio0_ldpc'           => true,
-        'radio0_beacon_int'     => 100,
-        'radio0_disable_b'      => true,
-        'radio0_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        )
-);
-
-$config['hardware'][20]      = array(
-		'name' 		=> __('NanoStation M5'),
-		'vendor'    => __('Ubiquiti'),
-	    'model'     => __('NanoStation M5'),	
-		'id'    	=> 'nano5',
-		'radios'	=> 1, 
-		'active'    => true, 
-		'max_power' => '28',
-		'eth_br'	=> 'eth0',
-		'two'		=> false,
-		'five'		=> true,
-		'hwmode'	=> '11a',
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio0_htmode'         => 'HT20',
-        'radio0_txpower'        => '28',
-        'radio0_diversity'      => true,
-        'radio0_distance'       => '300',
-        'radio0_noscan'         => false,
-        'radio0_ldpc'           => true,
-        'radio0_beacon_int'     => 100,
-        'radio0_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        )	
-);
-
-$config['hardware'][21]      = array(
-		'name' 		=> __('UniFi AP'),
-		'vendor'    => __('Ubiquiti'),
-	    'model'     => __('UniFi AP'),	
-		'id'    	=> 'unifiap',
-		'radios'	=> 1, 
-		'active'    => true, 
-		'max_power' => '23',
-		'eth_br'	=> 'eth0',
-		'two'		=> true,
-		'five'		=> false,
-		'hwmode'	=> '11g',
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio0_htmode'         => 'HT20',
-        'radio0_txpower'        => '23',
-        'radio0_diversity'      => true,
-        'radio0_distance'       => '300',
-        'radio0_noscan'         => false,
-        'radio0_ldpc'           => true,
-        'radio0_beacon_int'     => 100,
-        'radio0_disable_b'      => true,
-        'radio0_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        )	
-);
-
-$config['hardware'][22]      = array(
-		'name' 		=> __('UniFi AP-LR'),
-		'vendor'    => __('Ubiquiti'),
-	    'model'     => __('UniFi AP-LR'),		
-		'id'    	=> 'unifilrap',
-		'radios'	=> 1, 
-		'active'    => true, 
-		'max_power' => '27',
-		'eth_br'	=> 'eth0',
-		'two'		=> true,
-		'five'		=> false,
-		'hwmode'	=> '11g',
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio0_htmode'         => 'HT20',
-        'radio0_txpower'        => '27',
-        'radio0_diversity'      => true,
-        'radio0_distance'       => '300',
-        'radio0_noscan'         => false,
-        'radio0_ldpc'           => true,
-        'radio0_beacon_int'     => 100,
-        'radio0_disable_b'      => true,
-        'radio0_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        )	
-);
-
-$config['hardware'][23]      = array(
-		'name' 		=> __('UniFi AP PRO (Dual Radio)'),
-		'vendor'    => __('Ubiquiti'),
-	    'model'     => __('UniFi AP PRO'),	
-		'id'    	=> 'unifiappro',
-		'radios'	=> 2, 
-		'active'    => true,
-		'eth_br'	=> 'eth0',
-
-		//First radio 
-		'max_power' => '17',
-		'two'		=> false,
-		'five'		=> true,
-		'hwmode'	=> '11a',
-
-		//Second radio - This is extra for two radio devices
-		'max_power1'=> '30',
-		'two1'		=> true,
-		'five1'		=> false,
-		'hwmode1'	=> '11g',
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio0_htmode'         => 'HT20',
-        'radio0_txpower'        => '17',
-        'radio0_diversity'      => true,
-        'radio0_distance'       => '300',
-        'radio0_noscan'         => false,
-        'radio0_ldpc'           => true,
-        'radio0_beacon_int'     => 100,
-        'radio0_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        ),
-
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio1_htmode'         => 'HT20',
-        'radio1_txpower'        => '30',
-        'radio1_diversity'      => true,
-        'radio1_distance'       => '300',
-        'radio1_noscan'         => false,
-        'radio1_ldpc'           => true,
-        'radio1_beacon_int'     => 100,
-        'radio1_disable_b'      => true,
-        'radio1_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        )
-
-);
-
-$config['hardware'][24]      = array(
-	'name'    		=> __('AirGateway'),
-	'vendor'        => __('Ubiquiti'),
-	'model'         => __('AirGateway'),       
-    'id'          	=> 'airgw',
-    'radios'      	=> 1,
-    'active'    	=> true,
-    'max_power' 	=> 18,
-    'eth_br'      	=> 'eth0 eth1',
-    'two'         	=> true,
-    'five'        	=> false,
-    'hwmode'      	=> '11g',
-
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '18',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )
-     
-);
-
-$config['hardware'][25]      = array(
-	'name'     		=> __('AirRouter'), 
-	'vendor'        => __('Ubiquiti'),
-	'model'         => __('AirRouter'),         
-    'id'          	=> 'airrouter' ,  
-   	'radios'      	=> 1,
-    'active'    	=> true,
- 	'max_power' 	=> '19',
-   	'eth_br'      	=> 'eth0',
-   	'two'         	=> true,
-   	'five'        	=> false,
-  	'hwmode'      	=> '11g',
-
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '19',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )     
-);
-
-$config['hardware'][26]      = array(
-	'name'          => __('AirRouterHP'),
-	'vendor'        => __('Ubiquiti'),
-	'model'         => __('AirRouterHP'),            
-	'id'          	=> 'airrouterhp' ,  
-	'radios'      	=> 1,
-	'active'    	=> true,
-	'max_power'   	=> '26',
-	'eth_br'      	=> 'eth0',
-	'two'         	=> true,
-	'five'        	=> false,
-	'hwmode'      	=> '11g',
-
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '26',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    ) 
-);
-
 $config['hardware'][27]      = array(
-  	'name'          => __('BulletM2'),
-  	'vendor'        => __('Ubiquiti'),
-	'model'         => __('BulletM2'),           
-  	'id'          	=> 'bulm2',
-  	'radios'      	=> 1,
-	'active'    	=> true,
-  	'max_power' 	=> 28,
-  	'eth_br'      	=> 'eth0',
-  	'two'         	=> true,
-  	'five'        	=> false,
-  	'hwmode'      	=> '11g',
-
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '28',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )
-);
-
-
-$config['hardware'][28]      = array(
-		'name' 		    => __('Wally DR344 (AC)'),
-		'vendor'        => __('Wally'),
-	    'model'         => __('DR344'),	
-		'id'    	    => 'wally_dr344_ac',
-		'radios'	    => 2, 
-		'active'        => true,
-		'device_type'   => 'ac', //Options are 'standard' (if left out) or 'ac' for AC devices, more options to follow
-		'eth_br'	    => 'eth0',
-
-		//First radio 
-		'max_power'     => '30',
-		'two'		    => false,
-		'five'		    => true,
-		'hwmode'	    => '11a',
-
-		//Second radio - This is extra for two radio devices
-		'max_power1'    => '30',
-		'two1'		    => true,
-		'five1'		    => false,
-		'hwmode1'	    => '11n',
-
-        'radio0_htmode'         => 'VHT80',
-        'radio0_txpower'        => '30',
-        'radio0_diversity'      => true,
-        'radio0_distance'       => '300',
-        'radio0_noscan'         => false,
-        'radio0_ldpc'           => true,
-        'radio0_beacon_int'     => 100,
-        'radio0_ht_capab'       => array(
-   
-        ),
-
-        'radio1_htmode'         => 'HT20',
-        'radio1_txpower'        => '30',
-        'radio1_diversity'      => true,
-        'radio1_distance'       => '300',
-        'radio1_noscan'         => false,
-        'radio1_ldpc'           => true,
-        'radio1_beacon_int'     => 100,
-        'radio0_disable_b'      => true,
-        'radio1_ht_capab'       => array(
-            'SHORT-GI-40',
-            'RX-STBC1',
-            'TX-STBC',
-            'DSSS_CCK-40'
-        )
-);
-
-$config['hardware'][29]      = array(
-		'name' 		    => __('Xiaomi MiWiFi Mini (AC)'),
-		'vendor'        => __('Xiaom'),
-	    'model'         => __('MiWiFi Mini'),	
+		'name' 		    => __('Xiaomi MiWiFi Mini (AC)'),	
 		'id'    	    => 'miwifi_mini',
 		'radios'	    => 2, 
 		'active'        => true,
@@ -1173,10 +1045,148 @@ $config['hardware'][29]      = array(
 );
 
 
+$config['hardware'][28]      = array(
+    'name'          => __('EnGenius EAP300'),
+    'id'            => 'eap300' ,
+    'radios'        => 1,
+    'active'        => true,
+    'max_power'     => '29',
+    'eth_br'        => 'eth0',
+    'two'           => true,
+    'five'          => false,
+    'hwmode'        => '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '29',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )
+);
+
+$config['hardware'][29]      = array(
+    'name'          => __('TP-Link CPE210'),
+    'id'            => 'tl_cpe210' ,
+    'radios'        => 1,
+    'active'        => true,
+    'max_power'     => '29',
+    'eth_br'        => 'eth0 eth1',
+    'two'           => true,
+    'five'          => false,
+    'hwmode'        => '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '29',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )
+);
+
 $config['hardware'][30]      = array(
-		'name' 		    => __('Yuncore  XD3200 (AC)'),
-		'vendor'        => __('Yuncore'),
-	    'model'         => __('XD3200'),
+    'name'          => __('TP-Link WR1043ND'),
+    'id'            => 'tl_wr1043' ,
+    'radios'        => 1,
+    'active'        => true,
+    'max_power'     => '22',
+    'eth_br'        => 'eth1',  //Important This guy is swapped around!
+    'two'           => true,
+    'five'          => false,
+    'hwmode'        => '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '22',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )
+);
+
+$config['hardware'][31]      = array(
+    'name'          => __('AP 505'),
+    'id'            => 'pw_cpe505n' ,
+    'radios'        => 1,
+    'active'        => true,
+    'max_power'     => '30',
+    'eth_br'        => 'eth0', 
+    'two'           => true,
+    'five'          => false,
+    'hwmode'        => '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '30',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )
+);
+
+$config['hardware'][32]      = array(
+    'name'          => __('AP 602'),
+    'id'            => 'ap_602' ,
+    'radios'        => 1,
+    'active'        => true,
+    'max_power'     => '23',
+    'eth_br'        => 'eth0 eth1', 
+    'two'           => true,
+    'five'          => false,
+    'hwmode'        => '11g',
+
+    //Default Advanced WiFi settings (Enchancement made 8/9/15)
+    'radio0_htmode'         => 'HT20',
+    'radio0_txpower'        => '23',
+    'radio0_diversity'      => true,
+    'radio0_distance'       => '300',
+    'radio0_noscan'         => false,
+    'radio0_ldpc'           => true,
+    'radio0_beacon_int'     => 100,
+    'radio0_disable_b'      => true,
+    'radio0_ht_capab'       => array(
+        'SHORT-GI-40',
+        'RX-STBC1',
+        'TX-STBC',
+        'DSSS_CCK-40'
+    )
+);
+
+$config['hardware'][33]      = array(
+		'name' 		    => __('Yuncore  XD3200 (AC)'),	
 		'id'    	    => 'yc_xd3200',
 		'radios'	    => 2, 
 		'active'        => true,
@@ -1222,29 +1232,47 @@ $config['hardware'][30]      = array(
         )
 );
 
-$config['hardware'][31]      = array(
-		'name' 		=> __('Yuncore AP90'),
-		'vendor'    => __('Yuncore'),
-	    'model'     => __('AP90'),	
-		'id'    	=> 'yc_ap90q',
-		'radios'	=> 1, 
-		'active'    => true, 
-		'max_power' => '28',
-		'eth_br'	=> 'eth0',
-		'two'		=> true,
-		'five'		=> false,
-		'hwmode'	=> '11g',
 
-        //Default Advanced WiFi settings (Enchancement made 8/9/15)
-        'radio0_htmode'         => 'HT20',
-        'radio0_txpower'        => '28',
+$config['hardware'][34]      = array(
+		'name' 		    => __('Wally DR344 (AC)'),	
+		'id'    	    => 'wally_dr344_ac',
+		'radios'	    => 2, 
+		'active'        => true,
+		'device_type'   => 'ac', //Options are 'standard' (if left out) or 'ac' for AC devices, more options to follow
+		'eth_br'	    => 'eth0 eth1',
+
+		//First radio 
+		'max_power'     => '30',
+		'two'		    => false,
+		'five'		    => true,
+		'hwmode'	    => '11a',
+
+		//Second radio - This is extra for two radio devices
+		'max_power1'    => '30',
+		'two1'		    => true,
+		'five1'		    => false,
+		'hwmode1'	    => '11n',
+
+        'radio0_htmode'         => 'VHT80',
+        'radio0_txpower'        => '30',
         'radio0_diversity'      => true,
         'radio0_distance'       => '300',
         'radio0_noscan'         => false,
         'radio0_ldpc'           => true,
         'radio0_beacon_int'     => 100,
-        'radio0_disable_b'      => true,
         'radio0_ht_capab'       => array(
+   
+        ),
+
+        'radio1_htmode'         => 'HT20',
+        'radio1_txpower'        => '30',
+        'radio1_diversity'      => true,
+        'radio1_distance'       => '300',
+        'radio1_noscan'         => false,
+        'radio1_ldpc'           => true,
+        'radio1_beacon_int'     => 100,
+        'radio0_disable_b'      => true,
+        'radio1_ht_capab'       => array(
             'SHORT-GI-40',
             'RX-STBC1',
             'TX-STBC',
@@ -1252,65 +1280,7 @@ $config['hardware'][31]      = array(
         )
 );
 
-$config['hardware'][32]      = array(
-    'name'          => __('ZBT WE1526'),
-    'vendor'        => __('ZBT-Link'),
-	'model'         => __('WE1526'), 
-    'id'            => 'zbt_we1526' ,
-    'radios'        => 1,
-    'active'        => true,
-    'max_power'     => '20',
-    'eth_br'        => 'eth0 eth1',
-    'two'           => true,
-    'five'          => false,
-    'hwmode'        => '11g',
 
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '22',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )
-);
-
-$config['hardware'][33]      = array(
-    'name'          => __('ZBT WE2026'),
-    'vendor'        => __('ZBT-Link'),
-	'model'         => __('WE2026'),
-    'id'            => 'zbt_we2026' ,
-    'radios'        => 1,
-    'active'        => true,
-    'max_power'     => '20',
-    'eth_br'        => 'eth0.1',
-    'two'           => true,
-    'five'          => false,
-    'hwmode'        => '11g',
-
-    //Default Advanced WiFi settings (Enchancement made 8/9/15)
-    'radio0_htmode'         => 'HT20',
-    'radio0_txpower'        => '20',
-    'radio0_diversity'      => true,
-    'radio0_distance'       => '300',
-    'radio0_noscan'         => false,
-    'radio0_ldpc'           => true,
-    'radio0_beacon_int'     => 100,
-    'radio0_disable_b'      => true,
-    'radio0_ht_capab'       => array(
-        'SHORT-GI-40',
-        'RX-STBC1',
-        'TX-STBC',
-        'DSSS_CCK-40'
-    )
-);
 
 
 //== MESHdesk SSID/BSSID
