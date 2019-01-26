@@ -5,7 +5,9 @@
   cursor: default;
   overflow: hidden;
   border: 0px solid #ffffff;
+  /*dungtd
   background-color: #ffffff;
+  */
   white-space: normal;
   -webkit-appearance: none;
 }
@@ -31,7 +33,8 @@ button,
 	known types are: line, clean, wide, space;
 */
 .webix_layout_space {
-  background-color: #ffffff;
+  /*background-color: #ffffff; dungtd*/
+  background-color:#dddddd99;
 }
 .webix_layout_wide {
   background-color: #ffffff;
